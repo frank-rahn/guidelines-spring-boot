@@ -10,7 +10,7 @@ import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 
 import static javax.persistence.AccessType.FIELD;
-import static org.springframework.format.annotation.DateTimeFormat.ISO.DATE_TIME;
+import static org.springframework.format.annotation.DateTimeFormat.ISO.DATE;
 
 @Access(FIELD)
 @Entity
@@ -30,7 +30,7 @@ public class Person extends AbstractAuditing {
 	@Email
 	private String emailAddress;
 	
-	@DateTimeFormat(iso = DATE_TIME)
+	@DateTimeFormat(iso = DATE)
 	@NotNull
 	private LocalDate birthday;
 	
