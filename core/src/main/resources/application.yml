@@ -1,0 +1,11 @@
+app:
+  people:
+    - id: 83426010-c6e7-4425-8caa-9895417f06a4
+      firstName: Frank
+      lastName: Rahn
+      birthday: 1967-05-05
+    - id: bb5b17e7-64e9-4961-abc0-ed350fd4c8f3
+      firstName: Martin
+      lastName: Rahn
+      emailAddress: martin@frank-rahn.de
+      birthday: 1979-03-25
