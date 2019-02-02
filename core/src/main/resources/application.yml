@@ -1,3 +1,7 @@
+spring:
+  application:
+    name: @project.name@
+
 app:
   people:
     - id: 83426010-c6e7-4425-8caa-9895417f06a4

@@ -1,0 +1,23 @@
+info:
+  application:
+    name: @project.name@
+    groupId: @project.groupId@
+    artifactId: @project.artifactId@
+    version: @project.version@
+    description: @project.description@
+
+spring:
+  application:
+    name: ${info.application.name}
+  jackson:
+    serialization:
+      indent-output: true
+
+management:
+  endpoint:
+    health:
+      show-details: always
+  endpoints:
+    web:
+      exposure:
+        include: '*'

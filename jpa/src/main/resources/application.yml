@@ -1,4 +1,6 @@
 spring:
+  application:
+    name: @project.name@
   jpa:
     show-sql: true
     properties:
