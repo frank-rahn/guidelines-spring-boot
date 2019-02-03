@@ -13,7 +13,7 @@
 	<artifactId>rest</artifactId>
 
 	<name>Rest</name>
-	<description>Guidelines for Spring Boot Rest</description>
+	<description>Guidelines for Spring Boot - Rest</description>
 
 	<dependencies>
 		<!-- Standard -->

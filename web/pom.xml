@@ -13,7 +13,7 @@
 	<artifactId>web</artifactId>
 
 	<name>Web</name>
-	<description>Guidelines for Spring Boot Web</description>
+	<description>Guidelines for Spring Boot - Web</description>
 
 	<dependencies>
 		<!-- Standard -->

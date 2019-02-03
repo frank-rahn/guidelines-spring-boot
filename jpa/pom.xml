@@ -13,7 +13,7 @@
 	<artifactId>jpa</artifactId>
 	
 	<name>jpa</name>
-	<description>Guidelines for Spring Boot JPA</description>
+	<description>Guidelines for Spring Boot - JPA</description>
 
 	<dependencies>
 		<!-- Standard -->

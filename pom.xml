@@ -16,7 +16,7 @@
 	<packaging>pom</packaging>
 
 	<name>Parent</name>
-	<description>Guidelines for Spring Boot Parent</description>
+	<description>Guidelines for Spring Boot - Parent</description>
 
 	<modules>
 		<module>core</module>

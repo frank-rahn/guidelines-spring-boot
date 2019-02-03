@@ -13,7 +13,7 @@
 	<artifactId>core</artifactId>
 
 	<name>Core</name>
-	<description>Guidelines for Spring Boot Core</description>
+	<description>Guidelines for Spring Boot - Core</description>
 
 	<dependencies>
 		<!-- Standard -->
