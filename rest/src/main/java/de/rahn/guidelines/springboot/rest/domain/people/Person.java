@@ -6,6 +6,7 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
+import java.util.List;
 
 import static org.apache.commons.lang3.builder.EqualsBuilder.reflectionEquals;
 import static org.apache.commons.lang3.builder.HashCodeBuilder.reflectionHashCode;
@@ -29,6 +30,8 @@ public class Person {
 	@DateTimeFormat(iso = DATE)
 	@NotNull
 	private LocalDate birthday;
+	
+	private List<String> infos;
 	
 	@Override
 	public boolean equals(Object obj) {
@@ -85,4 +88,11 @@ public class Person {
 		this.birthday = birthday;
 	}
 	
+	public List<String> getInfos() {
+		return infos;
+	}
+	
+	public void setInfos(List<String> infos) {
+		this.infos = infos;
+	}
 }
