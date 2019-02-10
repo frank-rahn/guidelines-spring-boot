@@ -1,0 +1,191 @@
+{
+	"info": {
+		"_postman_id": "6fd93412-d829-47a9-b040-87e944172d48",
+		"name": "Guidelines for Spring Boot REST",
+		"description": "Guidelines for Spring Boot REST.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Read",
+			"item": [
+				{
+					"name": "Get all Peoples",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{url}}",
+							"host": [
+								"{{url}}"
+							]
+						},
+						"description": "List of Peoples"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Person by Id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{url}}/04693555-8f94-43ce-bf92-39f7af8cd8b9",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"04693555-8f94-43ce-bf92-39f7af8cd8b9"
+							]
+						},
+						"description": "Get Person by Id"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Create",
+			"item": [
+				{
+					"name": "Create a Person",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"firstName\": \"Martin\",\n    \"lastName\": \"Rahn\",\n    \"birthday\": \"1979-03-25\",\n    \"infos\": [\n    \t\"Ist super\",\n    \t\"Ist cool\"\n    ]\n}"
+						},
+						"url": {
+							"raw": "{{url}}",
+							"host": [
+								"{{url}}"
+							]
+						},
+						"description": "Create a Person"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Update or Store",
+			"item": [
+				{
+					"name": "Write the Person",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"firstName\": \"Martin\",\n    \"lastName\": \"Rahn\",\n    \"birthday\": \"1979-03-25\",\n    \"infos\": [\n        \"Ist super\",\n        \"Ist cool\",\n        \"Anwesend\"\n    ]\n}"
+						},
+						"url": {
+							"raw": "{{url}}/df0d9d3c-46bc-46c8-a022-6e8e0edadc3c",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"df0d9d3c-46bc-46c8-a022-6e8e0edadc3c"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Delete",
+			"item": [
+				{
+					"name": "Delete Person by Id",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{url}}/11cef1f9-b1f6-47b2-8f73-27b28b142aa4",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"11cef1f9-b1f6-47b2-8f73-27b28b142aa4"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"auth": {
+		"type": "basic",
+		"basic": [
+			{
+				"key": "password",
+				"value": "admin",
+				"type": "string"
+			},
+			{
+				"key": "username",
+				"value": "admin",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "151096f8-f8a6-478a-b13f-2b15ca6d2036",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "72510d24-42e3-44d2-8fd4-c99783ee7250",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"id": "a38b4011-6629-4138-b0ae-627dd446b761",
+			"key": "url",
+			"value": "http://localhost:8081/api/people",
+			"type": "string"
+		}
+	]
+}
