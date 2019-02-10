@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="de" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+	<meta name="author" content="Frank Rahn" />
+	<meta name="_csrf" th:content="${_csrf.token}" />
+	<meta name="_csrf_header" th:content="${_csrf.headerName}" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
+	<title>Person</title>
+	<link rel="stylesheet" th:href="@{/webjars/bootstrap/4.2.1/css/bootstrap.min.css}" />
+	<link rel="stylesheet" th:href="@{/css/style.css}" />
+</head>
+<body>
+	<div class="container">
+		<div class="card">
+			<div class="card-body text-right">
+				<a th:href="@{/logout}" th:inline="text" class="card-link">[[${#httpServletRequest.remoteUser}]] abmelden</a>
+			</div>
+		</div>
+	</div>
+	<div class="container">
+		<div class="card">
+			<h1 class="card-header">Person</h1>
+			<div class="card-body">
+				<form th:action="@{/poeple}" method="post" class="needs-validation" novalidate="novalidate">
+					<div class="form-group">
+						<label for="id">Id</label>
+						<input type="text" id="id" name="id" placeholder="Id" class="form-control" readonly="readonly" th:value="${person.id}" />
+					</div>
+					<div class="form-group">
+						<label for="firstName">Vorname</label>
+						<input type="text" id="firstName" name="firstName" placeholder="Vorname" class="form-control" th:value="${person.firstName}" />
+					</div>
+					<div class="form-group">
+						<label for="lastName">Name</label>
+						<input type="text" id="lastName" name="lastName" placeholder="Name" class="form-control" th:value="${person.lastName}" />
+					</div>
+					<div class="form-group">
+						<label for="emailAddress">E-Mail</label>
+						<input type="email" id="emailAddress" name="emailAddress" placeholder="E-Mail" class="form-control" th:value="${person.emailAddress}" />
+					</div>
+					<div class="form-group">
+						<label for="birthday">Geburtsdatum</label>
+						<input type="text" id="birthday" name="birthday" placeholder="Geburtsdatum" class="form-control" th:value="${person.birthday}" />
+					</div>
+				</form>
+			</div>
+			<div class="card-footer text-center">
+				<a th:href="@{/people}" class="card-link">Zurück</a>
+			</div>
+		</div>
+	</div>
+
+	<script th:src="@{/webjars/jquery/3.3.1-2/jquery.slim.min.js}"></script>
+	<script th:src="@{/webjars/popper.js/1.14.6/umd/popper.min.js}"></script>
+	<script th:src="@{/webjars/bootstrap/4.2.1/js/bootstrap.min.js}"></script>
+	<script th:src="@{/js/script.js}"></script>
+</body>
+</html>
