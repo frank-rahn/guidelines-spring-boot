@@ -15,7 +15,7 @@ public class WebSecurityConfiguration {
 	private String applicationName;
 	
 	@Autowired
-	protected void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
+	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
 		auth.inMemoryAuthentication().withUser("user").password("{noop}user").roles("USER");
 		auth.inMemoryAuthentication().withUser("admin").password("{noop}admin").roles("USER", "ADMIN", "ACTUATOR");
 		auth.inMemoryAuthentication().withUser("gast").password("{noop}gast").roles("GAST");
