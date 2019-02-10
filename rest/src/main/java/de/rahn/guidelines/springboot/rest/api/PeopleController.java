@@ -53,31 +53,36 @@ public class PeopleController {
 	
 	@GetMapping
 	public Collection<Person> getAllPeople() {
-		LOGGER.info("Authentication: {}", getContext().getAuthentication());
+		LOGGER.info("GetAllPeople: Authentication={}", getContext().getAuthentication());
+		
 		return people.values();
 	}
 	
 	@GetMapping(path = "/{id}")
 	public ResponseEntity<Person> getPersonById(@PathVariable("id") String id) {
-		LOGGER.info("Id: {}, Authentication: {}", id, getContext().getAuthentication());
+		LOGGER.info("GetPersonById: Id={}, Authentication={}", id, getContext().getAuthentication());
+		
 		return ResponseEntity.of(Optional.ofNullable(people.get(id)));
 	}
 	
 	@DeleteMapping(path = "/{id}")
-	public ResponseEntity<Person> removePersonById(@PathVariable("id") String id) {
-		LOGGER.info("Id: {}, Authentication: {}", id, getContext().getAuthentication());
+	public ResponseEntity<Person> deletePersonById(@PathVariable("id") String id) {
+		LOGGER.info("DeletePersonById: Id={}, Authentication={}", id, getContext().getAuthentication());
+		
 		return ResponseEntity.of(Optional.ofNullable(people.remove(id)));
 	}
 	
 	@PostMapping
-	public Person newPerson(@RequestBody @Valid Person person) {
-		LOGGER.info("Person: {}, Authentication: {}", person, getContext().getAuthentication());
+	public Person postPerson(@RequestBody @Valid Person person) {
+		LOGGER.info("PostPerson: Person={}, Authentication={}", person, getContext().getAuthentication());
+		
 		return addPersonToPeople(null, person);
 	}
 	
 	@PutMapping(path = "/{id}")
-	public Person newPerson(@PathVariable("id") String id, @RequestBody @Valid Person person) {
-		LOGGER.info("Id: {}, Person: {}, Authentication: {}", id, person, getContext().getAuthentication());
+	public Person putPerson(@PathVariable("id") String id, @RequestBody @Valid Person person) {
+		LOGGER.info("PutPerson: Id={}, Person={}, Authentication={}", id, person, getContext().getAuthentication());
+		
 		return addPersonToPeople(id, person);
 	}
 	

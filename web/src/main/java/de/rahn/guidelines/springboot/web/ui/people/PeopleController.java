@@ -29,7 +29,7 @@ public class PeopleController {
 	
 	@GetMapping
 	public String getAllPeople(Model model) {
-		LOGGER.info("Authentication: {}", getContext().getAuthentication());
+		LOGGER.info("GetAllPeople: Authentication={}", getContext().getAuthentication());
 		
 		ResponseEntity<List<Person>> people = template.exchange(
 				"/",
