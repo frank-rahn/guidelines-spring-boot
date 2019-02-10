@@ -8,18 +8,14 @@ info:
 
 server:
   port: 8080
+  servlet:
+    session:
+      cookie:
+        name: ${info.application.name}_JSESSIONID
 
 spring:
   application:
     name: ${info.application.name}
-  jackson:
-    serialization:
-      indent-output: true
-  jpa:
-    show-sql: true
-    properties:
-      hibernate:
-        format_sql: true
 
 management:
   endpoint:
