@@ -1,5 +1,7 @@
 package de.rahn.guidelines.springboot.rest.domain.people;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.validation.constraints.Email;
@@ -14,23 +16,30 @@ import static org.apache.commons.lang3.builder.ToStringBuilder.reflectionToStrin
 import static org.apache.commons.lang3.builder.ToStringStyle.JSON_STYLE;
 import static org.springframework.format.annotation.DateTimeFormat.ISO.DATE;
 
+@ApiModel(description = "Eine Person")
 public class Person {
 	
+	@ApiModelProperty("Die UUID der Person")
 	private String id;
 	
+	@ApiModelProperty("Der Vorname der Person")
 	private String firstName;
 
 	@NotNull
 	@NotBlank
+	@ApiModelProperty(value = "Der Nachname der Person", required = true)
 	private String lastName;
 	
 	@Email
+	@ApiModelProperty("Die E-Mail der Person")
 	private String emailAddress;
 	
 	@DateTimeFormat(iso = DATE)
 	@NotNull
+	@ApiModelProperty(value = "Das Geburtsdatum der Person", required = true)
 	private LocalDate birthday;
 	
+	@ApiModelProperty("Allgemeine Informationen über die Person")
 	private List<String> infos;
 	
 	@Override
