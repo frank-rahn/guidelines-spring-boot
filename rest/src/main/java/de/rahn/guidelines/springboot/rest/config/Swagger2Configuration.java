@@ -25,7 +25,6 @@ public class Swagger2Configuration {
 	@Bean
 	Docket docket() {
 		return new Docket(DocumentationType.SWAGGER_2)
-//				.groupName("public-api")
 				.apiInfo(apiInfo())
 				.select()
 					.apis(RequestHandlerSelectors.any())
