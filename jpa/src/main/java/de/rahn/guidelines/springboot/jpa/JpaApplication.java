@@ -49,9 +49,7 @@ public class JpaApplication {
 	@Bean
 	@Order(2)
 	protected ApplicationRunner usingDatabase(PersonRepository repository) {
-		return args -> {
-			repository.findByLastName("Rahn").forEach(person -> LOGGER.info(person.toString()));
-		};
+		return args -> repository.findByLastName("Rahn").forEach(person -> LOGGER.info(person.toString()));
 	}
 	
 }
