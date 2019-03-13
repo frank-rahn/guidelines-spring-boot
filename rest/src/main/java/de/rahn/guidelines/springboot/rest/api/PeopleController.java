@@ -6,6 +6,7 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.Assert;
 import org.springframework.web.bind.annotation.*;
@@ -18,13 +19,13 @@ import java.util.*;
 import static org.springframework.security.core.context.SecurityContextHolder.getContext;
 
 @RestController
-@RequestMapping(path = "/api/people", produces = "application/json")
+@RequestMapping(path = "/api/people", produces = MediaType.APPLICATION_JSON_VALUE)
 @Api(description = "Der Controller für Personen")
 public class PeopleController {
 	
 	private static final Logger LOGGER = LoggerFactory.getLogger(PeopleController.class);
 	
-	private Map<String, Person> people = new HashMap<>();
+	private final Map<String, Person> people = new HashMap<>();
 	
 	private Person addPersonToPeople(Person person) {
 		Assert.notNull(person.getId(), "Id darf nicht null sein!");
