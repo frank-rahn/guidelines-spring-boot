@@ -23,19 +23,40 @@ public class Swagger2Configuration {
 	private String description;
 	
 	@Bean
-	Docket docket() {
+	Docket actuator() {
 		return new Docket(DocumentationType.SWAGGER_2)
+				.groupName("Actuator")
+				.apiInfo(actuatorInfo())
+				.select()
+					.apis(RequestHandlerSelectors.any())
+					.paths(PathSelectors.regex("/actuator.*"))
+					.build()
+				;
+	}
+	
+	private ApiInfo actuatorInfo() {
+		return new ApiInfoBuilder()
+				.title("Spring Boot 2 Actuator API")
+				.description("Documentation for Spring Boot Actuator")
+				.termsOfServiceUrl("https://spring.io/projects/spring-boot")
+				.build();
+	}
+	
+	@Bean
+	Docket api() {
+		return new Docket(DocumentationType.SWAGGER_2)
+				.groupName("API")
 				.apiInfo(apiInfo())
 				.select()
 					.apis(RequestHandlerSelectors.any())
-					.paths(PathSelectors.any())
+					.paths(PathSelectors.regex("/api.*"))
 					.build()
 				;
 	}
 	
 	private ApiInfo apiInfo() {
 		return new ApiInfoBuilder()
-				.title("Guidelines for Spring Boot")
+				.title("Guidelines for Spring Boot API")
 				.description(description)
 				.version(version)
 				.contact(contact())
