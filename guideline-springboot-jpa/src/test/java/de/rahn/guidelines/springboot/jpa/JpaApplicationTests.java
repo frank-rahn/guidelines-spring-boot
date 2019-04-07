@@ -9,9 +9,8 @@ import org.springframework.test.context.junit4.SpringRunner;
 @SpringBootTest
 public class JpaApplicationTests {
 
-	@Test
-	public void contextLoads() {
-		// Empty
-	}
-
+  @Test
+  public void contextLoads() {
+    // Empty
+  }
 }

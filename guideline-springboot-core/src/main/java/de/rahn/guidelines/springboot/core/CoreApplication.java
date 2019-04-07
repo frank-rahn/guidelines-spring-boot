@@ -10,15 +10,15 @@ import org.springframework.context.annotation.Bean;
 
 @SpringBootApplication
 public class CoreApplication {
-	
-	private static final Logger LOGGER = LoggerFactory.getLogger(CoreApplication.class);
-	
-	public static void main(String[] args) {
-		SpringApplication.run(CoreApplication.class, args);
-	}
 
-	@Bean
-	protected ApplicationRunner start(AppProperties app) {
-		return args -> LOGGER.info(app.toString());
-	}
+  private static final Logger LOGGER = LoggerFactory.getLogger(CoreApplication.class);
+
+  public static void main(String[] args) {
+    SpringApplication.run(CoreApplication.class, args);
+  }
+
+  @Bean
+  protected ApplicationRunner start(AppProperties app) {
+    return args -> LOGGER.info(app.toString());
+  }
 }

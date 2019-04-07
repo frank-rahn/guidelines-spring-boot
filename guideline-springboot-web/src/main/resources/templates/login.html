@@ -1,68 +1,69 @@
 <!DOCTYPE html>
 <html lang="de" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head>
-	<meta charset="UTF-8" />
-	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-	<meta name="author" content="Frank Rahn" />
-	<meta name="_csrf" th:content="${_csrf.token}" />
-	<meta name="_csrf_header" th:content="${_csrf.headerName}" />
-	<meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
-	<title>Login</title>
-	<link rel="stylesheet" th:href="@{/webjars/bootstrap/4.2.1/css/bootstrap.min.css}" />
-	<link rel="stylesheet" th:href="@{/css/style.css}" />
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+  <meta name="author" content="Frank Rahn"/>
+  <meta name="_csrf" th:content="${_csrf.token}"/>
+  <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1"/>
+  <title>Login</title>
+  <link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}"/>
+  <link rel="stylesheet" th:href="@{/css/style.css}"/>
 </head>
 <body>
-	<div class="container">
-		<div class="card">
-			<h1 class="card-header">Login</h1>
-			<div class="card-body">
-				<form th:action="@{/login}" method="post" class="needs-validation" novalidate="novalidate">
-					<div th:if="${param.error}">
-						<div class="alert alert-danger">Anmeldename oder Passwort falsch.</div>
-					</div>
-					<div th:if="${param.logout}">
-						<div class="alert alert-info">Du hast Dich abgemeldet.</div>
-					</div>
-					<div class="form-group">
-						<label for="username">Anmeldename</label>
-						<input type="text" id="username" name="username" placeholder="Anmeldename eingeben" class="form-control" autofocus="autofocus" required="required" />
-						<div class="invalid-feedback">Bitte einen Namen eingeben.</div>
-					</div>
-					<div class="form-group">
-						<label for="password">Passwort</label>
-						<input type="password" id="password" name="password" placeholder="Passwort eingeben" class="form-control" required="required" />
-						<div class="invalid-feedback">Bitte das Passwort eingeben.</div>
-					</div>
-					<button type="submit" class="btn btn-primary">Anmelden</button>
-				</form>
-			</div>
-		</div>
-	</div>
+<div class="container">
+  <div class="card">
+    <h1 class="card-header">Login</h1>
+    <div class="card-body">
+      <form th:action="@{/login}" method="post" class="needs-validation" novalidate="novalidate">
+        <div th:if="${param.error}">
+          <div class="alert alert-danger">Anmeldename oder Passwort falsch.</div>
+        </div>
+        <div th:if="${param.logout}">
+          <div class="alert alert-info">Du hast Dich abgemeldet.</div>
+        </div>
+        <div class="form-group">
+          <label for="username">Anmeldename</label>
+          <input type="text" id="username" name="username" placeholder="Anmeldename eingeben"
+                 class="form-control" autofocus="autofocus" required="required"/>
+          <div class="invalid-feedback">Bitte einen Namen eingeben.</div>
+        </div>
+        <div class="form-group">
+          <label for="password">Passwort</label>
+          <input type="password" id="password" name="password" placeholder="Passwort eingeben"
+                 class="form-control" required="required"/>
+          <div class="invalid-feedback">Bitte das Passwort eingeben.</div>
+        </div>
+        <button type="submit" class="btn btn-primary">Anmelden</button>
+      </form>
+    </div>
+  </div>
+</div>
 
-	<script th:src="@{/webjars/jquery/3.3.1-2/jquery.slim.min.js}"></script>
-	<script th:src="@{/webjars/popper.js/1.14.6/umd/popper.min.js}"></script>
-	<script th:src="@{/webjars/bootstrap/4.2.1/js/bootstrap.min.js}"></script>
-	<script th:src="@{/js/script.js}"></script>
-
-	<script>
-        // Example starter JavaScript for disabling form submissions if there are invalid fields
-        (function() {
-            'use strict';
-            window.addEventListener('load', function() {
-                // Fetch all the forms we want to apply custom Bootstrap validation styles to
-                var forms = document.getElementsByClassName('needs-validation');
-                // Loop over them and prevent submission
-                var validation = Array.prototype.filter.call(forms, function(form) {
-                    form.addEventListener('submit', function(event) {
-                        if (form.checkValidity() === false) {
-                            event.preventDefault();
-                            event.stopPropagation();
-                        }
-                        form.classList.add('was-validated');
-                    }, false);
-                });
-            }, false);
-        })();
-	</script>
+<script th:src="@{/webjars/jquery/jquery.slim.min.js}"></script>
+<script th:src="@{/webjars/popper.js/umd/popper.min.js}"></script>
+<script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+<script th:src="@{/js/script.js}"></script>
+<script>
+  // Example starter JavaScript for disabling form submissions if there are invalid fields
+  (function () {
+    'use strict';
+    window.addEventListener('load', function () {
+      // Fetch all the forms we want to apply custom Bootstrap validation styles to
+      var forms = document.getElementsByClassName('needs-validation');
+      // Loop over them and prevent submission
+      var validation = Array.prototype.filter.call(forms, function (form) {
+        form.addEventListener('submit', function (event) {
+          if (form.checkValidity() === false) {
+            event.preventDefault();
+            event.stopPropagation();
+          }
+          form.classList.add('was-validated');
+        }, false);
+      });
+    }, false);
+  })();
+</script>
 </body>
 </html>

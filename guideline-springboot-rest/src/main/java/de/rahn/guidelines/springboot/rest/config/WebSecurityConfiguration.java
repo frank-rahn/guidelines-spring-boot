@@ -10,49 +10,45 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 
 @Configuration
 public class WebSecurityConfiguration {
-	
-	@Value("${spring.application.name}")
-	private String applicationName;
-	
-	@Autowired
-	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-		auth.inMemoryAuthentication().withUser("user").password("{noop}user").roles("USER");
-		auth.inMemoryAuthentication().withUser("admin").password("{noop}admin").roles("USER", "ADMIN", "ACTUATOR");
-		auth.inMemoryAuthentication().withUser("gast").password("{noop}gast").roles("GAST");
-	}
-	
-	@Configuration
-	@Order(1)
-	protected class ActuatorWebSecurityConfiguration extends WebSecurityConfigurerAdapter {
-		
-		@Override
-		protected void configure(HttpSecurity http) throws Exception {
-			http.antMatcher("/actuator/*")
-					.authorizeRequests()
-					.anyRequest()
-					.hasRole("ADMIN");
-			
-			http.httpBasic().realmName("Actuator-API");
-			
-			http.csrf().disable();
-		}
-	}
-	
-	@Configuration
-	@Order(2)
-	protected class ApiWebSecurityConfiguration extends WebSecurityConfigurerAdapter {
-		
-		@Override
-		protected void configure(HttpSecurity http) throws Exception {
-			http.antMatcher("/api/*")
-					.authorizeRequests()
-					.anyRequest()
-					.hasRole("USER");
-			
-			http.httpBasic().realmName(applicationName + "-API");
-			
-			http.csrf().disable();
-		}
-	}
-	
+
+  @Value("${spring.application.name}")
+  private String applicationName;
+
+  @Autowired
+  protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+    auth.inMemoryAuthentication().withUser("user").password("{noop}user").roles("USER");
+    auth.inMemoryAuthentication().withUser("gast").password("{noop}gast").roles("GAST");
+    auth.inMemoryAuthentication()
+        .withUser("admin")
+        .password("{noop}admin")
+        .roles("USER", "ADMIN", "ACTUATOR");
+  }
+
+  @Configuration
+  @Order(1)
+  protected class ActuatorWebSecurityConfiguration extends WebSecurityConfigurerAdapter {
+
+    @Override
+    protected void configure(HttpSecurity http) throws Exception {
+      http.antMatcher("/actuator/*").authorizeRequests().anyRequest().hasRole("ADMIN");
+
+      http.httpBasic().realmName("Actuator-API");
+
+      http.csrf().disable();
+    }
+  }
+
+  @Configuration
+  @Order(2)
+  protected class ApiWebSecurityConfiguration extends WebSecurityConfigurerAdapter {
+
+    @Override
+    protected void configure(HttpSecurity http) throws Exception {
+      http.antMatcher("/api/*").authorizeRequests().anyRequest().hasRole("USER");
+
+      http.httpBasic().realmName(applicationName + "-API");
+
+      http.csrf().disable();
+    }
+  }
 }
