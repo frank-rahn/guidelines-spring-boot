@@ -12,7 +12,6 @@
   </parent>
 
   <artifactId>guideline-springboot-jpa</artifactId>
-
   <name>JPA</name>
   <description>Guidelines for Spring Boot - JPA</description>
 

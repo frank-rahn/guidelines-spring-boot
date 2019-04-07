@@ -12,7 +12,6 @@
   </parent>
 
   <artifactId>guideline-springboot-rest</artifactId>
-
   <name>Rest</name>
   <description>Guidelines for Spring Boot - Rest</description>
 
@@ -58,6 +57,10 @@
       <artifactId>spring-data-rest-hal-browser</artifactId>
     </dependency>
     <dependency>
+      <groupId>org.apache.commons</groupId>
+      <artifactId>commons-lang3</artifactId>
+    </dependency>
+    <dependency>
       <groupId>io.springfox</groupId>
       <artifactId>springfox-swagger2</artifactId>
       <version>2.9.2</version>
@@ -66,10 +69,6 @@
       <groupId>io.springfox</groupId>
       <artifactId>springfox-swagger-ui</artifactId>
       <version>2.9.2</version>
-    </dependency>
-    <dependency>
-      <groupId>org.apache.commons</groupId>
-      <artifactId>commons-lang3</artifactId>
     </dependency>
 
     <!-- Dev & Runtime -->

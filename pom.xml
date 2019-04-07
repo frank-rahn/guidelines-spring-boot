@@ -5,33 +5,32 @@
   <modelVersion>4.0.0</modelVersion>
 
   <parent>
-    <artifactId>spring-boot-starter-parent</artifactId>
     <groupId>org.springframework.boot</groupId>
-    <relativePath/>
-    <version>2.1.4.RELEASE</version> <!-- lookup parent from repository -->
+    <artifactId>spring-boot-starter-parent</artifactId>
+    <version>2.1.4.RELEASE</version>
+    <relativePath/> <!-- lookup parent from repository -->
   </parent>
 
   <groupId>de.rahn.guidelines.springboot</groupId>
   <artifactId>guideline-springboot-parent</artifactId>
   <version>1.0.0-SNAPSHOT</version>
-
-  <description>Guidelines for Spring Boot - Parent</description>
   <name>Parent</name>
+  <description>Guidelines for Spring Boot - Parent</description>
   <packaging>pom</packaging>
 
   <properties>
     <!-- Standard -->
-    <jacoco-maven-plugin.version>0.8.2</jacoco-maven-plugin.version>
-    <java.version>1.8</java.version>
-
-    <!-- Java Version -->
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-
-    <!-- Other Spring Version -->
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
-    <!-- Plugins Version -->
+    <!-- Java Version -->
+    <java.version>1.8</java.version>
+
+    <!-- Other Spring Version -->
     <spring-cloud.version>Greenwich.RELEASE</spring-cloud.version>
+
+    <!-- Plugins Version -->
+    <jacoco-maven-plugin.version>0.8.2</jacoco-maven-plugin.version>
   </properties>
 
   <modules>
@@ -44,29 +43,31 @@
   <build>
     <plugins>
       <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-source-plugin</artifactId>
         <executions>
           <execution>
+            <id>attach-sources</id>
             <goals>
               <!-- Create *-source.jar -->
               <goal>jar</goal>
             </goals>
-            <id>attach-sources</id>
           </execution>
         </executions>
-        <groupId>org.apache.maven.plugins</groupId>
       </plugin>
 
       <plugin>
+        <groupId>org.codehaus.mojo</groupId>
         <artifactId>versions-maven-plugin</artifactId>
         <configuration>
           <generateBackupPoms>false</generateBackupPoms>
         </configuration>
-        <groupId>org.codehaus.mojo</groupId>
       </plugin>
 
       <plugin>
+        <groupId>org.jacoco</groupId>
         <artifactId>jacoco-maven-plugin</artifactId>
+        <version>${jacoco-maven-plugin.version}</version>
         <configuration>
           <!-- Exclude Entity_.class -->
           <excludes>
@@ -75,32 +76,30 @@
         </configuration>
         <executions>
           <execution>
-            <goals>
-              <goal>prepare-agent</goal>
-            </goals>
-            <id>default-prepare-agent</id>
-          </execution>
-          <execution>
+            <id>default-prepare-agent-integration</id>
             <goals>
               <goal>prepare-agent-integration</goal>
             </goals>
-            <id>default-prepare-agent-integration</id>
           </execution>
           <execution>
+            <id>default-prepare-agent</id>
+            <goals>
+              <goal>prepare-agent</goal>
+            </goals>
+          </execution>
+          <execution>
+            <id>default-report</id>
             <goals>
               <goal>report</goal>
             </goals>
-            <id>default-report</id>
           </execution>
           <execution>
+            <id>default-report-integration</id>
             <goals>
               <goal>report-integration</goal>
             </goals>
-            <id>default-report-integration</id>
           </execution>
         </executions>
-        <groupId>org.jacoco</groupId>
-        <version>${jacoco-maven-plugin.version}</version>
       </plugin>
     </plugins>
   </build>
@@ -108,23 +107,23 @@
   <dependencyManagement>
     <dependencies>
       <dependency>
-        <artifactId>spring-cloud-dependencies</artifactId>
         <groupId>org.springframework.cloud</groupId>
+        <artifactId>spring-cloud-dependencies</artifactId>
+        <version>${spring-cloud.version}</version>
         <scope>import</scope>
         <type>pom</type>
-        <version>${spring-cloud.version}</version>
       </dependency>
     </dependencies>
   </dependencyManagement>
 
   <developers>
     <developer>
-      <email>frank+git at frank-rahn.de</email>
-      <name>Frank Rahn</name>
       <organization>Frank W. Rahn</organization>
+      <name>Frank Rahn</name>
+      <email>frank+git at frank-rahn.de</email>
       <roles>
-        <role>Developer</role>
         <role>Contributor</role>
+        <role>Developer</role>
       </roles>
     </developer>
   </developers>
