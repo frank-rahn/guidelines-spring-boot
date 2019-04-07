@@ -30,7 +30,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping(path = "/api/people", produces = MediaType.APPLICATION_JSON_VALUE)
-@Api(description = "Der Controller für Personen")
+@Api(tags = {"People"})
 public class PeopleController {
 
   private static final Logger LOGGER = LoggerFactory.getLogger(PeopleController.class);
