@@ -29,7 +29,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping(path = "/api/people", produces = MediaType.APPLICATION_JSON_VALUE)
+@RequestMapping(path = "/api/people", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
 @Api(tags = {"People"})
 public class PeopleController {
 
