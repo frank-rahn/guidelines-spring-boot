@@ -13,9 +13,11 @@ import java.util.List;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import javax.xml.bind.annotation.XmlRootElement;
 import org.springframework.format.annotation.DateTimeFormat;
 
 @ApiModel(description = "Eine Person")
+@XmlRootElement
 public class Person {
 
   @ApiModelProperty("Die UUID der Person")
