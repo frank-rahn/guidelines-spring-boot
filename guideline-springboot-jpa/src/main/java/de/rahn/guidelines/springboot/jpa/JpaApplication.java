@@ -24,22 +24,18 @@ public class JpaApplication {
 
   @Bean
   @Order(1)
-  protected ApplicationRunner initDatabase(PersonRepository repository) {
+  ApplicationRunner initDatabase(PersonRepository repository) {
     return new ApplicationRunner() {
 
       @Override
       @Transactional
       public void run(ApplicationArguments args) {
-        Person person = new Person();
+        Person person = new Person("Rahn", LocalDate.of(1967, 5, 5));
         person.setFirstName("Frank");
-        person.setLastName("Rahn");
-        person.setBirthday(LocalDate.of(1967, 5, 5));
         repository.save(person);
 
-        person = new Person();
+        person = new Person("Rahn", LocalDate.of(1979, 3, 25));
         person.setFirstName("Martin");
-        person.setLastName("Rahn");
-        person.setBirthday(LocalDate.of(1979, 3, 25));
         repository.save(person);
       }
     };
@@ -47,7 +43,7 @@ public class JpaApplication {
 
   @Bean
   @Order(2)
-  protected ApplicationRunner usingDatabase(PersonRepository repository) {
+  ApplicationRunner usingDatabase(PersonRepository repository) {
     return args ->
         repository.findByLastName("Rahn").forEach(person -> LOGGER.info(person.toString()));
   }

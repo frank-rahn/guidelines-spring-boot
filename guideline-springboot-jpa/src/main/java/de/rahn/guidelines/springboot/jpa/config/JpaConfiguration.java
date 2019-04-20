@@ -10,10 +10,10 @@ import org.springframework.security.core.context.SecurityContextHolder;
 
 @Configuration
 @EnableJpaAuditing
-public class JpaConfiguration {
+class JpaConfiguration {
 
   @Bean
-  protected AuditorAware<String> auditorAware() {
+  AuditorAware<String> auditorAware() {
     return () -> {
       Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 

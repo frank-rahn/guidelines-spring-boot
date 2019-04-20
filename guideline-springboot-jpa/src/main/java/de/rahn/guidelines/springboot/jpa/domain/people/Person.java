@@ -32,9 +32,21 @@ public class Person extends AbstractAuditing {
   @Email
   private String emailAddress;
 
+  @Column(nullable = false)
   @DateTimeFormat(iso = DATE)
   @NotNull
   private LocalDate birthday;
+
+  Person() {
+    super();
+  }
+
+  public Person(String lastName, LocalDate birthday) {
+    this();
+
+    this.lastName = lastName;
+    this.birthday = birthday;
+  }
 
   public String getId() {
     return id;
