@@ -15,6 +15,12 @@
   <name>Web</name>
   <description>Guidelines for Spring Boot - Web</description>
 
+  <properties>
+    <jquery.version>3.4.0</jquery.version>
+    <popper.js.version>1.15.0</popper.js.version>
+    <bootstrap.version>4.3.1</bootstrap.version>
+  </properties>
+
   <dependencies>
     <!-- Standard -->
     <dependency>
@@ -59,17 +65,17 @@
     <dependency>
       <groupId>org.webjars</groupId>
       <artifactId>jquery</artifactId>
-      <version>3.3.1-2</version>
+      <version>${jquery.version}</version>
     </dependency>
     <dependency>
       <groupId>org.webjars</groupId>
       <artifactId>popper.js</artifactId>
-      <version>1.14.7</version>
+      <version>${popper.js.version}</version>
     </dependency>
     <dependency>
       <groupId>org.webjars</groupId>
       <artifactId>bootstrap</artifactId>
-      <version>4.3.1</version>
+      <version>${bootstrap.version}</version>
     </dependency>
 
     <!-- Dev & Runtime -->
