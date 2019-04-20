@@ -9,7 +9,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
 @SpringBootApplication
-public class CoreApplication {
+class CoreApplication {
 
   private static final Logger LOGGER = LoggerFactory.getLogger(CoreApplication.class);
 
@@ -18,7 +18,7 @@ public class CoreApplication {
   }
 
   @Bean
-  protected ApplicationRunner start(AppProperties app) {
+  ApplicationRunner start(AppProperties app) {
     return args -> LOGGER.info(app.toString());
   }
 }

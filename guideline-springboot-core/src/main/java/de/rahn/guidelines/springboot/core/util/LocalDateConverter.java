@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 @ConfigurationPropertiesBinding
-public class LocalDateConverter implements Converter<String, LocalDate> {
+class LocalDateConverter implements Converter<String, LocalDate> {
 
   @Override
   public LocalDate convert(String source) {
