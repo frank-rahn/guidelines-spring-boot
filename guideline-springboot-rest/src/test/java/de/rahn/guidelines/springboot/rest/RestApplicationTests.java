@@ -26,7 +26,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 class RestApplicationTests {
 
   @Test
-  void contextLoads() {
+  void givenContext_whenLoads_thenOk() {
     // Empty
   }
 }
