@@ -13,7 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  **************************************************************************************************/
-
 package de.rahn.guidelines.springboot.web.ui.people;
 
 import static org.springframework.http.HttpMethod.GET;
@@ -33,7 +32,7 @@ import org.springframework.web.client.RestTemplate;
 
 @Controller
 @RequestMapping(path = "/people")
-public class PeopleController {
+class PeopleController {
 
   private static final Logger LOGGER = LoggerFactory.getLogger(PeopleController.class);
 
@@ -44,7 +43,7 @@ public class PeopleController {
   }
 
   @GetMapping
-  public String getAllPeople(Model model) {
+  String getAllPeople(Model model) {
     LOGGER.info("GetAllPeople: Authentication={}", getContext().getAuthentication());
 
     ResponseEntity<List<Person>> people =
@@ -57,7 +56,7 @@ public class PeopleController {
   }
 
   @GetMapping(path = "/{id}")
-  public String getPersonById(@PathVariable("id") String id, Model model) {
+  String getPersonById(@PathVariable("id") String id, Model model) {
     LOGGER.info("GetPersonById: Id={}, Authentication={}", id, getContext().getAuthentication());
 
     Person person = template.getForObject("/" + id, Person.class);
