@@ -1,3 +1,19 @@
+/***************************************************************************************************
+ * Copyright (c) 2019-2019 the original author or authors.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *    http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ **************************************************************************************************/
+
 package de.rahn.guidelines.springboot.rest.api;
 
 import static org.springframework.security.core.context.SecurityContextHolder.getContext;
@@ -29,9 +45,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping(path = "/api/people", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+@RequestMapping(
+    path = {"/api/people"},
+    produces = {MediaType.APPLICATION_JSON_UTF8_VALUE, MediaType.APPLICATION_XML_VALUE})
 @Api(tags = {"People"})
-public class PeopleController {
+class PeopleController {
 
   private static final Logger LOGGER = LoggerFactory.getLogger(PeopleController.class);
 
@@ -56,19 +74,17 @@ public class PeopleController {
   }
 
   @PostConstruct
-  protected void setup() {
-    Person person = new Person();
+  void setup() {
+    Person person = new Person("Rahn", LocalDate.of(1967, 5, 5));
     person.setId(UUID.randomUUID().toString());
     person.setFirstName("Frank");
-    person.setLastName("Rahn");
-    person.setBirthday(LocalDate.of(1967, 5, 5));
 
     addPersonToPeople(person);
   }
 
   @GetMapping
   @ApiOperation("Liefert alle Personen")
-  public Collection<Person> getAllPeople() {
+  Collection<Person> getAllPeople() {
     LOGGER.info("GetAllPeople: Authentication={}", getContext().getAuthentication());
 
     return people.values();
@@ -86,7 +102,7 @@ public class PeopleController {
 
   @DeleteMapping(path = "/{id}")
   @ApiOperation("Lösche die Person mit der Id")
-  public ResponseEntity<Person> deletePersonById(
+  ResponseEntity<Person> deletePersonById(
       @PathVariable("id") @ApiParam(value = "Die UUID der zu löschenden Person", required = true)
           String id) {
     LOGGER.info("DeletePersonById: Id={}, Authentication={}", id, getContext().getAuthentication());
@@ -96,7 +112,7 @@ public class PeopleController {
 
   @PostMapping
   @ApiOperation("Füge eine Person hinzu")
-  public Person postPerson(
+  Person postPerson(
       @RequestBody @Valid @ApiParam(value = "Die neue Person", required = true) Person person) {
     LOGGER.info(
         "PostPerson: Person={}, Authentication={}", person, getContext().getAuthentication());
@@ -106,7 +122,7 @@ public class PeopleController {
 
   @PutMapping(path = "/{id}")
   @ApiOperation("Füge die Person mit der Id hinzu")
-  public Person putPerson(
+  Person putPerson(
       @PathVariable("id") @ApiParam(value = "Die UUID der neuen Person", required = true) String id,
       @RequestBody @Valid @ApiParam(value = "Die neue Person", required = true) Person person) {
     LOGGER.info(
