@@ -4,8 +4,7 @@
       <element module="Project Files" copyright="Apache-2.0" />
     </module2copyright>
     <LanguageOptions name="__TEMPLATE__">
-      <option name="separateBefore" value="true" />
-      <option name="separateAfter" value="true" />
+      <option name="addBlankAfter" value="false" />
       <option name="lenBefore" value="100" />
       <option name="lenAfter" value="100" />
     </LanguageOptions>
