@@ -13,10 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  **************************************************************************************************/
-
 package de.rahn.guidelines.springboot.rest.config;
 
-import java.util.Collections;
+import static java.util.Collections.singletonList;
+
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -50,7 +50,7 @@ class Swagger2Configuration {
         .groupName("Actuator")
         .useDefaultResponseMessages(false)
         .apiInfo(actuatorInfo())
-        .securitySchemes(Collections.singletonList(new BasicAuth("Actuator-API")))
+        .securitySchemes(singletonList(new BasicAuth("Actuator-API")))
         .enableUrlTemplating(true)
         .select()
         .apis(RequestHandlerSelectors.any())
@@ -72,7 +72,7 @@ class Swagger2Configuration {
         .groupName("API")
         .apiInfo(apiInfo())
         .tags(tagPeople())
-        .securitySchemes(Collections.singletonList(new BasicAuth(applicationName + "-API")))
+        .securitySchemes(singletonList(new BasicAuth(applicationName + "-API")))
         .enableUrlTemplating(true)
         .select()
         .apis(RequestHandlerSelectors.any())
