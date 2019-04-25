@@ -15,6 +15,7 @@
  */
 package de.rahn.guidelines.springboot.core.util;
 
+import static org.apache.commons.lang3.builder.ToStringBuilder.reflectionToString;
 import static org.apache.commons.lang3.builder.ToStringStyle.JSON_STYLE;
 
 import java.time.LocalDate;
@@ -23,7 +24,6 @@ import java.util.List;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
-import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.annotation.Validated;
@@ -49,7 +49,7 @@ public class AppProperties {
 
   @Override
   public String toString() {
-    return ToStringBuilder.reflectionToString(this, JSON_STYLE);
+    return reflectionToString(this, JSON_STYLE);
   }
 
   @Validated
@@ -71,7 +71,7 @@ public class AppProperties {
 
     @Override
     public String toString() {
-      return ToStringBuilder.reflectionToString(this, JSON_STYLE);
+      return reflectionToString(this, JSON_STYLE);
     }
 
     public String getId() {
