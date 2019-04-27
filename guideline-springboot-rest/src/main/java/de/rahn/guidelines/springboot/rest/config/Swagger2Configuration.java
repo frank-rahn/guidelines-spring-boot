@@ -70,6 +70,7 @@ class Swagger2Configuration {
   Docket api() {
     return new Docket(DocumentationType.SWAGGER_2)
         .groupName("API")
+        .useDefaultResponseMessages(false)
         .apiInfo(apiInfo())
         .tags(tagPeople())
         .securitySchemes(singletonList(new BasicAuth(applicationName + "-API")))
