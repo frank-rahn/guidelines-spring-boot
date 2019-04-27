@@ -45,7 +45,7 @@ class WebSecurityConfiguration {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-      http.antMatcher("/actuator/*").authorizeRequests().anyRequest().hasRole("ADMIN");
+      http.antMatcher("/actuator/**").authorizeRequests().anyRequest().hasRole("ADMIN");
 
       http.httpBasic().realmName("Actuator-API");
 
@@ -59,7 +59,7 @@ class WebSecurityConfiguration {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-      http.antMatcher("/api/*").authorizeRequests().anyRequest().hasRole("USER");
+      http.antMatcher("/api/**").authorizeRequests().anyRequest().hasRole("USER");
 
       http.httpBasic().realmName(applicationName + "-API");
 
