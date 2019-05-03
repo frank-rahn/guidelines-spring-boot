@@ -19,8 +19,9 @@ import static javax.persistence.AccessType.FIELD;
 import static org.springframework.format.annotation.DateTimeFormat.ISO.DATE;
 
 import java.time.LocalDate;
+import java.util.Optional;
 import javax.persistence.Access;
-import javax.persistence.Column;
+import javax.persistence.Basic;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -33,13 +34,15 @@ import org.springframework.format.annotation.DateTimeFormat;
 @Entity
 public class Person extends AbstractAuditing {
 
+  private static final long serialVersionUID = 1L;
+
   @Id
   @GeneratedValue(generator = "uuid")
   private String id;
 
   private String firstName;
 
-  @Column(nullable = false)
+  @Basic(optional = false)
   @NotNull
   @NotBlank
   private String lastName;
@@ -47,16 +50,17 @@ public class Person extends AbstractAuditing {
   @Email
   private String emailAddress;
 
-  @Column(nullable = false)
-  @DateTimeFormat(iso = DATE)
+  @Basic(optional = false)
   @NotNull
+  @DateTimeFormat(iso = DATE)
   private LocalDate birthday;
 
-  Person() {
-    super();
+  protected Person() {
+    // default bzw. no-arg constructor
   }
 
   public Person(String lastName, LocalDate birthday) {
+    // required-args constructor
     this();
 
     this.lastName = lastName;
@@ -71,8 +75,8 @@ public class Person extends AbstractAuditing {
     this.id = id;
   }
 
-  public String getFirstName() {
-    return firstName;
+  public Optional<String> getFirstName() {
+    return Optional.ofNullable(firstName);
   }
 
   public void setFirstName(String firstName) {
@@ -87,8 +91,8 @@ public class Person extends AbstractAuditing {
     this.lastName = lastName;
   }
 
-  public String getEmailAddress() {
-    return emailAddress;
+  public Optional<String> getEmailAddress() {
+    return Optional.ofNullable(emailAddress);
   }
 
   public void setEmailAddress(String emailAddress) {

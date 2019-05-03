@@ -22,6 +22,7 @@ import static org.apache.commons.lang3.builder.ToStringBuilder.reflectionToStrin
 import static org.apache.commons.lang3.builder.ToStringStyle.JSON_STYLE;
 import static org.springframework.format.annotation.DateTimeFormat.ISO.DATE_TIME;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import javax.persistence.Access;
 import javax.persistence.EntityListeners;
@@ -37,7 +38,9 @@ import org.springframework.format.annotation.DateTimeFormat;
 @Access(FIELD)
 @MappedSuperclass
 @EntityListeners({AuditingEntityListener.class})
-public abstract class AbstractAuditing {
+public abstract class AbstractAuditing implements Serializable {
+
+  private static final long serialVersionUID = 1L;
 
   @Version
   private long version;
