@@ -1,11 +1,16 @@
 # Getting Started
 
-### Reference Documentation
+## Reference Documentation
 For further reference, please consider the following sections:
 
 * [Official Apache Maven documentation](https://maven.apache.org/guides/index.html)
+* [Official Google Style Guides](https://google.github.io/styleguide/)
+* [Official Google Java Style Guide](https://google.github.io/styleguide/javaguide.html)
+* [Official Google HTML/CSS Style Guide](https://google.github.io/styleguide/htmlcssguide.html)
+* [Official Google JavaScript Style Guide](https://google.github.io/styleguide/jsguide.html)
+* [Official Google XML Document Format Style Guide](https://google.github.io/styleguide/xmlstyle.html)
 
-### Guides
+## Spring Guides
 The following guides illustrate how to use some features concretely:
 
 * [Validating Form Input](https://spring.io/guides/gs/validating-form-input/)
