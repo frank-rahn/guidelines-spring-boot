@@ -1,0 +1,39 @@
+= Getting Started
+Frank Rahn <frank@frank-rahn.de>
+:toc:
+:toclevels: 3
+:toc-title: Inhaltsverzeichnis
+:sectanchors:
+
+== Reference Documentation
+
+For further reference, please consider the following sections:
+
+* https://maven.apache.org/guides/index.html[Official Apache Maven documentation]
+* https://google.github.io/styleguide/[Official Google Style Guides]
+* https://google.github.io/styleguide/javaguide.html[Official Google Java Style Guide]
+* https://google.github.io/styleguide/htmlcssguide.html[Official Google HTML/CSS Style Guide]
+* https://google.github.io/styleguide/jsguide.html[Official Google JavaScript Style Guide]
+* https://google.github.io/styleguide/xmlstyle.html[Official Google XML Document Format Style Guide]
+
+== Spring Guides
+
+The following guides illustrate how to use some features concretely:
+
+* https://spring.io/guides/gs/validating-form-input/[Validating Form Input]
+* https://spring.io/guides/gs/rest-service/[Building a RESTful Web Service]
+* https://spring.io/guides/gs/serving-web-content/[Serving Web Content with Spring MVC]
+* https://spring.io/guides/tutorials/bookmarks/[Building REST services with Spring]
+* https://spring.io/guides/gs/accessing-data-rest/[Accessing JPA Data with REST]
+* https://spring.io/guides/gs/accessing-neo4j-data-rest/[Accessing Neo4j Data with REST]
+* https://spring.io/guides/gs/accessing-mongodb-data-rest/[Accessing MongoDB Data with REST]
+* https://spring.io/guides/gs/rest-hateoas/[Building a Hypermedia-Driven RESTful Web Service]
+* https://spring.io/guides/gs/handling-form-submission/[Handling Form Submission]
+* https://spring.io/guides/gs/securing-web/[Securing a Web Application]
+* https://spring.io/guides/tutorials/spring-boot-oauth2/[Spring Boot and OAuth2]
+* https://spring.io/guides/gs/authenticating-ldap/[Authenticating a User with LDAP]
+* https://spring.io/guides/gs/accessing-data-jpa/[Accessing Data with JPA]
+* https://spring.io/guides/gs/relational-data-access/[Accessing Relational Data using JDBC with Spring]
+* https://spring.io/guides/gs/managing-transactions/[Managing Transactions]
+* https://spring.io/guides/gs/batch-processing/[Creating a Batch Service]
+* https://spring.io/guides/gs/actuator-service/[Building a RESTful Web Service with Spring Boot Actuator]
