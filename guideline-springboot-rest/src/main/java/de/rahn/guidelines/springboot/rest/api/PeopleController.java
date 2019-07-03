@@ -98,7 +98,7 @@ class PeopleController {
       @ApiResponse(code = HTTP_UNAUTHORIZED, message = "Nicht autorisiert die Personen abzurufen"),
       @ApiResponse(code = HTTP_FORBIDDEN, message = "Zugriff auf die Personen ist verboten")
   })
-  Collection<Person> getAllPeople() {
+  Collection<Person> getPeople() {
     LOGGER.info("GetAllPeople: Authentication={}", getContext().getAuthentication());
 
     return people.values();
@@ -112,7 +112,7 @@ class PeopleController {
       @ApiResponse(code = HTTP_FORBIDDEN, message = "Zugriff auf die Person ist verboten"),
       @ApiResponse(code = HTTP_NOT_FOUND, message = "Keine Person gefunden")
   })
-  public ResponseEntity<Person> getPersonById(
+  ResponseEntity<Person> getPersonById(
       @PathVariable("id") @ApiParam(value = "Die UUID der gesuchten Person", required = true)
           String id) {
     LOGGER.info("GetPersonById: Id={}, Authentication={}", id, getContext().getAuthentication());
@@ -137,6 +137,28 @@ class PeopleController {
     return ResponseEntity.noContent().build();
   }
 
+  @PutMapping(path = "/{id}")
+  @ApiOperation("Füge die Person mit der Id hinzu oder ändere sie")
+  @ApiResponses({
+      @ApiResponse(code = HTTP_OK, message = "Person erfolgreich geändert oder angelegt"),
+      @ApiResponse(code = HTTP_UNAUTHORIZED, message = "Nicht autorisiert Personen zu bearbeiten"),
+      @ApiResponse(code = HTTP_FORBIDDEN, message = "Zugriff auf die Person ist verboten")
+  })
+  Person putPersonById(
+      @ApiParam(value = "Die UUID der neuen oder zu ändernde Person", required = true)
+      @PathVariable("id")
+          String id,
+      @ApiParam(value = "Die neue oder zu ändernde Person", required = true) @RequestBody @Valid
+          Person person) {
+    LOGGER.info(
+        "PutPerson: Id={}, Person={}, Authentication={}",
+        id,
+        person,
+        getContext().getAuthentication());
+
+    return addPersonToPeople(id, person);
+  }
+
   @PostMapping
   @ApiOperation("Füge eine Person hinzu")
   @ApiResponses({
@@ -157,25 +179,9 @@ class PeopleController {
     return ResponseEntity.created(location).body(person);
   }
 
-  @PutMapping(path = "/{id}")
-  @ApiOperation("Füge die Person mit der Id hinzu oder ändere sie")
-  @ApiResponses({
-      @ApiResponse(code = HTTP_OK, message = "Person erfolgreich geändert oder angelegt"),
-      @ApiResponse(code = HTTP_UNAUTHORIZED, message = "Nicht autorisiert Personen zu bearbeiten"),
-      @ApiResponse(code = HTTP_FORBIDDEN, message = "Zugriff auf die Person ist verboten")
-  })
-  Person putPerson(
-      @ApiParam(value = "Die UUID der neuen oder zu ändernde Person", required = true)
-      @PathVariable("id")
-          String id,
-      @ApiParam(value = "Die neue oder zu ändernde Person", required = true) @RequestBody @Valid
-          Person person) {
-    LOGGER.info(
-        "PutPerson: Id={}, Person={}, Authentication={}",
-        id,
-        person,
-        getContext().getAuthentication());
+  void reset() {
+    people.clear();
 
-    return addPersonToPeople(id, person);
+    setup();
   }
 }

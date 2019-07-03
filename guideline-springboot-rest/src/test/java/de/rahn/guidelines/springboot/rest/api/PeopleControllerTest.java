@@ -30,6 +30,7 @@ import de.rahn.guidelines.springboot.rest.api.PeopleControllerTest.PeopleControl
 import de.rahn.guidelines.springboot.rest.domain.people.Person;
 import java.time.LocalDate;
 import java.util.UUID;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -49,6 +50,14 @@ class PeopleControllerTest {
 
   @Autowired
   private ObjectMapper objectMapper;
+
+  @Autowired
+  private PeopleController classUnderTest;
+
+  @BeforeEach
+  void resetPeopleController() {
+    classUnderTest.reset();
+  }
 
   @Test
   void givenPeople_whenGetPeople_andNoAuth_thenReturnStatusUnauthorized() throws Exception {
@@ -70,7 +79,7 @@ class PeopleControllerTest {
 
   @Test
   @WithMockUser
-  void givenPerson_whenPutPerson_thenReturnPersonWithOk() throws Exception {
+  void givenPerson_whenPutPersonById_thenReturnPersonWithOk() throws Exception {
     String uuid = UUID.randomUUID().toString();
 
     Person person = new Person("Rahn", LocalDate.of(1979, 3, 25));
@@ -96,7 +105,7 @@ class PeopleControllerTest {
             post("/api/people")
                 .contentType(APPLICATION_JSON_UTF8)
                 .content(objectMapper.writeValueAsString(person)))
-        .andExpect(status().isOk())
+        .andExpect(status().isCreated())
         .andExpect(content().contentType(APPLICATION_JSON_UTF8))
         .andExpect(jsonPath("$.lastName", is("Rahn")));
   }
