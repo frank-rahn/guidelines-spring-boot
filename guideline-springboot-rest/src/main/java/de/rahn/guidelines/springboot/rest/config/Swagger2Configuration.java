@@ -17,9 +17,13 @@ package de.rahn.guidelines.springboot.rest.config;
 
 import static java.util.Collections.singletonList;
 
+import java.time.LocalDate;
+import java.util.Date;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.ResponseEntity;
 import springfox.documentation.builders.ApiInfoBuilder;
 import springfox.documentation.builders.PathSelectors;
 import springfox.documentation.builders.RequestHandlerSelectors;
@@ -29,6 +33,12 @@ import springfox.documentation.service.Contact;
 import springfox.documentation.service.Tag;
 import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spring.web.plugins.Docket;
+import springfox.documentation.swagger.web.DocExpansion;
+import springfox.documentation.swagger.web.ModelRendering;
+import springfox.documentation.swagger.web.OperationsSorter;
+import springfox.documentation.swagger.web.TagsSorter;
+import springfox.documentation.swagger.web.UiConfiguration;
+import springfox.documentation.swagger.web.UiConfigurationBuilder;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 @Configuration
@@ -49,6 +59,9 @@ class Swagger2Configuration {
     return new Docket(DocumentationType.SWAGGER_2)
         .groupName("Actuator")
         .useDefaultResponseMessages(false)
+        .pathMapping("/")
+        .directModelSubstitute(LocalDate.class, Date.class)
+        .genericModelSubstitutes(List.class, ResponseEntity.class)
         .apiInfo(actuatorInfo())
         .securitySchemes(singletonList(new BasicAuth("Actuator-API")))
         .enableUrlTemplating(true)
@@ -71,6 +84,9 @@ class Swagger2Configuration {
     return new Docket(DocumentationType.SWAGGER_2)
         .groupName("API")
         .useDefaultResponseMessages(false)
+        .pathMapping("/")
+        .directModelSubstitute(LocalDate.class, Date.class)
+        .genericModelSubstitutes(List.class, ResponseEntity.class)
         .apiInfo(apiInfo())
         .tags(tagPeople())
         .securitySchemes(singletonList(new BasicAuth(applicationName + "-API")))
@@ -99,5 +115,26 @@ class Swagger2Configuration {
 
   private Contact contact() {
     return new Contact("Frank Rahn", "https://www.frank-rahn.de/", "frank@frank-rahn.de");
+  }
+
+  @Bean
+  UiConfiguration uiConfiguration() {
+    return UiConfigurationBuilder
+        .builder()
+        .deepLinking(true)
+        .displayOperationId(false)
+        .defaultModelsExpandDepth(1)
+        .defaultModelExpandDepth(1)
+        .defaultModelRendering(ModelRendering.EXAMPLE)
+        .displayRequestDuration(true)
+        .docExpansion(DocExpansion.NONE)
+        .filter(false)
+        .maxDisplayedTags(0)
+        .operationsSorter(OperationsSorter.ALPHA)
+        .showExtensions(true)
+        .tagsSorter(TagsSorter.ALPHA)
+        .supportedSubmitMethods(UiConfiguration.Constants.DEFAULT_SUBMIT_METHODS)
+        .validatorUrl(null)
+        .build();
   }
 }
