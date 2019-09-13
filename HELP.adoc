@@ -37,3 +37,4 @@ The following guides illustrate how to use some features concretely:
 * https://spring.io/guides/gs/managing-transactions/[Managing Transactions]
 * https://spring.io/guides/gs/batch-processing/[Creating a Batch Service]
 * https://spring.io/guides/gs/actuator-service/[Building a RESTful Web Service with Spring Boot Actuator]
+* https://spring.io/guides/gs/batch-processing/[Creating a Batch Service]
