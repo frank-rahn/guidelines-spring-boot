@@ -51,6 +51,7 @@
   <modules>
     <module>guideline-springboot-core</module>
     <module>guideline-springboot-jpa</module>
+    <module>guideline-springboot-batch</module>
     <module>guideline-springboot-rest</module>
     <module>guideline-springboot-web</module>
   </modules>
