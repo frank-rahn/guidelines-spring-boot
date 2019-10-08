@@ -15,123 +15,83 @@
  */
 package de.rahn.guidlines.springboot.batch.config;
 
-import java.net.MalformedURLException;
-import org.springframework.batch.core.ExitStatus;
+import de.rahn.guidlines.springboot.batch.job.userimport.Person;
+import de.rahn.guidlines.springboot.batch.job.userimport.UserImportJobCompletionNotificationListener;
+import de.rahn.guidlines.springboot.batch.job.userimport.UserImportPersonProcessor;
+import de.rahn.guidlines.springboot.batch.job.userimport.UserImportStepExecutionListener;
+import javax.sql.DataSource;
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.Step;
-import org.springframework.batch.core.StepExecution;
-import org.springframework.batch.core.StepExecutionListener;
 import org.springframework.batch.core.configuration.annotation.EnableBatchProcessing;
 import org.springframework.batch.core.configuration.annotation.JobBuilderFactory;
 import org.springframework.batch.core.configuration.annotation.StepBuilderFactory;
 import org.springframework.batch.core.launch.support.RunIdIncrementer;
-import org.springframework.batch.item.ItemProcessor;
-import org.springframework.batch.item.ItemReader;
-import org.springframework.batch.item.ItemWriter;
-import org.springframework.batch.item.file.FlatFileItemWriter;
-import org.springframework.batch.item.file.builder.FlatFileItemWriterBuilder;
-import org.springframework.batch.item.json.JacksonJsonObjectReader;
-import org.springframework.batch.item.json.JsonItemReader;
-import org.springframework.batch.item.json.builder.JsonItemReaderBuilder;
+import org.springframework.batch.item.database.BeanPropertyItemSqlParameterSourceProvider;
+import org.springframework.batch.item.database.JdbcBatchItemWriter;
+import org.springframework.batch.item.database.builder.JdbcBatchItemWriterBuilder;
+import org.springframework.batch.item.file.FlatFileItemReader;
+import org.springframework.batch.item.file.builder.FlatFileItemReaderBuilder;
+import org.springframework.batch.item.file.mapping.BeanWrapperFieldSetMapper;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.core.io.FileSystemResource;
-import org.springframework.core.io.UrlResource;
+import org.springframework.core.io.ClassPathResource;
 
 @Configuration
 @EnableBatchProcessing
 class BatchConfiguration {
 
-  /* TODO */
-  public static class Item {
-
-  }
-
-  public static class Result {
-
-  }
-
   @Bean
-  JsonItemReader<Item> jsonItemReader() throws MalformedURLException {
-    return new JsonItemReaderBuilder<Item>()
-        .jsonObjectReader(new JacksonJsonObjectReader<>(Item.class))
-        .resource(new UrlResource("https://www.frank-rahn.de/items.json"))
-        .name("itemJsonItemReader")
-        .build();
-  }
-
-  @Bean
-  ItemProcessor<Item, Result> itemProcessor() {
-    return item -> new Result();
-  }
-
-  @Bean
-  FlatFileItemWriter<Result> itemWriter() {
-    return new FlatFileItemWriterBuilder<Result>()
-        .name("itemWriter")
-        .resource(new FileSystemResource("out/result.csv"))
+  FlatFileItemReader<Person> userImportPersonReader() {
+    return new FlatFileItemReaderBuilder<Person>()
+        .name("userImportPersonReader")
+        .resource(new ClassPathResource("sample-data.csv"))
         .delimited()
-        .delimiter(",")
-        .names(new String[]{"result"})
+        .names(new String[]{"firstName", "lastName"})
+        .fieldSetMapper(
+            new BeanWrapperFieldSetMapper<Person>() {
+              {
+                setTargetType(Person.class);
+              }
+            })
         .build();
   }
 
   @Bean
-  Step firstStep(
+  JdbcBatchItemWriter<Person> userImportPersonWriter(DataSource dataSource) {
+    return new JdbcBatchItemWriterBuilder<Person>()
+        .itemSqlParameterSourceProvider(new BeanPropertyItemSqlParameterSourceProvider<>())
+        .sql("INSERT INTO people (first_name, last_name) VALUES (:firstName, :lastName)")
+        .dataSource(dataSource)
+        .build();
+  }
+
+  @Bean
+  Step userImportStep(
       StepBuilderFactory stepBuilderFactory,
-      ItemReader<Item> jsonItemReader,
-      ItemProcessor<Item, Result> itemProcessor,
-      ItemWriter<Result> itemWriter,
-      StepExecutionListener firstStepListener) {
+      FlatFileItemReader<Person> userImportPersonReader,
+      UserImportPersonProcessor userImportPersonProcessor,
+      JdbcBatchItemWriter<Person> userImportPersonWriter,
+      UserImportStepExecutionListener userImportStepListener) {
     return stepBuilderFactory
-        .get("firstStep")
-        .listener(firstStepListener)
-        .<Item, Result>chunk(10)
-        .reader(jsonItemReader)
-        .processor(itemProcessor)
-        .writer(itemWriter)
+        .get("userImportStep")
+        .listener(userImportStepListener)
+        .<Person, Person>chunk(2)
+        .reader(userImportPersonReader)
+        .processor(userImportPersonProcessor)
+        .writer(userImportPersonWriter)
         .build();
   }
 
   @Bean
-  Job firstJob(Step firstStep, JobBuilderFactory jobBuilderFactory) {
+  Job userImportJob(Step userImportStep, JobBuilderFactory jobBuilderFactory,
+      UserImportJobCompletionNotificationListener listener) {
     return jobBuilderFactory
-        .get("firstJob")
+        .get("userImportJob")
         .incrementer(new RunIdIncrementer())
-        .flow(firstStep)
+        .listener(listener)
+        .flow(userImportStep)
         .end()
         .build();
   }
 
-  @Bean
-  StepExecutionListener firstStepListener() {
-    return new StepExecutionListener() {
-
-      @Override
-      public void beforeStep(StepExecution stepExecution) {
-        stepExecution.getExecutionContext().put("start", System.currentTimeMillis());
-
-        System.out.println("Step name:" + stepExecution.getStepName() + " Started");
-      }
-
-      @Override
-      public ExitStatus afterStep(StepExecution stepExecution) {
-        long elapsed =
-            System.currentTimeMillis() - stepExecution.getExecutionContext().getLong("start");
-
-        System.out.println(
-            "Step name:"
-                + stepExecution.getStepName()
-                + " Ended. Running time is "
-                + elapsed
-                + " milliseconds.");
-        System.out.println(
-            "Read Count:"
-                + stepExecution.getReadCount()
-                + " Write Count:"
-                + stepExecution.getWriteCount());
-        return ExitStatus.COMPLETED;
-      }
-    };
-  }
 }
