@@ -1,4 +1,4 @@
-DROP TABLE people IF EXISTS;
+DROP TABLE IF EXISTS people;
 
 CREATE TABLE people
 (

@@ -83,7 +83,9 @@ class BatchConfiguration {
   }
 
   @Bean
-  Job userImportJob(Step userImportStep, JobBuilderFactory jobBuilderFactory,
+  Job userImportJob(
+      Step userImportStep,
+      JobBuilderFactory jobBuilderFactory,
       UserImportJobCompletionNotificationListener listener) {
     return jobBuilderFactory
         .get("userImportJob")
@@ -93,5 +95,4 @@ class BatchConfiguration {
         .end()
         .build();
   }
-
 }
