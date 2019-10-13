@@ -29,6 +29,11 @@ public class UserImportPersonProcessor implements ItemProcessor<Person, Person> 
 
   @Override
   public Person process(Person person) {
+    if (!"RAHN".equals(person.getLastName().toUpperCase())) {
+      // Filter this record
+      return null;
+    }
+
     Person transformedPerson =
         new Person(person.getFirstName().toUpperCase(), person.getLastName().toUpperCase());
 
