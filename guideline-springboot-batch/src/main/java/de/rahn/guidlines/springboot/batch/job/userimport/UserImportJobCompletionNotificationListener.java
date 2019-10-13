@@ -38,8 +38,10 @@ public class UserImportJobCompletionNotificationListener extends JobExecutionLis
 
   @Override
   public void afterJob(JobExecution jobExecution) {
+    LOGGER.info(jobExecution.toString());
+
     if (jobExecution.getStatus() == COMPLETED) {
-      LOGGER.info("!!! JOB FINISHED! Time to verify the results");
+      LOGGER.info("Time to verify the results:");
 
       jdbcTemplate
           .query(
