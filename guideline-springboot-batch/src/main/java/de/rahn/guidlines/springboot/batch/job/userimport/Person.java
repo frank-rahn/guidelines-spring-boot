@@ -20,16 +20,22 @@ import static org.apache.commons.lang3.builder.HashCodeBuilder.reflectionHashCod
 import static org.apache.commons.lang3.builder.ToStringBuilder.reflectionToString;
 import static org.apache.commons.lang3.builder.ToStringStyle.JSON_STYLE;
 
+import java.util.Optional;
+
 public class Person {
 
   private String lastName;
+
   private String firstName;
 
+  private String emailAddress;
+
   public Person() {
-    super();
+    // default bzw. no-arg constructor
   }
 
   public Person(String lastName, String firstName) {
+    // required-args constructor
     this();
 
     this.lastName = lastName;
@@ -73,5 +79,13 @@ public class Person {
 
   public void setFirstName(String firstName) {
     this.firstName = firstName;
+  }
+
+  public Optional<String> getEmailAddress() {
+    return Optional.ofNullable(emailAddress);
+  }
+
+  public void setEmailAddress(String emailAddress) {
+    this.emailAddress = emailAddress;
   }
 }

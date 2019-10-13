@@ -15,8 +15,6 @@
  */
 package de.rahn.guidlines.springboot.batch.job.userimport;
 
-import static org.springframework.batch.core.ExitStatus.COMPLETED;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.batch.core.ExitStatus;
@@ -46,10 +44,7 @@ public class UserImportStepExecutionListener implements StepExecutionListener {
         "Step name: {} ended. Running time is {} milliseconds.",
         stepExecution.getStepName(),
         elapsed);
-    LOGGER.info(
-        "Read Count: {}, Write Count: {}",
-        stepExecution.getReadCount(),
-        stepExecution.getWriteCount());
-    return COMPLETED;
+    LOGGER.info(stepExecution.toString());
+    return null;
   }
 }
