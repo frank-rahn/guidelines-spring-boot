@@ -17,7 +17,7 @@ package de.rahn.guidelines.springboot.rest.api;
 
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
-import static org.springframework.http.MediaType.APPLICATION_JSON_UTF8;
+import static org.springframework.http.MediaType.APPLICATION_JSON;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
@@ -62,7 +62,7 @@ class PeopleControllerTest {
   @Test
   void givenPeople_whenGetPeople_andNoAuth_thenReturnStatusUnauthorized() throws Exception {
     mockMvc
-        .perform(get("/api/people").contentType(APPLICATION_JSON_UTF8))
+        .perform(get("/api/people").contentType(APPLICATION_JSON))
         .andExpect(status().isUnauthorized());
   }
 
@@ -70,9 +70,9 @@ class PeopleControllerTest {
   @WithMockUser
   void givenPeople_whenGetPeople_thenReturnJsonArrayWith1Element() throws Exception {
     mockMvc
-        .perform(get("/api/people").contentType(APPLICATION_JSON_UTF8))
+        .perform(get("/api/people").contentType(APPLICATION_JSON))
         .andExpect(status().isOk())
-        .andExpect(content().contentType(APPLICATION_JSON_UTF8))
+        .andExpect(content().contentType(APPLICATION_JSON))
         .andExpect(jsonPath("$", hasSize(1)))
         .andExpect(jsonPath("$[0].lastName", is("Rahn")));
   }
@@ -88,10 +88,10 @@ class PeopleControllerTest {
     mockMvc
         .perform(
             put("/api/people/{id}", uuid)
-                .contentType(APPLICATION_JSON_UTF8)
+                .contentType(APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(person)))
         .andExpect(status().isOk())
-        .andExpect(content().contentType(APPLICATION_JSON_UTF8))
+        .andExpect(content().contentType(APPLICATION_JSON))
         .andExpect(jsonPath("$.lastName", is("Rahn")));
   }
 
@@ -103,10 +103,10 @@ class PeopleControllerTest {
     mockMvc
         .perform(
             post("/api/people")
-                .contentType(APPLICATION_JSON_UTF8)
+                .contentType(APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(person)))
         .andExpect(status().isCreated())
-        .andExpect(content().contentType(APPLICATION_JSON_UTF8))
+        .andExpect(content().contentType(APPLICATION_JSON))
         .andExpect(jsonPath("$.lastName", is("Rahn")));
   }
 
@@ -118,7 +118,7 @@ class PeopleControllerTest {
             + "\"birthday\": null, \"infos\": null}";
 
     mockMvc
-        .perform(post("/api/people").contentType(APPLICATION_JSON_UTF8).content(personAsJson))
+        .perform(post("/api/people").contentType(APPLICATION_JSON).content(personAsJson))
         .andExpect(status().isBadRequest());
   }
 

@@ -113,8 +113,8 @@
       <scope>test</scope>
       <exclusions>
         <exclusion>
-          <artifactId>junit</artifactId>
-          <groupId>junit</groupId>
+          <artifactId>org.junit.vintage</artifactId>
+          <groupId>junit-vintage-engine</groupId>
         </exclusion>
       </exclusions>
     </dependency>
