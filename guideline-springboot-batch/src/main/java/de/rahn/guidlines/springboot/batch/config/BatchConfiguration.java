@@ -47,7 +47,7 @@ class BatchConfiguration {
         .resource(new ClassPathResource("sample-data.csv"))
         .linesToSkip(1)
         .delimited()
-        .names(new String[]{"firstName", "lastName"})
+        .names("firstName", "lastName")
         .fieldSetMapper(
             new BeanWrapperFieldSetMapper<Person>() {
               {
@@ -85,15 +85,14 @@ class BatchConfiguration {
 
   @Bean
   Job userImportJob(
-      Step userImportStep,
       JobBuilderFactory jobBuilderFactory,
+      Step userImportStep,
       UserImportJobCompletionNotificationListener listener) {
     return jobBuilderFactory
         .get("userImportJob")
         .incrementer(new RunIdIncrementer())
         .listener(listener)
-        .flow(userImportStep)
-        .end()
+        .start(userImportStep)
         .build();
   }
 }
