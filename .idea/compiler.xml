@@ -7,9 +7,9 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="guideline-springboot-core" />
-        <module name="guideline-springboot-rest" />
-        <module name="guideline-springboot-web" />
         <module name="guideline-springboot-batch" />
+        <module name="guideline-springboot-web" />
+        <module name="guideline-springboot-rest" />
         <module name="guideline-springboot-jpa" />
       </profile>
     </annotationProcessing>

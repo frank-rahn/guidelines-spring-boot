@@ -54,6 +54,3 @@ The following guides illustrate how to use some features concretely:
 * https://spring.io/guides/tutorials/spring-boot-oauth2/[Spring Boot and OAuth2]
 * https://spring.io/guides/gs/authenticating-ldap/[Authenticating a User with LDAP]
 * https://spring.io/guides/gs/batch-processing/[Creating a Batch Service]
-
-a
-
