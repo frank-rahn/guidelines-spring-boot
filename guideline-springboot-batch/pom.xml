@@ -30,6 +30,10 @@
   <name>Batch</name>
   <description>Guidelines for Spring Boot - Batch</description>
 
+  <properties>
+    <jib-maven-plugin.version>1.7.0</jib-maven-plugin.version>
+  </properties>
+
   <dependencies>
     <!-- Standard -->
     <dependency>
@@ -111,6 +115,29 @@
       <plugin>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-maven-plugin</artifactId>
+      </plugin>
+      <plugin>
+        <groupId>com.google.cloud.tools</groupId>
+        <artifactId>jib-maven-plugin</artifactId>
+        <version>${jib-maven-plugin.version}</version>
+        <executions>
+          <execution>
+            <phase>package</phase>
+            <goals>
+              <goal>dockerBuild</goal>
+            </goals>
+            <configuration>
+              <from>
+                <image>openjdk:8-jdk-alpine</image>
+              </from>
+              <to>
+                <tags>
+                  <tag>latest</tag>
+                </tags>
+              </to>
+            </configuration>
+          </execution>
+        </executions>
       </plugin>
     </plugins>
   </build>
