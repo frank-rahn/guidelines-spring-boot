@@ -16,16 +16,19 @@
 package de.rahn.guidlines.springboot.batch.config;
 
 import de.rahn.guidlines.springboot.batch.job.userimport.Person;
-import de.rahn.guidlines.springboot.batch.job.userimport.UserImportJobCompletionNotificationListener;
 import de.rahn.guidlines.springboot.batch.job.userimport.UserImportPersonProcessor;
-import de.rahn.guidlines.springboot.batch.job.userimport.UserImportStepExecutionListener;
+import java.util.Collection;
 import javax.sql.DataSource;
 import org.springframework.batch.core.Job;
+import org.springframework.batch.core.JobExecutionListener;
 import org.springframework.batch.core.Step;
+import org.springframework.batch.core.StepExecutionListener;
 import org.springframework.batch.core.configuration.annotation.EnableBatchProcessing;
 import org.springframework.batch.core.configuration.annotation.JobBuilderFactory;
 import org.springframework.batch.core.configuration.annotation.StepBuilderFactory;
+import org.springframework.batch.core.job.builder.SimpleJobBuilder;
 import org.springframework.batch.core.launch.support.RunIdIncrementer;
+import org.springframework.batch.core.step.builder.SimpleStepBuilder;
 import org.springframework.batch.item.database.BeanPropertyItemSqlParameterSourceProvider;
 import org.springframework.batch.item.database.JdbcBatchItemWriter;
 import org.springframework.batch.item.database.builder.JdbcBatchItemWriterBuilder;
@@ -72,30 +75,40 @@ class BatchConfiguration {
       FlatFileItemReader<Person> userImportPersonReader,
       UserImportPersonProcessor userImportPersonProcessor,
       JdbcBatchItemWriter<Person> userImportPersonWriter,
-      UserImportStepExecutionListener userImportStepListener) {
-    return stepBuilderFactory
-        .get("userImportStep")
-        .listener(userImportStepListener)
-        .<Person, Person>chunk(2)
-        .faultTolerant()
-        .skipLimit(1)
-        .skip(RuntimeException.class)
-        .reader(userImportPersonReader)
-        .processor(userImportPersonProcessor)
-        .writer(userImportPersonWriter)
-        .build();
+      Collection<StepExecutionListener> stepExecutionListeners) {
+    SimpleStepBuilder builder =
+        stepBuilderFactory
+            .get("userImportStep")
+            .<Person, Person>chunk(2)
+            .faultTolerant()
+            .skipLimit(1)
+            .skip(RuntimeException.class)
+            .reader(userImportPersonReader)
+            .processor(userImportPersonProcessor)
+            .writer(userImportPersonWriter);
+
+    if (stepExecutionListeners != null) {
+      stepExecutionListeners.forEach(builder::listener);
+    }
+
+    return builder.build();
   }
 
   @Bean
   Job userImportJob(
       JobBuilderFactory jobBuilderFactory,
       Step userImportStep,
-      UserImportJobCompletionNotificationListener listener) {
-    return jobBuilderFactory
-        .get("userImportJob")
-        .incrementer(new RunIdIncrementer())
-        .listener(listener)
-        .start(userImportStep)
-        .build();
+      Collection<JobExecutionListener> jobExecutionListeners) {
+    SimpleJobBuilder builder =
+        jobBuilderFactory
+            .get("userImportJob")
+            .incrementer(new RunIdIncrementer())
+            .start(userImportStep);
+
+    if (jobExecutionListeners != null) {
+      jobExecutionListeners.forEach(builder::listener);
+    }
+
+    return builder.build();
   }
 }
