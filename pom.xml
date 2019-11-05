@@ -40,18 +40,26 @@
 
     <!-- Java Version -->
     <java.version>1.8</java.version>
+    <docker-basis-image.version>openjdk:8-jdk-alpine</docker-basis-image.version>
 
     <!-- Other Spring Version -->
-    <spring-cloud.version>Hoxton.M3</spring-cloud.version>
+    <spring-cloud-dependencies.version>Hoxton.RC1</spring-cloud-dependencies.version>
+
+    <!-- Other Libraries (Not in spring-boot-dependencies) -->
+    <springfox-swagger2.version>2.9.2</springfox-swagger2.version>
+    <jquery.version>3.4.1</jquery.version>
+    <popper.js.version>1.15.0</popper.js.version>
+    <bootstrap.version>4.3.1</bootstrap.version>
 
     <!-- Plugins Version -->
     <jacoco-maven-plugin.version>0.8.5</jacoco-maven-plugin.version>
+    <jib-maven-plugin.version>1.7.0</jib-maven-plugin.version>
   </properties>
 
   <modules>
     <module>guideline-springboot-core</module>
-    <module>guideline-springboot-jpa</module>
     <module>guideline-springboot-batch</module>
+    <module>guideline-springboot-jpa</module>
     <module>guideline-springboot-rest</module>
     <module>guideline-springboot-web</module>
   </modules>
@@ -61,14 +69,68 @@
       <dependency>
         <groupId>org.springframework.cloud</groupId>
         <artifactId>spring-cloud-dependencies</artifactId>
-        <version>${spring-cloud.version}</version>
+        <version>${spring-cloud-dependencies.version}</version>
         <type>pom</type>
         <scope>import</scope>
+      </dependency>
+      <!-- Libraries -->
+      <dependency>
+        <groupId>io.springfox</groupId>
+        <artifactId>springfox-swagger2</artifactId>
+        <version>${springfox-swagger2.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>io.springfox</groupId>
+        <artifactId>springfox-swagger-ui</artifactId>
+        <version>${springfox-swagger2.version}</version>
+      </dependency>
+      <!-- JavaScript -->
+      <dependency>
+        <groupId>org.webjars</groupId>
+        <artifactId>jquery</artifactId>
+        <version>${jquery.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.webjars</groupId>
+        <artifactId>popper.js</artifactId>
+        <version>${popper.js.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.webjars</groupId>
+        <artifactId>bootstrap</artifactId>
+        <version>${bootstrap.version}</version>
       </dependency>
     </dependencies>
   </dependencyManagement>
 
   <build>
+    <pluginManagement>
+      <plugins>
+        <plugin>
+          <groupId>com.google.cloud.tools</groupId>
+          <artifactId>jib-maven-plugin</artifactId>
+          <version>${jib-maven-plugin.version}</version>
+          <executions>
+            <execution>
+              <phase>package</phase>
+              <goals>
+                <goal>dockerBuild</goal>
+              </goals>
+              <configuration>
+                <from>
+                  <image>${docker-basis-image.version}</image>
+                </from>
+                <to>
+                  <tags>
+                    <tag>latest</tag>
+                  </tags>
+                </to>
+              </configuration>
+            </execution>
+          </executions>
+        </plugin>
+      </plugins>
+    </pluginManagement>
     <plugins>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
@@ -142,9 +204,10 @@
 
   <developers>
     <developer>
-      <organization>Frank W. Rahn</organization>
       <name>Frank Rahn</name>
-      <email>frank+git at frank-rahn.de</email>
+      <email>frank+git@frank-rahn.de</email>
+      <organization>Frank W. Rahn</organization>
+      <organizationUrl>https://www.frank-rahn.de/</organizationUrl>
       <roles>
         <role>Contributor</role>
         <role>Developer</role>
@@ -154,7 +217,6 @@
 
   <licenses>
     <license>
-      <distribution>manual</distribution>
       <name>Apache License, Version 2.0</name>
       <url>https://www.apache.org/licenses/LICENSE-2.0</url>
     </license>
