@@ -1,0 +1,18 @@
+= Guidelines for Spring Boot - App-Core
+Frank Rahn <frank@frank-rahn.de>
+:toc:
+:toclevels: 3
+:toc-title: Inhaltsverzeichnis
+:sectanchors:
+
+Die Anwendung in diesem Module `Core-App` wendet folgende Technologien an:
+
+* Spezifische und typsichere Konfiguration lesen
+** Bereitstellung von Metadaten zu den spezifischen Konfigurationen
+** Typkonvertierung: hier `String` nach `LocalDate`
+
+Nach der Ausgabe der Klassen link:src/main/java/de/rahn/guidelines/springboot/app/core/util/AppProperties.java[AppProperties] beendet sich die Spring Boot Anwendung.
+
+== Homepage des Autors
+
+https://www.frank-rahn.de/?utm_source=github&utm_medium=readme&utm_campaign=guidelines-spring-boot&utm_content=app-core[Frank W. Rahn]
