@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package de.rahn.guidelines.springboot.jpa;
+package de.rahn.guidelines.springboot.app.jpa;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -22,7 +22,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 @ExtendWith(SpringExtension.class)
 @SpringBootTest
-class JpaApplicationTests {
+class AppJpaApplicationTests {
 
   @Test
   void contextLoads() {

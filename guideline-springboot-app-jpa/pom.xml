@@ -26,9 +26,9 @@
     <relativePath>..</relativePath>
   </parent>
 
-  <artifactId>guideline-springboot-jpa</artifactId>
+  <artifactId>guideline-springboot-app-jpa</artifactId>
   <name>JPA</name>
-  <description>Guidelines for Spring Boot - JPA</description>
+  <description>Guidelines for Spring Boot - App-JPA</description>
 
   <dependencies>
     <!-- Standard -->

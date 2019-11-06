@@ -13,10 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package de.rahn.guidelines.springboot.jpa;
+package de.rahn.guidelines.springboot.app.jpa;
 
-import de.rahn.guidelines.springboot.jpa.domain.people.Person;
-import de.rahn.guidelines.springboot.jpa.domain.people.PersonRepository;
+import de.rahn.guidelines.springboot.app.jpa.domain.people.Person;
+import de.rahn.guidelines.springboot.app.jpa.domain.people.PersonRepository;
 import java.time.LocalDate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -29,12 +29,12 @@ import org.springframework.core.annotation.Order;
 import org.springframework.transaction.annotation.Transactional;
 
 @SpringBootApplication
-public class JpaApplication {
+public class AppJpaApplication {
 
-  private static final Logger LOGGER = LoggerFactory.getLogger(JpaApplication.class);
+  private static final Logger LOGGER = LoggerFactory.getLogger(AppJpaApplication.class);
 
   public static void main(String[] args) {
-    SpringApplication.run(JpaApplication.class, args);
+    SpringApplication.run(AppJpaApplication.class, args);
   }
 
   @Bean

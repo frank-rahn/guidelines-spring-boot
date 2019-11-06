@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package de.rahn.guidelines.springboot.jpa.config;
+package de.rahn.guidelines.springboot.app.jpa.config;
 
 import java.util.Optional;
 import org.springframework.context.annotation.Bean;

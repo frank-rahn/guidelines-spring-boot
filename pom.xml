@@ -58,8 +58,8 @@
 
   <modules>
     <module>guideline-springboot-app-core</module>
+    <module>guideline-springboot-app-jpa</module>
     <module>guideline-springboot-batch</module>
-    <module>guideline-springboot-jpa</module>
     <module>guideline-springboot-rest</module>
     <module>guideline-springboot-web</module>
   </modules>

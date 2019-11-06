@@ -13,12 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package de.rahn.guidelines.springboot.jpa.domain.people;
+@GenericGenerator(name = "uuid", strategy = "uuid2")
+package de.rahn.guidelines.springboot.app.jpa.domain.people;
 
-import java.util.List;
-import org.springframework.data.jpa.repository.JpaRepository;
-
-public interface PersonRepository extends JpaRepository<Person, String> {
-
-  List<Person> findByLastName(String lastname);
-}
+import org.hibernate.annotations.GenericGenerator;

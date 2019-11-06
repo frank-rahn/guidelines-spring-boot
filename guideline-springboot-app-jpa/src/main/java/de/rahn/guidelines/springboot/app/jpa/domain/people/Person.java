@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package de.rahn.guidelines.springboot.jpa.domain.people;
+package de.rahn.guidelines.springboot.app.jpa.domain.people;
 
 import static javax.persistence.AccessType.FIELD;
 import static org.springframework.format.annotation.DateTimeFormat.ISO.DATE;
