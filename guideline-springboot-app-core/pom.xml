@@ -26,9 +26,9 @@
     <relativePath>..</relativePath>
   </parent>
 
-  <artifactId>guideline-springboot-core</artifactId>
-  <name>Core</name>
-  <description>Guidelines for Spring Boot - Core</description>
+  <artifactId>guideline-springboot-app-core</artifactId>
+  <name>App-Core</name>
+  <description>Guidelines for Spring Boot - App-Core</description>
 
   <dependencies>
     <!-- Standard -->

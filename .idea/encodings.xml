@@ -2,8 +2,8 @@
 <project version="4">
   <component name="Encoding">
     <file url="file://$PROJECT_DIR$" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/guideline-springboot-app-core" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/guideline-springboot-batch" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/guideline-springboot-core" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/guideline-springboot-jpa" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/guideline-springboot-rest" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/guideline-springboot-web" charset="UTF-8" />

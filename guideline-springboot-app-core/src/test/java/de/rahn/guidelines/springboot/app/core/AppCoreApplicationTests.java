@@ -13,25 +13,19 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package de.rahn.guidelines.springboot.core.util;
+package de.rahn.guidelines.springboot.app.core;
 
-import static java.time.format.DateTimeFormatter.ISO_DATE;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-import java.time.LocalDate;
-import org.springframework.boot.context.properties.ConfigurationPropertiesBinding;
-import org.springframework.core.convert.converter.Converter;
-import org.springframework.stereotype.Component;
+@ExtendWith(SpringExtension.class)
+@SpringBootTest
+class AppCoreApplicationTests {
 
-@Component
-@ConfigurationPropertiesBinding
-class LocalDateConverter implements Converter<String, LocalDate> {
-
-  @Override
-  public LocalDate convert(String source) {
-    if (source == null) {
-      return null;
-    }
-
-    return LocalDate.parse(source, ISO_DATE);
+  @Test
+  void contextLoads() {
+    // Empty
   }
 }

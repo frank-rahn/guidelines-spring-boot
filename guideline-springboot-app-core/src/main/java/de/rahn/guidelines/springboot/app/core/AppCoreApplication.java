@@ -13,9 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package de.rahn.guidelines.springboot.core;
+package de.rahn.guidelines.springboot.app.core;
 
-import de.rahn.guidelines.springboot.core.util.AppProperties;
+import de.rahn.guidelines.springboot.app.core.util.AppProperties;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.ApplicationRunner;
@@ -24,12 +24,12 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
 @SpringBootApplication
-public class CoreApplication {
+public class AppCoreApplication {
 
-  private static final Logger LOGGER = LoggerFactory.getLogger(CoreApplication.class);
+  private static final Logger LOGGER = LoggerFactory.getLogger(AppCoreApplication.class);
 
   public static void main(String[] args) {
-    SpringApplication.run(CoreApplication.class, args);
+    SpringApplication.run(AppCoreApplication.class, args);
   }
 
   @Bean

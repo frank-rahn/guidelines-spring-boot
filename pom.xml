@@ -57,7 +57,7 @@
   </properties>
 
   <modules>
-    <module>guideline-springboot-core</module>
+    <module>guideline-springboot-app-core</module>
     <module>guideline-springboot-batch</module>
     <module>guideline-springboot-jpa</module>
     <module>guideline-springboot-rest</module>

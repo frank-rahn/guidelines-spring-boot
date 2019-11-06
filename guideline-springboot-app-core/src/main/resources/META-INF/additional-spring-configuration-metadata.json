@@ -14,31 +14,31 @@
       "name": "app.people.id",
       "description": "Die eindeutige Id einer Person.",
       "type": "java.lang.String",
-      "sourceType": "de.rahn.guidelines.springboot.core.util.AppProperties"
+      "sourceType": "de.rahn.guidelines.springboot.app.core.util.AppProperties"
     },
     {
       "name": "app.people.firstName",
       "description": "Der Vorname eine Person.",
       "type": "java.lang.String",
-      "sourceType": "de.rahn.guidelines.springboot.core.util.AppProperties"
+      "sourceType": "de.rahn.guidelines.springboot.app.core.util.AppProperties"
     },
     {
       "name": "app.people.lastName",
       "description": "Der Nachname einer Person.",
       "type": "java.lang.String",
-      "sourceType": "de.rahn.guidelines.springboot.core.util.AppProperties"
+      "sourceType": "de.rahn.guidelines.springboot.app.core.util.AppProperties"
     },
     {
       "name": "app.people.emailAddress",
       "description": "Die E-Mail einer Person.",
       "type": "java.lang.String",
-      "sourceType": "de.rahn.guidelines.springboot.core.util.AppProperties"
+      "sourceType": "de.rahn.guidelines.springboot.app.core.util.AppProperties"
     },
     {
       "name": "app.people.birthday",
       "description": "Das Geburtsdatum einer Person im ISO-Format (yyyy-MM-dd).",
       "type": "java.time.LocalDate",
-      "sourceType": "de.rahn.guidelines.springboot.core.util.AppProperties"
+      "sourceType": "de.rahn.guidelines.springboot.app.core.util.AppProperties"
     }
   ],
   "hints": []
