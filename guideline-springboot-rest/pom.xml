@@ -62,10 +62,6 @@
     </dependency>
     <dependency>
       <groupId>org.springframework.boot</groupId>
-      <artifactId>spring-boot-starter-data-rest</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-hateoas</artifactId>
     </dependency>
     <dependency>
@@ -79,6 +75,13 @@
     <dependency>
       <groupId>io.springfox</groupId>
       <artifactId>springfox-swagger2</artifactId>
+      <exclusions>
+        <exclusion>
+          <!-- Vorübergehend weil HATEOAS eine neuere Version benötigt -->
+          <artifactId>spring-plugin-core</artifactId>
+          <groupId>org.springframework.plugin</groupId>
+        </exclusion>
+      </exclusions>
     </dependency>
     <dependency>
       <groupId>io.springfox</groupId>
