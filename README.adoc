@@ -1,0 +1,38 @@
+= Guidelines for Spring Boot
+Frank Rahn <frank@frank-rahn.de>
+:toc:
+:toclevels: 3
+:toc-title: Inhaltsverzeichnis
+:sectanchors:
+
+In diesem Repository befinden sich Projekte als Vorlagen rund um das Thema Spring Boot.
+
+== Module
+
+=== App-Core
+
+Eine Anwendung ...
+
+=== App-JPA
+
+Eine Anwendung mit Datenbankzugriffen ...
+
+=== Batch
+
+Eine Batch-Anwendung ...
+
+=== Rest
+
+Eine Rest-Service ...
+
+=== Web
+
+Eine Webanwendung ...
+
+== Hilfen
+
+link:HELP.adoc[Getting Started]
+
+== Homepage des Autors
+
+https://www.frank-rahn.de/?utm_source=github&utm_medium=readme&utm_campaign=guidelines-spring-boot&utm_content=top[Frank W. Rahn]
