@@ -5,7 +5,7 @@ JOB_PARAMS+=("run.id=\"${RUN_ID}\"")
 
 function help {
   cat <<EOM
-usage: $(basename $0) -h -o <options> -d <month> -y <year>
+usage: $(basename "${0}") -h -o <options> -d <month> -y <year>
    where command is one of the following:
        options       - Options (such as autoLogin|autoLogOut).
        month         - Enter a month as Job param.
