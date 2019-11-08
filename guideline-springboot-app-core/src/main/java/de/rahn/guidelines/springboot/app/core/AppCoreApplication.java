@@ -19,11 +19,17 @@ import de.rahn.guidelines.springboot.app.core.util.AppProperties;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.ApplicationRunner;
+import org.springframework.boot.ExitCodeExceptionMapper;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.properties.ConfigurationPropertiesScan;
+import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
+import org.springframework.core.annotation.Order;
 
+/**
+ * @author Frank Rahn
+ */
 @SpringBootApplication
 @ConfigurationPropertiesScan
 public class AppCoreApplication {
@@ -31,11 +37,41 @@ public class AppCoreApplication {
   private static final Logger LOGGER = LoggerFactory.getLogger(AppCoreApplication.class);
 
   public static void main(String[] args) {
-    SpringApplication.run(AppCoreApplication.class, args);
+    ApplicationContext applicationContext = SpringApplication.run(AppCoreApplication.class, args);
+
+    int exitCode = SpringApplication.exit(applicationContext);
+    LOGGER.info("App finished with exit code {}", exitCode);
+    System.exit(exitCode);
   }
 
   @Bean
+  @Order(1)
   ApplicationRunner start(AppProperties app) {
     return args -> LOGGER.info(app.toString());
+  }
+
+  @Bean
+  @Order(2)
+  ApplicationRunner fail() {
+    return args -> {
+      if (args.containsOption("go-wrong")) {
+        LOGGER.error("Option go-wrong received");
+        throw new IllegalArgumentException("Option go-wrong received");
+      }
+
+      LOGGER.info("No option received");
+    };
+  }
+
+  @Bean
+  ExitCodeExceptionMapper exitCodeExceptionMapper() {
+    return exception -> {
+      if (exception.getCause() instanceof IllegalArgumentException) {
+        return 3;
+      }
+
+      // Unknown Exception
+      return 2;
+    };
   }
 }

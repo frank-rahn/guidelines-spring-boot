@@ -11,7 +11,10 @@ In diesem Repository befinden sich Projekte als Vorlagen rund um das Thema Sprin
 
 === App-Core
 
-Eine Anwendung ...
+Es wird eine Anwendung gestartet, die einige Dinge erledigt, und sich wieder beendet.
+Dabei wird ein entsprechender Exit-Code zurückgeliefert.
+
+Weiterhin werden ...
 
 === App-JPA
 

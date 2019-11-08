@@ -22,6 +22,9 @@ import org.springframework.boot.context.properties.ConfigurationPropertiesBindin
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
 
+/**
+ * @author Frank Rahn
+ */
 @Component
 @ConfigurationPropertiesBinding
 class LocalDateConverter implements Converter<String, LocalDate> {
