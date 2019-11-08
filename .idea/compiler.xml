@@ -8,8 +8,8 @@
         <outputRelativeToContentRoot value="true" />
         <module name="guideline-springboot-app-core" />
         <module name="guideline-springboot-app-jpa" />
-        <module name="guideline-springboot-batch" />
         <module name="guideline-springboot-web" />
+        <module name="guideline-springboot-batch" />
         <module name="guideline-springboot-rest" />
       </profile>
     </annotationProcessing>

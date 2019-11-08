@@ -27,9 +27,9 @@ public class BatchApplication {
   private static final Logger LOGGER = LoggerFactory.getLogger(BatchApplication.class);
 
   public static void main(String... args) {
-    ApplicationContext context = SpringApplication.run(BatchApplication.class, args);
+    ApplicationContext applicationContext = SpringApplication.run(BatchApplication.class, args);
 
-    int exitCode = SpringApplication.exit(context);
+    int exitCode = SpringApplication.exit(applicationContext);
     LOGGER.info("Batch finished with exit code {}", exitCode);
     System.exit(exitCode);
   }
