@@ -30,6 +30,9 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import org.springframework.format.annotation.DateTimeFormat;
 
+/**
+ * @author Frank Rahn
+ */
 @Access(FIELD)
 @Entity
 public class Person extends AbstractAuditing {

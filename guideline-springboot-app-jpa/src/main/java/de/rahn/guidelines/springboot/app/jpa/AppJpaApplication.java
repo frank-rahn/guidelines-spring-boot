@@ -24,17 +24,25 @@ import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.core.annotation.Order;
 import org.springframework.transaction.annotation.Transactional;
 
+/**
+ * @author Frank Rahn
+ */
 @SpringBootApplication
 public class AppJpaApplication {
 
   private static final Logger LOGGER = LoggerFactory.getLogger(AppJpaApplication.class);
 
   public static void main(String[] args) {
-    SpringApplication.run(AppJpaApplication.class, args);
+    ApplicationContext applicationContext = SpringApplication.run(AppJpaApplication.class, args);
+
+    int exitCode = SpringApplication.exit(applicationContext);
+    LOGGER.info("App finished with exit code {}", exitCode);
+    System.exit(exitCode);
   }
 
   @Bean

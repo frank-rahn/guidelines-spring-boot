@@ -23,6 +23,9 @@ import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 
+/**
+ * @author Frank Rahn
+ */
 @Configuration
 @EnableJpaAuditing
 class JpaConfiguration {

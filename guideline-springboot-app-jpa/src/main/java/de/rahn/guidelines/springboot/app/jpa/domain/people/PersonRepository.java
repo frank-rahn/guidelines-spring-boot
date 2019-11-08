@@ -18,6 +18,9 @@ package de.rahn.guidelines.springboot.app.jpa.domain.people;
 import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 
+/**
+ * @author Frank Rahn
+ */
 public interface PersonRepository extends JpaRepository<Person, String> {
 
   List<Person> findByLastName(String lastname);
