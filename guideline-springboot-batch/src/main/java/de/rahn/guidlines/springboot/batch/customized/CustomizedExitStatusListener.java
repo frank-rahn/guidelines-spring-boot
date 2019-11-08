@@ -26,6 +26,9 @@ import org.springframework.batch.core.StepExecution;
 import org.springframework.batch.core.StepExecutionListener;
 import org.springframework.stereotype.Component;
 
+/**
+ * @author Frank Rahn
+ */
 @Component
 public class CustomizedExitStatusListener implements JobExecutionListener, StepExecutionListener {
 

@@ -21,6 +21,9 @@ import org.springframework.batch.core.configuration.annotation.StepScope;
 import org.springframework.batch.item.ItemProcessor;
 import org.springframework.stereotype.Component;
 
+/**
+ * @author Frank Rahn
+ */
 @Component
 @StepScope
 public class UserImportPersonProcessor implements ItemProcessor<Person, Person> {

@@ -22,6 +22,9 @@ import static org.apache.commons.lang3.builder.ToStringStyle.JSON_STYLE;
 
 import java.util.Optional;
 
+/**
+ * @author Frank Rahn
+ */
 public class Person {
 
   private String lastName;

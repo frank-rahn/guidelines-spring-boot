@@ -17,6 +17,9 @@ package de.rahn.guidlines.springboot.batch.customized;
 
 import org.springframework.batch.core.ExitStatus;
 
+/**
+ * @author Frank Rahn
+ */
 public interface CustomizedExitStatus {
 
   ExitStatus COMPLETED_WITH_ERRORS = new ExitStatus("COMPLETED_WITH_ERRORS");
