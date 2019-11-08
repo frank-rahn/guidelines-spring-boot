@@ -5,11 +5,11 @@ JOB_PARAMS+=("run.id=\"${RUN_ID}\"")
 
 function help {
   cat <<EOM
-usage: $(basename "${0}") -h -o <options> -d <month> -y <year>
-   where command is one of the following:
-       options       - Options (such as autoLogin|autoLogOut).
-       month         - Enter a month as Job param.
-       year          - Enter a year as Job param.
+usage: $(basename "${0}") [-h] [-o <options>] [-d <month>] [-y <year>]
+  where command is one of the following:
+    -o <options>    Options (such as autoLogin|autoLogOut)
+    -d <month>      Enter a month as Job param
+    -y <year>       Enter a year as Job param
 EOM
   exit 1
 }
@@ -18,7 +18,7 @@ while getopts "ho:d:y:" opt; do
   case "${opt}" in
   h) help
     ;;
-  o) JOB_PARAMS+=("options=\"${OPTARG}")
+  o) JOB_PARAMS+=("options=\"${OPTARG}\"")
     ;;
   d) JOB_PARAMS+=("month=\"${OPTARG}\"")
     ;;
