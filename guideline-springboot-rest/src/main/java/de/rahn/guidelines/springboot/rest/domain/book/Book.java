@@ -22,10 +22,21 @@ import io.swagger.annotations.ApiModelProperty;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+import lombok.Setter;
 import org.hibernate.validator.constraints.ISBN;
 
+/**
+ * @author Frank Rahn
+ */
 @ApiModel(description = "Ein Buch")
 @XmlRootElement
+@Getter
+@Setter
+@RequiredArgsConstructor
+@AllArgsConstructor
 public class Book {
 
   @ApiModelProperty(value = "Die Artikelnummer", required = true, example = "4711")
@@ -39,26 +50,4 @@ public class Book {
   @ApiModelProperty("Der Titel des Buches sollte mindestens 5 Zeichen umfassen")
   @Size(min = 5)
   private String title;
-
-  public Book(final String id, final String isbn, String title) {
-    this.id = id;
-    this.isbn = isbn;
-    this.title = title;
-  }
-
-  public String getId() {
-    return id;
-  }
-
-  public String getIsbn() {
-    return isbn;
-  }
-
-  public String getTitle() {
-    return title;
-  }
-
-  public void setTitle(String title) {
-    this.title = title;
-  }
 }

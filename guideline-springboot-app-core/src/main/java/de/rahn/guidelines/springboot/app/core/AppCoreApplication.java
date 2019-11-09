@@ -16,8 +16,7 @@
 package de.rahn.guidelines.springboot.app.core;
 
 import de.rahn.guidelines.springboot.app.core.util.AppProperties;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.boot.ExitCodeExceptionMapper;
 import org.springframework.boot.SpringApplication;
@@ -32,9 +31,8 @@ import org.springframework.core.annotation.Order;
  */
 @SpringBootApplication
 @ConfigurationPropertiesScan
+@Slf4j
 public class AppCoreApplication {
-
-  private static final Logger LOGGER = LoggerFactory.getLogger(AppCoreApplication.class);
 
   public static void main(String[] args) {
     ApplicationContext applicationContext = SpringApplication.run(AppCoreApplication.class, args);
@@ -55,7 +53,7 @@ public class AppCoreApplication {
   ApplicationRunner fail() {
     return args -> {
       if (args.containsOption("go-wrong")) {
-        LOGGER.error("Option go-wrong received");
+        LOGGER.warn("Option go-wrong received");
         throw new IllegalArgumentException("Option go-wrong received");
       }
 

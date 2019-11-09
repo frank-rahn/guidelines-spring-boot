@@ -17,8 +17,8 @@ package de.rahn.guidlines.springboot.batch.job.userimport;
 
 import static org.springframework.batch.core.BatchStatus.COMPLETED;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.batch.core.JobExecution;
 import org.springframework.batch.core.listener.JobExecutionListenerSupport;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -28,16 +28,11 @@ import org.springframework.stereotype.Component;
  * @author Frank Rahn
  */
 @Component
+@Slf4j
+@RequiredArgsConstructor
 public class UserImportJobCompletionNotificationListener extends JobExecutionListenerSupport {
 
-  private static final Logger LOGGER =
-      LoggerFactory.getLogger(UserImportJobCompletionNotificationListener.class);
-
   private final JdbcTemplate jdbcTemplate;
-
-  public UserImportJobCompletionNotificationListener(JdbcTemplate jdbcTemplate) {
-    this.jdbcTemplate = jdbcTemplate;
-  }
 
   @Override
   public void afterJob(JobExecution jobExecution) {

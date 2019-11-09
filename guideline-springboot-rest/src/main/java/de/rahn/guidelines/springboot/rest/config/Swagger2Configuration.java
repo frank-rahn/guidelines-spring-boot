@@ -41,6 +41,9 @@ import springfox.documentation.swagger.web.UiConfiguration;
 import springfox.documentation.swagger.web.UiConfigurationBuilder;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
+/**
+ * @author Frank Rahn
+ */
 @Configuration
 @EnableSwagger2
 class Swagger2Configuration {
@@ -119,8 +122,7 @@ class Swagger2Configuration {
 
   @Bean
   UiConfiguration uiConfiguration() {
-    return UiConfigurationBuilder
-        .builder()
+    return UiConfigurationBuilder.builder()
         .deepLinking(true)
         .displayOperationId(false)
         .defaultModelsExpandDepth(1)

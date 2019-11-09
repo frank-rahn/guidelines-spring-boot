@@ -38,8 +38,7 @@ import java.util.Optional;
 import java.util.UUID;
 import javax.annotation.PostConstruct;
 import javax.validation.Valid;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.Assert;
@@ -53,14 +52,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+/**
+ * @author Frank Rahn
+ */
 @RestController
 @RequestMapping(
     path = {"/api/people"},
     produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
 @Api(tags = {"People"})
+@Slf4j
 class PeopleController {
-
-  private static final Logger LOGGER = LoggerFactory.getLogger(PeopleController.class);
 
   private final Map<String, Person> people = new HashMap<>();
 

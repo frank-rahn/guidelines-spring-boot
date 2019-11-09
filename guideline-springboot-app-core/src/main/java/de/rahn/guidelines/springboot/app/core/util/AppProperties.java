@@ -24,6 +24,8 @@ import java.util.List;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import lombok.Getter;
+import lombok.Setter;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.annotation.Validated;
@@ -36,11 +38,8 @@ import org.springframework.validation.annotation.Validated;
 @Validated
 public class AppProperties {
 
+  @Getter
   private final List<Person> people = new ArrayList<>();
-
-  public List<Person> getPeople() {
-    return people;
-  }
 
   public void setPeople(List<Person> people) {
     this.people.clear();
@@ -56,6 +55,8 @@ public class AppProperties {
   }
 
   @Validated
+  @Getter
+  @Setter
   public static class Person {
 
     private String id;
@@ -75,46 +76,6 @@ public class AppProperties {
     @Override
     public String toString() {
       return reflectionToString(this, JSON_STYLE);
-    }
-
-    public String getId() {
-      return id;
-    }
-
-    public void setId(String id) {
-      this.id = id;
-    }
-
-    public String getFirstName() {
-      return firstName;
-    }
-
-    public void setFirstName(String firstName) {
-      this.firstName = firstName;
-    }
-
-    public String getLastName() {
-      return lastName;
-    }
-
-    public void setLastName(String lastName) {
-      this.lastName = lastName;
-    }
-
-    public String getEmailAddress() {
-      return emailAddress;
-    }
-
-    public void setEmailAddress(String emailAddress) {
-      this.emailAddress = emailAddress;
-    }
-
-    public LocalDate getBirthday() {
-      return birthday;
-    }
-
-    public void setBirthday(LocalDate birthday) {
-      this.birthday = birthday;
     }
   }
 }

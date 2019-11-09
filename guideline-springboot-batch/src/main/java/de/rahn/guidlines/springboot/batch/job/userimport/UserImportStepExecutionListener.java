@@ -15,8 +15,7 @@
  */
 package de.rahn.guidlines.springboot.batch.job.userimport;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.batch.core.ExitStatus;
 import org.springframework.batch.core.StepExecution;
 import org.springframework.batch.core.StepExecutionListener;
@@ -26,10 +25,8 @@ import org.springframework.stereotype.Component;
  * @author Frank Rahn
  */
 @Component
+@Slf4j
 public class UserImportStepExecutionListener implements StepExecutionListener {
-
-  private static final Logger LOGGER =
-      LoggerFactory.getLogger(UserImportStepExecutionListener.class);
 
   @Override
   public void beforeStep(StepExecution stepExecution) {

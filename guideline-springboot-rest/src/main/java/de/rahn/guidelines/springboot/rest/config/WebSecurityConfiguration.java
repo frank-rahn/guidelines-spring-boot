@@ -23,6 +23,9 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 
+/**
+ * @author Frank Rahn
+ */
 @Configuration
 class WebSecurityConfiguration {
 
@@ -41,7 +44,7 @@ class WebSecurityConfiguration {
 
   @Configuration
   @Order(1)
-  class ActuatorWebSecurityConfiguration extends WebSecurityConfigurerAdapter {
+  static class ActuatorWebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {

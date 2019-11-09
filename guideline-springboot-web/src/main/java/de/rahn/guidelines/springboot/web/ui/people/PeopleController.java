@@ -19,8 +19,8 @@ import static org.springframework.http.HttpMethod.GET;
 import static org.springframework.security.core.context.SecurityContextHolder.getContext;
 
 import java.util.List;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -30,25 +30,23 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.client.RestTemplate;
 
+/**
+ * @author Frank Rahn
+ */
 @Controller
 @RequestMapping(path = "/people")
+@Slf4j
+@RequiredArgsConstructor
 class PeopleController {
 
-  private static final Logger LOGGER = LoggerFactory.getLogger(PeopleController.class);
-
   private final RestTemplate template;
-
-  public PeopleController(RestTemplate template) {
-    this.template = template;
-  }
 
   @GetMapping
   String getAllPeople(Model model) {
     LOGGER.info("GetAllPeople: Authentication={}", getContext().getAuthentication());
 
     ResponseEntity<List<Person>> people =
-        template.exchange("/", GET, null, new ParameterizedTypeReference<List<Person>>() {
-        });
+        template.exchange("/", GET, null, new ParameterizedTypeReference<List<Person>>() {});
 
     model.addAttribute("people", people.getBody());
 

@@ -15,8 +15,7 @@
  */
 package de.rahn.guidlines.springboot.batch.job.userimport;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.batch.core.configuration.annotation.StepScope;
 import org.springframework.batch.item.ItemProcessor;
 import org.springframework.stereotype.Component;
@@ -26,9 +25,8 @@ import org.springframework.stereotype.Component;
  */
 @Component
 @StepScope
+@Slf4j
 public class UserImportPersonProcessor implements ItemProcessor<Person, Person> {
-
-  private static final Logger LOGGER = LoggerFactory.getLogger(UserImportPersonProcessor.class);
 
   @Override
   public Person process(Person person) {

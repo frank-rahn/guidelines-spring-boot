@@ -29,10 +29,22 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlRootElement;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
+import lombok.Setter;
 import org.springframework.format.annotation.DateTimeFormat;
 
+/**
+ * @author Frank Rahn
+ */
 @ApiModel(description = "Eine Person")
 @XmlRootElement
+@Getter
+@Setter
+@RequiredArgsConstructor
+@AllArgsConstructor
 public class Person {
 
   @ApiModelProperty("Die UUID der Person")
@@ -44,6 +56,7 @@ public class Person {
   @NotNull
   @NotBlank
   @ApiModelProperty(value = "Der Nachname der Person", required = true)
+  @NonNull
   private String lastName;
 
   @Email
@@ -53,17 +66,11 @@ public class Person {
   @DateTimeFormat(iso = DATE)
   @NotNull
   @ApiModelProperty(value = "Das Geburtsdatum der Person", required = true)
+  @NonNull
   private LocalDate birthday;
 
   @ApiModelProperty("Allgemeine Informationen über die Person")
   private List<String> infos;
-
-  public Person(String lastName, LocalDate birthday) {
-    super();
-
-    this.lastName = lastName;
-    this.birthday = birthday;
-  }
 
   @Override
   public boolean equals(Object obj) {
@@ -86,53 +93,5 @@ public class Person {
   @Override
   public String toString() {
     return reflectionToString(this, JSON_STYLE);
-  }
-
-  public String getId() {
-    return id;
-  }
-
-  public void setId(String id) {
-    this.id = id;
-  }
-
-  public String getFirstName() {
-    return firstName;
-  }
-
-  public void setFirstName(String firstName) {
-    this.firstName = firstName;
-  }
-
-  public String getLastName() {
-    return lastName;
-  }
-
-  public void setLastName(String lastName) {
-    this.lastName = lastName;
-  }
-
-  public String getEmailAddress() {
-    return emailAddress;
-  }
-
-  public void setEmailAddress(String emailAddress) {
-    this.emailAddress = emailAddress;
-  }
-
-  public LocalDate getBirthday() {
-    return birthday;
-  }
-
-  public void setBirthday(LocalDate birthday) {
-    this.birthday = birthday;
-  }
-
-  public List<String> getInfos() {
-    return infos;
-  }
-
-  public void setInfos(List<String> infos) {
-    this.infos = infos;
   }
 }

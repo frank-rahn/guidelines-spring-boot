@@ -26,8 +26,20 @@ import java.util.List;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
+import lombok.Setter;
 import org.springframework.format.annotation.DateTimeFormat;
 
+/**
+ * @author Frank Rahn
+ */
+@Getter
+@Setter
+@RequiredArgsConstructor
+@NoArgsConstructor
 public class Person {
 
   private String id;
@@ -36,6 +48,7 @@ public class Person {
 
   @NotNull
   @NotBlank
+  @NonNull
   private String lastName;
 
   @Email
@@ -43,6 +56,7 @@ public class Person {
 
   @DateTimeFormat(iso = DATE)
   @NotNull
+  @NonNull
   private LocalDate birthday;
 
   private List<String> infos;
@@ -68,53 +82,5 @@ public class Person {
   @Override
   public String toString() {
     return reflectionToString(this, JSON_STYLE);
-  }
-
-  public String getId() {
-    return id;
-  }
-
-  public void setId(String id) {
-    this.id = id;
-  }
-
-  public String getFirstName() {
-    return firstName;
-  }
-
-  public void setFirstName(String firstName) {
-    this.firstName = firstName;
-  }
-
-  public String getLastName() {
-    return lastName;
-  }
-
-  public void setLastName(String lastName) {
-    this.lastName = lastName;
-  }
-
-  public String getEmailAddress() {
-    return emailAddress;
-  }
-
-  public void setEmailAddress(String emailAddress) {
-    this.emailAddress = emailAddress;
-  }
-
-  public LocalDate getBirthday() {
-    return birthday;
-  }
-
-  public void setBirthday(LocalDate birthday) {
-    this.birthday = birthday;
-  }
-
-  public List<String> getInfos() {
-    return infos;
-  }
-
-  public void setInfos(List<String> infos) {
-    this.infos = infos;
   }
 }

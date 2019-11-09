@@ -18,8 +18,7 @@ package de.rahn.guidelines.springboot.app.jpa;
 import de.rahn.guidelines.springboot.app.jpa.domain.people.Person;
 import de.rahn.guidelines.springboot.app.jpa.domain.people.PersonRepository;
 import java.time.LocalDate;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.boot.SpringApplication;
@@ -33,9 +32,8 @@ import org.springframework.transaction.annotation.Transactional;
  * @author Frank Rahn
  */
 @SpringBootApplication
+@Slf4j
 public class AppJpaApplication {
-
-  private static final Logger LOGGER = LoggerFactory.getLogger(AppJpaApplication.class);
 
   public static void main(String[] args) {
     ApplicationContext applicationContext = SpringApplication.run(AppJpaApplication.class, args);

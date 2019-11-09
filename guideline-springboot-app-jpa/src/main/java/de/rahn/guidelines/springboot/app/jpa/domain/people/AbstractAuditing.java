@@ -28,6 +28,8 @@ import javax.persistence.Access;
 import javax.persistence.EntityListeners;
 import javax.persistence.MappedSuperclass;
 import javax.persistence.Version;
+import lombok.Getter;
+import lombok.Setter;
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedBy;
@@ -41,6 +43,8 @@ import org.springframework.format.annotation.DateTimeFormat;
 @Access(FIELD)
 @MappedSuperclass
 @EntityListeners({AuditingEntityListener.class})
+@Getter
+@Setter
 public abstract class AbstractAuditing implements Serializable {
 
   private static final long serialVersionUID = 1L;
@@ -83,45 +87,5 @@ public abstract class AbstractAuditing implements Serializable {
   @Override
   public String toString() {
     return reflectionToString(this, JSON_STYLE);
-  }
-
-  public long getVersion() {
-    return version;
-  }
-
-  public void setVersion(long version) {
-    this.version = version;
-  }
-
-  public LocalDateTime getCreatedDate() {
-    return createdDate;
-  }
-
-  public void setCreatedDate(LocalDateTime createdDate) {
-    this.createdDate = createdDate;
-  }
-
-  public String getCreatedBy() {
-    return createdBy;
-  }
-
-  public void setCreatedBy(String createdBy) {
-    this.createdBy = createdBy;
-  }
-
-  public LocalDateTime getLastModifiedDate() {
-    return lastModifiedDate;
-  }
-
-  public void setLastModifiedDate(LocalDateTime lastModifiedDate) {
-    this.lastModifiedDate = lastModifiedDate;
-  }
-
-  public String getLastModifiedBy() {
-    return lastModifiedBy;
-  }
-
-  public void setLastModifiedBy(String lastModifiedBy) {
-    this.lastModifiedBy = lastModifiedBy;
   }
 }

@@ -19,7 +19,6 @@ import static javax.persistence.AccessType.FIELD;
 import static org.springframework.format.annotation.DateTimeFormat.ISO.DATE;
 
 import java.time.LocalDate;
-import java.util.Optional;
 import javax.persistence.Access;
 import javax.persistence.Basic;
 import javax.persistence.Entity;
@@ -28,6 +27,12 @@ import javax.persistence.Id;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import lombok.AccessLevel;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
+import lombok.Setter;
 import org.springframework.format.annotation.DateTimeFormat;
 
 /**
@@ -35,6 +40,10 @@ import org.springframework.format.annotation.DateTimeFormat;
  */
 @Access(FIELD)
 @Entity
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@RequiredArgsConstructor
+@Getter
+@Setter
 public class Person extends AbstractAuditing {
 
   private static final long serialVersionUID = 1L;
@@ -48,65 +57,15 @@ public class Person extends AbstractAuditing {
   @Basic(optional = false)
   @NotNull
   @NotBlank
+  @NonNull
   private String lastName;
 
   @Email
   private String emailAddress;
 
   @Basic(optional = false)
-  @NotNull
   @DateTimeFormat(iso = DATE)
+  @NotNull
+  @NonNull
   private LocalDate birthday;
-
-  protected Person() {
-    // default bzw. no-arg constructor
-  }
-
-  public Person(String lastName, LocalDate birthday) {
-    // required-args constructor
-    this();
-
-    this.lastName = lastName;
-    this.birthday = birthday;
-  }
-
-  public String getId() {
-    return id;
-  }
-
-  public void setId(String id) {
-    this.id = id;
-  }
-
-  public Optional<String> getFirstName() {
-    return Optional.ofNullable(firstName);
-  }
-
-  public void setFirstName(String firstName) {
-    this.firstName = firstName;
-  }
-
-  public String getLastName() {
-    return lastName;
-  }
-
-  public void setLastName(String lastName) {
-    this.lastName = lastName;
-  }
-
-  public Optional<String> getEmailAddress() {
-    return Optional.ofNullable(emailAddress);
-  }
-
-  public void setEmailAddress(String emailAddress) {
-    this.emailAddress = emailAddress;
-  }
-
-  public LocalDate getBirthday() {
-    return birthday;
-  }
-
-  public void setBirthday(LocalDate birthday) {
-    this.birthday = birthday;
-  }
 }

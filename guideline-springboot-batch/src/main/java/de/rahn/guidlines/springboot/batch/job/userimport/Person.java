@@ -20,30 +20,28 @@ import static org.apache.commons.lang3.builder.HashCodeBuilder.reflectionHashCod
 import static org.apache.commons.lang3.builder.ToStringBuilder.reflectionToString;
 import static org.apache.commons.lang3.builder.ToStringStyle.JSON_STYLE;
 
-import java.util.Optional;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
+import lombok.Setter;
 
 /**
  * @author Frank Rahn
  */
+@NoArgsConstructor
+@RequiredArgsConstructor
+@Getter
+@Setter
 public class Person {
 
+  @NonNull
   private String lastName;
 
+  @NonNull
   private String firstName;
 
   private String emailAddress;
-
-  public Person() {
-    // default bzw. no-arg constructor
-  }
-
-  public Person(String lastName, String firstName) {
-    // required-args constructor
-    this();
-
-    this.lastName = lastName;
-    this.firstName = firstName;
-  }
 
   @Override
   public boolean equals(Object obj) {
@@ -66,29 +64,5 @@ public class Person {
   @Override
   public String toString() {
     return reflectionToString(this, JSON_STYLE);
-  }
-
-  public String getLastName() {
-    return lastName;
-  }
-
-  public void setLastName(String lastName) {
-    this.lastName = lastName;
-  }
-
-  public String getFirstName() {
-    return firstName;
-  }
-
-  public void setFirstName(String firstName) {
-    this.firstName = firstName;
-  }
-
-  public Optional<String> getEmailAddress() {
-    return Optional.ofNullable(emailAddress);
-  }
-
-  public void setEmailAddress(String emailAddress) {
-    this.emailAddress = emailAddress;
   }
 }

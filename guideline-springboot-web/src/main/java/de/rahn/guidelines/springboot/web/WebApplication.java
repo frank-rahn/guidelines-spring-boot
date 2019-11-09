@@ -18,6 +18,9 @@ package de.rahn.guidelines.springboot.web;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+/**
+ * @author Frank Rahn
+ */
 @SpringBootApplication
 public class WebApplication {
 
