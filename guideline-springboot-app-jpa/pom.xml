@@ -27,7 +27,7 @@
   </parent>
 
   <artifactId>guideline-springboot-app-jpa</artifactId>
-  <name>JPA</name>
+  <name>App-JPA</name>
   <description>Guidelines for Spring Boot - App-JPA</description>
 
   <dependencies>
