@@ -41,6 +41,9 @@ import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 
+/**
+ * @author Frank Rahn
+ */
 @WebMvcTest(controllers = {PeopleController.class})
 @ContextConfiguration(classes = {PeopleControllerTestConfiguration.class})
 class PeopleControllerTest {

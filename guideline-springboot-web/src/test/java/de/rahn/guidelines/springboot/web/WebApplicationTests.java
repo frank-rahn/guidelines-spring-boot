@@ -20,12 +20,15 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
+/**
+ * @author Frank Rahn
+ */
 @ExtendWith(SpringExtension.class)
 @SpringBootTest
 class WebApplicationTests {
 
   @Test
-  void contextLoads() {
+  void givenContext_whenLoads_thenOk() {
     // Empty
   }
 }

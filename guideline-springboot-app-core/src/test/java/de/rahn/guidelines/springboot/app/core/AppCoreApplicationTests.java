@@ -28,7 +28,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 class AppCoreApplicationTests {
 
   @Test
-  void contextLoads() {
+  void givenContext_whenLoads_thenOk() {
     // Empty
   }
 }

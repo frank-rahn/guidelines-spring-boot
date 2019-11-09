@@ -34,13 +34,13 @@ class PersonRepositoryTest {
   PersonRepository personRepository;
 
   @Test
-  void injectedComponentsAreNotNull() {
+  void givenContext_whenLoads_thenInjectedComponentsAreNotNull() {
     assertThat(personRepository).isNotNull();
   }
 
   @Test
   @Sql(statements = {"DELETE FROM person"})
-  void whenSavedThenFindByName() {
+  void givenPeople_whenSaved_thenFindByName() {
     final Person person = new Person("Rahn", LocalDate.of(1940, 2, 8));
     person.setFirstName("Gerd");
 
@@ -53,7 +53,7 @@ class PersonRepositoryTest {
   }
 
   @Test
-  void whenNothingThenFindOldData() {
+  void givenNothing_whenFindByLastName_thenFindOldData() {
     final List<Person> result = personRepository.findByLastName("Rahn");
     assertThat(result).hasSize(2);
   }

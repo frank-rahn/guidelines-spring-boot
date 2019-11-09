@@ -47,7 +47,7 @@ class AppPropertiesTest {
   private AppProperties properties;
 
   @Test
-  void shouldPopulateAppProperties() {
+  void givenContext_whenLoads_thenShouldPopulateAppProperties() {
     assertThat(properties).isNotNull();
     assertThat(properties.getPeople()).hasSize(2);
     assertThat(properties.getPeople().get(0)).isNotNull();
