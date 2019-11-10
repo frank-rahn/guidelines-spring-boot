@@ -15,6 +15,8 @@
  */
 package de.rahn.guidelines.springboot.web.config;
 
+import de.rahn.guidelines.springboot.web.config.properties.AppProperties;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -24,10 +26,11 @@ import org.springframework.web.client.RestTemplate;
  * @author Frank Rahn
  */
 @Configuration
-class RestConsumerConfiguration {
+@EnableConfigurationProperties({AppProperties.class})
+class AppConfiguration {
 
   @Bean
-  RestTemplate restTemplate(RestTemplateBuilder builder) {
-    return builder.rootUri("http://localhost:8081/api/people").build();
+  RestTemplate restTemplate(RestTemplateBuilder builder, AppProperties appProperties) {
+    return builder.rootUri(appProperties.getUrl()).build();
   }
 }

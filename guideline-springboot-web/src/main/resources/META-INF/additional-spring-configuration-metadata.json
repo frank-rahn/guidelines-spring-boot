@@ -1,0 +1,17 @@
+{
+  "groups": [
+    {
+      "name": "app",
+      "description": "Anwendungsspezifische Properties."
+    }
+  ],
+  "properties": [
+    {
+      "name": "app.url",
+      "description": "Die URL für den REST-Service.",
+      "type": "java.lang.String",
+      "sourceType": "de.rahn.guidelines.springboot.web.config.properties.AppProperties"
+    }
+  ],
+  "hints": []
+}

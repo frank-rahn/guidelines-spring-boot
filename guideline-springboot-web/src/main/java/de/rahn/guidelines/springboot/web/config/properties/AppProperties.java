@@ -13,69 +13,33 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package de.rahn.guidelines.springboot.app.core.util;
+package de.rahn.guidelines.springboot.web.config.properties;
 
 import static org.apache.commons.lang3.builder.ToStringBuilder.reflectionToString;
 import static org.apache.commons.lang3.builder.ToStringStyle.JSON_STYLE;
 
-import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
-import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.stereotype.Component;
 import org.springframework.validation.annotation.Validated;
 
 /**
  * @author Frank Rahn
  */
-@Component
 @ConfigurationProperties(prefix = "app")
+@Getter
+@Setter
 @Validated
 public class AppProperties {
 
-  @Getter
-  private final List<Person> people = new ArrayList<>();
-
-  public void setPeople(List<Person> people) {
-    this.people.clear();
-
-    if (people != null) {
-      this.people.addAll(people);
-    }
-  }
+  @NotNull
+  @NotBlank
+  private String url;
 
   @Override
   public String toString() {
     return reflectionToString(this, JSON_STYLE);
-  }
-
-  @Validated
-  @Getter
-  @Setter
-  public static class Person {
-
-    private String id;
-
-    private String firstName;
-
-    @NotNull
-    @NotBlank
-    private String lastName;
-
-    @Email
-    private String emailAddress;
-
-    @NotNull
-    private LocalDate birthday;
-
-    @Override
-    public String toString() {
-      return reflectionToString(this, JSON_STYLE);
-    }
   }
 }

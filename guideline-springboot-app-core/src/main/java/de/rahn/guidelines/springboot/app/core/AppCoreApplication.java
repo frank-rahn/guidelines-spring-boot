@@ -15,13 +15,13 @@
  */
 package de.rahn.guidelines.springboot.app.core;
 
-import de.rahn.guidelines.springboot.app.core.util.AppProperties;
+import de.rahn.guidelines.springboot.app.core.config.properties.AppProperties;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.boot.ExitCodeExceptionMapper;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.context.properties.ConfigurationPropertiesScan;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.core.annotation.Order;
@@ -30,7 +30,7 @@ import org.springframework.core.annotation.Order;
  * @author Frank Rahn
  */
 @SpringBootApplication
-@ConfigurationPropertiesScan
+@EnableConfigurationProperties({AppProperties.class})
 @Slf4j
 public class AppCoreApplication {
 
