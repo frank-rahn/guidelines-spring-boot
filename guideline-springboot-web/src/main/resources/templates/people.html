@@ -51,6 +51,12 @@
           </tr>
           </thead>
           <tbody>
+          <!--/*-->
+          <!--@thymesVar id="people" type="java.util.List<de.rahn.guidelines.springboot.web.ui.people.Person>"-->
+          <!--*/-->
+          <!--/*-->
+          <!--@thymesVar id="person" type="de.rahn.guidelines.springboot.web.ui.people.Person"-->
+          <!--*/-->
           <tr th:each="person: ${people}">
             <td><a th:href="@{/people/{id}(id=${person.id})}" th:text="${person.id}">id</a></td>
             <td th:text="${person.firstName}">first</td>
