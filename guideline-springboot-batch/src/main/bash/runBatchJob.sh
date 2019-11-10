@@ -1,28 +1,31 @@
 #!/bin/bash
 
-RUN_ID=$(date +"%Y-%m-%d %H:%M:%S")
-JOB_PARAMS+=("run.id=\"${RUN_ID}\"")
+RUN_ID=$(date +"%s%3N")
+JOB_PARAMS+=("run.id(long)=${RUN_ID}")
 
 function help {
   cat <<EOM
 usage: $(basename "${0}") [-h] [-o <options>] [-d <month>] [-y <year>]
   where command is one of the following:
-    -o <options>    Options (such as autoLogin|autoLogOut)
+    -s <name>       Enter a name to skip (e.G. Meier)
+    -f <name>       Enter a name to filter (e.G. Schmitz)
     -d <month>      Enter a month as Job param
     -y <year>       Enter a year as Job param
 EOM
   exit 1
 }
 
-while getopts "ho:d:y:" opt; do
+while getopts "hs:f:d:y:" opt; do
   case "${opt}" in
   h) help
     ;;
-  o) JOB_PARAMS+=("options=\"${OPTARG}\"")
+  s) JOB_PARAMS+=("skip=${OPTARG}")
     ;;
-  d) JOB_PARAMS+=("month=\"${OPTARG}\"")
+  f) JOB_PARAMS+=("filter=${OPTARG}")
     ;;
-  y) JOB_PARAMS+=("year=\"${OPTARG}\"")
+  d) JOB_PARAMS+=("month=${OPTARG}")
+    ;;
+  y) JOB_PARAMS+=("year=${OPTARG}")
     ;;
   *) help
     ;;

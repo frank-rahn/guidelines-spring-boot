@@ -1,7 +1,7 @@
 #!/bin/bash
 
 RUN_ID=$(date +"%Y-%m-%d %H:%M:%S")
-ARGS+=("--run.id=\"${RUN_ID}\"")
+ARGS+=("--run.id=${RUN_ID}")
 
 function help {
   cat <<EOM

@@ -18,6 +18,7 @@ package de.rahn.guidlines.springboot.batch.job.userimport;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.batch.core.configuration.annotation.StepScope;
 import org.springframework.batch.item.ItemProcessor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 /**
@@ -28,14 +29,20 @@ import org.springframework.stereotype.Component;
 @Slf4j
 public class UserImportPersonProcessor implements ItemProcessor<Person, Person> {
 
+  @Value("#{jobParameters['filter']?:'FILTER'}")
+  private String filterUser;
+
+  @Value("#{jobParameters['skip']?:'SKIP'}")
+  private String skipUser;
+
   @Override
   public Person process(Person person) {
-    if ("SCHMITZ".equals(person.getLastName().toUpperCase())) {
+    if (filterUser.toUpperCase().equals(person.getLastName().toUpperCase())) {
       // Filter this record
       return null;
-    } else if ("MEIER".equals(person.getLastName().toUpperCase())) {
+    } else if (skipUser.toUpperCase().equals(person.getLastName().toUpperCase())) {
       // Skip this record
-      throw new RuntimeException("Skip Meier");
+      throw new RuntimeException("Skip " + skipUser);
     }
 
     Person transformedPerson =
