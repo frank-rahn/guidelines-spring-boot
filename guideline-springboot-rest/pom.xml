@@ -30,6 +30,11 @@
   <artifactId>guideline-springboot-rest</artifactId>
   <name>Rest</name>
   <description>Guidelines for Spring Boot - Rest</description>
+  
+  <properties>
+    <!-- Siehe Issue #4: https://github.com/frank-rahn/guidelines-spring-boot/issues/4 -->
+    <skipTests>true</skipTests>
+  </properties>
 
   <dependencies>
     <!-- Standard -->
