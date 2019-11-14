@@ -8,6 +8,8 @@ Frank Rahn <frank@frank-rahn.de>
 
 image::https://github.com/frank-rahn/guidelines-spring-boot/workflows/ci/badge.svg[CI Workflow Status]
 
+== Beschreibung
+
 In diesem Repository befinden sich Projekte als Vorlagen rund um das Thema Spring Boot.
 
 == Module
