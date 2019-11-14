@@ -112,7 +112,7 @@
           <version>${jib-maven-plugin.version}</version>
           <executions>
             <execution>
-              <phase>package</phase>
+              <phase>install</phase>
               <goals>
                 <goal>dockerBuild</goal>
               </goals>
