@@ -4,8 +4,9 @@ Frank Rahn <frank@frank-rahn.de>
 :toclevels: 3
 :toc-title: Inhaltsverzeichnis
 :sectanchors:
+:figure-caption!:
 
-image::https://github.com/frank-rahn/guidelines-spring-boot/workflows/Java-CI/badge.svg[title="Workflow Status"]
+image::https://github.com/frank-rahn/guidelines-spring-boot/workflows/Java-CI/badge.svg[]
 
 In diesem Repository befinden sich Projekte als Vorlagen rund um das Thema Spring Boot.
 
