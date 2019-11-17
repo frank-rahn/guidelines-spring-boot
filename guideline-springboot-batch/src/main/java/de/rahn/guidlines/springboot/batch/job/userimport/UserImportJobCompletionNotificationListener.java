@@ -17,6 +17,7 @@ package de.rahn.guidlines.springboot.batch.job.userimport;
 
 import static org.springframework.batch.core.BatchStatus.COMPLETED;
 
+import java.time.LocalDate;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.batch.core.JobExecution;
@@ -43,8 +44,13 @@ public class UserImportJobCompletionNotificationListener extends JobExecutionLis
 
       jdbcTemplate
           .query(
-              "SELECT first_name, last_name FROM people",
-              (rs, row) -> new Person(rs.getString(1), rs.getString(2)))
+              "SELECT person_id, first_name, last_name, email_address, birth_day FROM people",
+              (rs, row) -> {
+                Person person = new Person(rs.getString(2), rs.getString(3));
+                person.setEmailAddress(rs.getString(4));
+                person.setBirthday(rs.getObject(5, LocalDate.class));
+                return person;
+              })
           .forEach(person -> LOGGER.info("Found <" + person + "> in the database."));
     }
   }

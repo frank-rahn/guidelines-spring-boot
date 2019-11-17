@@ -1,6 +1,6 @@
-firstName, lastName
-Frank    , Rahn
-Martin   , Rahn
-Peter    , Schmitz
-Gerd     , Rahn
-Hans     , Meier
+firstName, lastName, emailAddress        , birthday
+Frank    , Rahn    , frank@frank-rahn.de , 1967-05-05
+Martin   , Rahn    , martin@frank-rahn.de,
+Peter    , Schmitz , peter@schmitz.de    , 1979-03-25
+Gerd     , Rahn    , gerd@frank-rahn.de  ,
+Hans     , Meier   , hans@meier.de       , 1940-02-08

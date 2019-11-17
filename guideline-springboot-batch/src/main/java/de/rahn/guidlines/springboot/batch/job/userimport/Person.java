@@ -20,6 +20,7 @@ import static org.apache.commons.lang3.builder.HashCodeBuilder.reflectionHashCod
 import static org.apache.commons.lang3.builder.ToStringBuilder.reflectionToString;
 import static org.apache.commons.lang3.builder.ToStringStyle.JSON_STYLE;
 
+import java.time.LocalDate;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
@@ -42,6 +43,8 @@ public class Person {
   private String firstName;
 
   private String emailAddress;
+
+  private LocalDate birthday;
 
   @Override
   public boolean equals(Object obj) {
