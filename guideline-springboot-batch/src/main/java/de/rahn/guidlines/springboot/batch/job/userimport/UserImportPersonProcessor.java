@@ -45,8 +45,10 @@ public class UserImportPersonProcessor implements ItemProcessor<Person, Person> 
       throw new RuntimeException("Skip " + skipUser);
     }
 
-    Person transformedPerson =
+    var transformedPerson =
         new Person(person.getFirstName().toUpperCase(), person.getLastName().toUpperCase());
+    transformedPerson.setEmailAddress(person.getEmailAddress());
+    transformedPerson.setBirthday(person.getBirthday());
 
     LOGGER.info("Converting (" + person + ") into (" + transformedPerson + ")");
 

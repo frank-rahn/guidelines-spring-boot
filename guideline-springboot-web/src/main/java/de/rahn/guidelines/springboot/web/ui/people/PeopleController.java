@@ -46,7 +46,8 @@ class PeopleController {
     LOGGER.info("GetAllPeople: Authentication={}", getContext().getAuthentication());
 
     ResponseEntity<List<Person>> people =
-        template.exchange("/", GET, null, new ParameterizedTypeReference<List<Person>>() {});
+        template.exchange("/", GET, null, new ParameterizedTypeReference<>() {
+        });
 
     model.addAttribute("people", people.getBody());
 
@@ -57,7 +58,7 @@ class PeopleController {
   String getPersonById(@PathVariable("id") String id, Model model) {
     LOGGER.info("GetPersonById: Id={}, Authentication={}", id, getContext().getAuthentication());
 
-    Person person = template.getForObject("/" + id, Person.class);
+    var person = template.getForObject("/" + id, Person.class);
 
     model.addAttribute("person", person);
 
