@@ -41,13 +41,14 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
         "app.people[1].birthday=1979-03-25",
         "app.people[1].emailAddress=martin@frank-rahn.de"
     })
-class AppPropertiesTest {
+class AppPropertiesTests {
 
   @Autowired(required = false)
   private AppProperties properties;
 
   @Test
   void givenContext_whenLoads_thenShouldPopulateAppProperties() {
+    // Then
     assertThat(properties).isNotNull();
     assertThat(properties.getPeople()).hasSize(2);
     assertThat(properties.getPeople().get(0)).isNotNull();
@@ -62,5 +63,14 @@ class AppPropertiesTest {
     assertThat(properties.getPeople().get(1).getLastName()).isEqualTo("Rahn");
     assertThat(properties.getPeople().get(1).getBirthday()).isEqualTo(LocalDate.of(1979, 3, 25));
     assertThat(properties.getPeople().get(1).getEmailAddress()).isEqualTo("martin@frank-rahn.de");
+  }
+
+  @Test
+  void givenContext_whenSetPeople_thenListIsNotNull() {
+    // When
+    properties.setPeople(null);
+
+    // Then
+    assertThat(properties.getPeople()).hasSize(0);
   }
 }

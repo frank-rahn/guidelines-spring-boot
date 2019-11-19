@@ -64,7 +64,13 @@ public class AppCoreApplication {
   @Bean
   ExitCodeExceptionMapper exitCodeExceptionMapper() {
     return exception -> {
-      if (exception.getCause() instanceof IllegalArgumentException) {
+      Throwable cause = exception.getCause();
+
+      if (cause == null) {
+        cause = exception;
+      }
+
+      if (cause instanceof IllegalArgumentException) {
         return 3;
       }
 

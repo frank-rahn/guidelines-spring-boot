@@ -15,8 +15,17 @@
  */
 package de.rahn.guidelines.springboot.app.core;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
+import java.util.List;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.ApplicationArguments;
+import org.springframework.boot.ApplicationRunner;
+import org.springframework.boot.DefaultApplicationArguments;
+import org.springframework.boot.ExitCodeExceptionMapper;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
@@ -27,8 +36,47 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 @SpringBootTest
 class AppCoreApplicationTests {
 
+  @Autowired
+  private List<ApplicationRunner> applicationRunnerList;
+
+  @Autowired
+  private ExitCodeExceptionMapper exitCodeExceptionMapper;
+
   @Test
   void givenContext_whenLoads_thenOk() {
     // Empty
+  }
+
+  @Test
+  void givenContext_whenLoads_thenApplicationRunner() {
+    // Given
+    ApplicationArguments applicationArguments = new DefaultApplicationArguments("--go-wrong");
+
+    // Then
+    assertThat(applicationRunnerList).hasSize(2);
+
+    Throwable t =
+        assertThrows(
+            IllegalArgumentException.class,
+            () -> applicationRunnerList.get(1).run(applicationArguments));
+
+    assertThat(t.getMessage()).contains("go-wrong");
+  }
+
+  @Test
+  void givenContext_whenLoads_thenExitCodeExceptionMapper() {
+    // Then
+    Throwable throwable = new RuntimeException("Unknown Exception");
+
+    // When
+    int exitCode2 = exitCodeExceptionMapper.getExitCode(throwable);
+
+    //noinspection UnnecessaryInitCause
+    throwable.initCause(new IllegalArgumentException("Known Exception"));
+    int exitCode3 = exitCodeExceptionMapper.getExitCode(throwable);
+
+    // Then
+    assertThat(exitCode2).isEqualTo(2);
+    assertThat(exitCode3).isEqualTo(3);
   }
 }
