@@ -15,6 +15,7 @@
  */
 package de.rahn.guidelines.springboot.rest;
 
+import lombok.Generated;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
@@ -24,6 +25,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication
 public class RestApplication {
 
+  @Generated
   public static void main(String[] args) {
     SpringApplication.run(RestApplication.class, args);
   }

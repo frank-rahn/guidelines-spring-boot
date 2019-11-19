@@ -18,6 +18,7 @@ package de.rahn.guidelines.springboot.app.jpa;
 import de.rahn.guidelines.springboot.app.jpa.domain.people.Person;
 import de.rahn.guidelines.springboot.app.jpa.domain.people.PersonRepository;
 import java.time.LocalDate;
+import lombok.Generated;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
@@ -35,6 +36,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Slf4j
 public class AppJpaApplication {
 
+  @Generated
   public static void main(String[] args) {
     ApplicationContext applicationContext = SpringApplication.run(AppJpaApplication.class, args);
 

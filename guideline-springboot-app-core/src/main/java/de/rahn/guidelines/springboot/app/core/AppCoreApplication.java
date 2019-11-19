@@ -16,6 +16,7 @@
 package de.rahn.guidelines.springboot.app.core;
 
 import de.rahn.guidelines.springboot.app.core.config.properties.AppProperties;
+import lombok.Generated;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.boot.ExitCodeExceptionMapper;
@@ -34,6 +35,7 @@ import org.springframework.core.annotation.Order;
 @Slf4j
 public class AppCoreApplication {
 
+  @Generated
   public static void main(String[] args) {
     ApplicationContext applicationContext = SpringApplication.run(AppCoreApplication.class, args);
 
