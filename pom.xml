@@ -216,8 +216,22 @@
             <artifactId>coveralls-maven-plugin</artifactId>
             <version>${coveralls-maven-plugin.version}</version>
             <configuration>
+              <!--suppress MavenModelInspection -->
               <repoToken>${env.COVERALLS_TOKEN}</repoToken>
             </configuration>
+            <dependencies>
+              <!-- Plugin not Java 11 compatible -->
+              <dependency>
+                <groupId>javax.xml.bind</groupId>
+                <artifactId>jaxb-api</artifactId>
+                <version>2.3.1</version>
+              </dependency>
+              <dependency>
+                <groupId>jakarta.xml.bind</groupId>
+                <artifactId>jakarta.xml.bind-api</artifactId>
+                <version>2.3.2</version>
+              </dependency>
+            </dependencies>
           </plugin>
         </plugins>
       </build>
