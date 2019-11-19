@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package de.rahn.guidlines.springboot.batch.customized;
+package de.rahn.guidelines.springboot.batch.customized;
 
 import org.springframework.batch.core.ExitStatus;
 

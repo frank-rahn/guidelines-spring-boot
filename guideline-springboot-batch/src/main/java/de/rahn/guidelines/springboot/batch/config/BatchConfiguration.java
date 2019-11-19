@@ -13,12 +13,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package de.rahn.guidlines.springboot.batch.config;
+package de.rahn.guidelines.springboot.batch.config;
 
 import static java.time.format.DateTimeFormatter.ISO_DATE;
 
-import de.rahn.guidlines.springboot.batch.job.userimport.Person;
-import de.rahn.guidlines.springboot.batch.job.userimport.UserImportPersonProcessor;
+import de.rahn.guidelines.springboot.batch.job.userimport.Person;
+import de.rahn.guidelines.springboot.batch.job.userimport.UserImportPersonProcessor;
 import java.beans.PropertyEditorSupport;
 import java.sql.Date;
 import java.time.LocalDate;

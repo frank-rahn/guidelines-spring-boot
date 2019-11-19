@@ -13,22 +13,25 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package de.rahn.guidlines.springboot.batch;
+package de.rahn.guidelines.springboot.batch;
 
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.ApplicationContext;
 
 /**
  * @author Frank Rahn
  */
-@ExtendWith(SpringExtension.class)
-@SpringBootTest
-class BatchApplicationTests {
+@SpringBootApplication
+@Slf4j
+public class BatchApplication {
 
-  @Test
-  void givenContext_whenLoads_thenOk() {
-    // Empty
+  public static void main(String... args) {
+    ApplicationContext applicationContext = SpringApplication.run(BatchApplication.class, args);
+
+    int exitCode = SpringApplication.exit(applicationContext);
+    LOGGER.info("Batch finished with exit code {}", exitCode);
+    System.exit(exitCode);
   }
 }
