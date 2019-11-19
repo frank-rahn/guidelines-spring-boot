@@ -114,7 +114,9 @@ class PeopleController {
       @ApiResponse(code = HTTP_NOT_FOUND, message = "Keine Person gefunden")
   })
   ResponseEntity<Person> getPersonById(
-      @PathVariable("id") @ApiParam(value = "Die UUID der gesuchten Person", required = true)
+      @SuppressWarnings("MVCPathVariableInspection")
+      @PathVariable("id")
+      @ApiParam(value = "Die UUID der gesuchten Person", required = true)
           String id) {
     LOGGER.info("GetPersonById: Id={}, Authentication={}", id, getContext().getAuthentication());
 
@@ -129,7 +131,9 @@ class PeopleController {
       @ApiResponse(code = HTTP_FORBIDDEN, message = "Löschen der Person ist verboten")
   })
   ResponseEntity<Void> deletePersonById(
-      @ApiParam(value = "Die UUID der zu löschenden Person", required = true) @PathVariable("id")
+      @SuppressWarnings("MVCPathVariableInspection")
+      @ApiParam(value = "Die UUID der zu löschenden Person", required = true)
+      @PathVariable("id")
           String id) {
     LOGGER.info("DeletePersonById: Id={}, Authentication={}", id, getContext().getAuthentication());
 
@@ -146,6 +150,7 @@ class PeopleController {
       @ApiResponse(code = HTTP_FORBIDDEN, message = "Zugriff auf die Person ist verboten")
   })
   Person putPersonById(
+      @SuppressWarnings("MVCPathVariableInspection")
       @ApiParam(value = "Die UUID der neuen oder zu ändernde Person", required = true)
       @PathVariable("id")
           String id,

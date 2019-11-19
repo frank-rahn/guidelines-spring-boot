@@ -56,6 +56,7 @@ public class CustomizedJobExecutionExitCodeGenerator
         .orElse(0);
   }
 
+  @SuppressWarnings("WeakerAccess")
   protected int mapExitStatusToExitCode(ExitStatus exitStatus) {
     if (COMPLETED.getExitCode().equals(exitStatus.getExitCode())) {
       return 0;

@@ -46,8 +46,7 @@ class PeopleController {
     LOGGER.info("GetAllPeople: Authentication={}", getContext().getAuthentication());
 
     ResponseEntity<List<Person>> people =
-        template.exchange("/", GET, null, new ParameterizedTypeReference<>() {
-        });
+        template.exchange("/", GET, null, new ParameterizedTypeReference<>() {});
 
     model.addAttribute("people", people.getBody());
 
@@ -55,7 +54,8 @@ class PeopleController {
   }
 
   @GetMapping(path = "/{id}")
-  String getPersonById(@PathVariable("id") String id, Model model) {
+  String getPersonById(
+      @SuppressWarnings("MVCPathVariableInspection") @PathVariable("id") String id, Model model) {
     LOGGER.info("GetPersonById: Id={}, Authentication={}", id, getContext().getAuthentication());
 
     var person = template.getForObject("/" + id, Person.class);
