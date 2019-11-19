@@ -215,6 +215,9 @@
             <groupId>org.eluder.coveralls</groupId>
             <artifactId>coveralls-maven-plugin</artifactId>
             <version>${coveralls-maven-plugin.version}</version>
+            <configuration>
+              <repoToken>${env.COVERALLS_TOKEN}</repoToken>
+            </configuration>
           </plugin>
         </plugins>
       </build>
