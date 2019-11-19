@@ -55,7 +55,8 @@
 
     <!-- Plugins Version -->
     <jacoco-maven-plugin.version>0.8.5</jacoco-maven-plugin.version>
-    <jib-maven-plugin.version>1.7.0</jib-maven-plugin.version>
+    <jib-maven-plugin.version>1.8.0</jib-maven-plugin.version>
+    <coveralls-maven-plugin.version>4.3.0</coveralls-maven-plugin.version>
   </properties>
 
   <modules>
@@ -198,6 +199,28 @@
     </plugins>
   </build>
 
+  <profiles>
+    <profile>
+      <id>github-actions</id>
+      <activation>
+        <property>
+          <name>env.GITHUB_ACTIONS</name>
+          <value>true</value>
+        </property>
+      </activation>
+
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.eluder.coveralls</groupId>
+            <artifactId>coveralls-maven-plugin</artifactId>
+            <version>${coveralls-maven-plugin.version}</version>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+  </profiles>
+
   <repositories>
     <repository>
       <id>spring-milestones</id>
@@ -225,5 +248,15 @@
       <url>https://www.apache.org/licenses/LICENSE-2.0</url>
     </license>
   </licenses>
+
+  <issueManagement>
+    <system>GitHub Issues</system>
+    <url>https://github.com/frank-rahn/guidelines-spring-boot/issues</url>
+  </issueManagement>
+
+  <ciManagement>
+    <system>GitHub Actions</system>
+    <url>https://github.com/frank-rahn/guidelines-spring-boot/actions</url>
+  </ciManagement>
 
 </project>

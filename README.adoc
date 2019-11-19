@@ -8,6 +8,7 @@ Frank Rahn <frank@frank-rahn.de>
 
 image:https://img.shields.io/badge/license-Apache_License_2-blue.svg[title="Apache License 2", alt="Apache License 2", link="https://www.apache.org/licenses/LICENSE-2.0"]
 image:https://github.com/frank-rahn/guidelines-spring-boot/workflows/build/badge.svg[title="Build Status",alt="Build Status"]
+image:https://coveralls.io/repos/frank-rahn/guidelines-spring-boot/badge.svg?branch=master&service=github[title="Coverage Status", alt="Coverage Status", link="https://coveralls.io/github/frank-rahn/guidelines-spring-boot?branch=master"]
 
 toc::[]
 
@@ -16,6 +17,9 @@ toc::[]
 In diesem Repository befinden sich Projekte als Vorlagen rund um das Thema Spring Boot.
 
 == Module
+
+In allen Modulen wird der Java Style Guide aus den
+link:https://google.github.io/styleguide/[Google Style Guides] genutzt.
 
 === App-Core
 
