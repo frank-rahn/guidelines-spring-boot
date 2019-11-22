@@ -41,20 +41,27 @@ class PersonRepositoryTest {
   @Test
   @Sql(statements = {"DELETE FROM person"})
   void givenPeople_whenSaved_thenFindByName() {
+    // Given
     final Person person = new Person("Rahn", LocalDate.of(1940, 2, 8));
     person.setFirstName("Gerd");
 
-    personRepository.save(person);
-    assertThat(person.getId()).isNotEmpty();
+    // When
+    final Person result = personRepository.save(person);
 
-    final List<Person> result = personRepository.findByLastName("Rahn");
-    assertThat(result).hasSize(1);
-    assertThat(result).contains(person);
+    // Then
+    assertThat(result.getId()).isNotEmpty();
+
+    final List<Person> foundPerson = personRepository.findByLastName("Rahn");
+    assertThat(foundPerson).hasSize(1);
+    assertThat(foundPerson).contains(person);
   }
 
   @Test
   void givenNothing_whenFindByLastName_thenFindOldData() {
+    // When
     final List<Person> result = personRepository.findByLastName("Rahn");
-    assertThat(result).hasSize(2);
+
+    // Then
+    assertThat(result).hasSize(0);
   }
 }

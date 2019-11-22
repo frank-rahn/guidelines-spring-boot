@@ -167,6 +167,7 @@
           <!-- Exclude Entity_.class -->
           <excludes>
             <exclude>**/*_.*</exclude>
+            <exclude>**/*Application.*</exclude>
           </excludes>
         </configuration>
         <executions>

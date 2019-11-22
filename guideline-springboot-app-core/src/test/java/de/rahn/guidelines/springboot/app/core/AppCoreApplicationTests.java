@@ -52,9 +52,10 @@ class AppCoreApplicationTests {
     // Given
     ApplicationArguments applicationArguments = new DefaultApplicationArguments("--go-wrong");
 
-    // Then
+    // When
     assertThat(applicationRunnerList).hasSize(2);
 
+    // Then
     Throwable t =
         assertThrows(
             IllegalArgumentException.class,

@@ -64,13 +64,4 @@ class AppPropertiesTests {
     assertThat(properties.getPeople().get(1).getBirthday()).isEqualTo(LocalDate.of(1979, 3, 25));
     assertThat(properties.getPeople().get(1).getEmailAddress()).isEqualTo("martin@frank-rahn.de");
   }
-
-  @Test
-  void givenContext_whenSetPeople_thenListIsNotNull() {
-    // When
-    properties.setPeople(null);
-
-    // Then
-    assertThat(properties.getPeople()).hasSize(0);
-  }
 }

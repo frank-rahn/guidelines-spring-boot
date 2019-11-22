@@ -15,8 +15,12 @@
  */
 package de.rahn.guidelines.springboot.batch;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
+import de.rahn.guidelines.springboot.batch.customized.CustomizedJobExecutionExitCodeGenerator;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
@@ -27,8 +31,14 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 @SpringBootTest
 class BatchApplicationTests {
 
+  @Autowired
+  private CustomizedJobExecutionExitCodeGenerator customizedJobExecutionExitCodeGenerator;
+
   @Test
   void givenContext_whenLoads_thenOk() {
-    // Empty
+    // Then
+    int exitCode = customizedJobExecutionExitCodeGenerator.getExitCode();
+
+    assertThat(exitCode).isEqualTo(0);
   }
 }

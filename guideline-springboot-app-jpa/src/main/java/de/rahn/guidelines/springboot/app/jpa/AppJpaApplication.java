@@ -15,19 +15,10 @@
  */
 package de.rahn.guidelines.springboot.app.jpa;
 
-import de.rahn.guidelines.springboot.app.jpa.domain.people.Person;
-import de.rahn.guidelines.springboot.app.jpa.domain.people.PersonRepository;
-import java.time.LocalDate;
-import lombok.Generated;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.boot.ApplicationArguments;
-import org.springframework.boot.ApplicationRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;
-import org.springframework.context.annotation.Bean;
-import org.springframework.core.annotation.Order;
-import org.springframework.transaction.annotation.Transactional;
 
 /**
  * @author Frank Rahn
@@ -36,38 +27,11 @@ import org.springframework.transaction.annotation.Transactional;
 @Slf4j
 public class AppJpaApplication {
 
-  @Generated
   public static void main(String[] args) {
     ApplicationContext applicationContext = SpringApplication.run(AppJpaApplication.class, args);
 
     int exitCode = SpringApplication.exit(applicationContext);
-    LOGGER.info("App finished with exit code {}", exitCode);
+    LOGGER.info("App-Jpa finished with exit code {}", exitCode);
     System.exit(exitCode);
-  }
-
-  @Bean
-  @Order(1)
-  ApplicationRunner initDatabase(PersonRepository repository) {
-    return new ApplicationRunner() {
-
-      @Override
-      @Transactional
-      public void run(ApplicationArguments args) {
-        Person person = new Person("Rahn", LocalDate.of(1967, 5, 5));
-        person.setFirstName("Frank");
-        repository.save(person);
-
-        person = new Person("Rahn", LocalDate.of(1979, 3, 25));
-        person.setFirstName("Martin");
-        repository.save(person);
-      }
-    };
-  }
-
-  @Bean
-  @Order(2)
-  ApplicationRunner usingDatabase(PersonRepository repository) {
-    return args ->
-        repository.findByLastName("Rahn").forEach(person -> LOGGER.info(person.toString()));
   }
 }

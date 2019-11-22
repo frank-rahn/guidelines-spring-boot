@@ -19,42 +19,36 @@ import static org.apache.commons.lang3.builder.ToStringBuilder.reflectionToStrin
 import static org.apache.commons.lang3.builder.ToStringStyle.JSON_STYLE;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.Setter;
 import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.boot.context.properties.ConstructorBinding;
 import org.springframework.validation.annotation.Validated;
 
 /**
  * @author Frank Rahn
  */
 @ConfigurationProperties(prefix = "app")
+@ConstructorBinding
+@AllArgsConstructor()
 @Getter
-@Setter
 @Validated
 public class AppProperties {
 
-  private final List<Person> people = new ArrayList<>();
-
-  public void setPeople(List<Person> people) {
-    this.people.clear();
-
-    if (people != null) {
-      this.people.addAll(people);
-    }
-  }
+  private final List<Person> people;
 
   @Override
   public String toString() {
     return reflectionToString(this, JSON_STYLE);
   }
 
+  @ConstructorBinding
+  @AllArgsConstructor
   @Getter
-  @Setter
   @Validated
   public static class Person {
 
