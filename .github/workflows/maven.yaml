@@ -9,6 +9,8 @@ jobs:
     steps:
       - name: Checkout sources
         uses: actions/checkout@v1
+        with:
+          ref: master
       - name: Set up JDK
         uses: actions/setup-java@v1
         with:
