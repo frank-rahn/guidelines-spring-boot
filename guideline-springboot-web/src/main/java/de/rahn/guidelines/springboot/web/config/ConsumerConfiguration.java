@@ -27,7 +27,7 @@ import org.springframework.web.client.RestTemplate;
  */
 @Configuration
 @EnableConfigurationProperties({AppProperties.class})
-class AppConfiguration {
+class ConsumerConfiguration {
 
   @Bean
   RestTemplate restTemplate(RestTemplateBuilder builder, AppProperties appProperties) {
