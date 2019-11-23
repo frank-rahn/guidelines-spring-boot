@@ -106,7 +106,9 @@ class BatchConfiguration {
               ps.setString(1, person.getFirstName());
               ps.setString(2, person.getLastName());
               ps.setString(3, person.getEmailAddress());
-              ps.setDate(4, Date.valueOf(person.getBirthday()));
+              if (person.getBirthday() != null) {
+                ps.setDate(4, Date.valueOf(person.getBirthday()));
+              }
             })
         .dataSource(dataSource)
         .build();

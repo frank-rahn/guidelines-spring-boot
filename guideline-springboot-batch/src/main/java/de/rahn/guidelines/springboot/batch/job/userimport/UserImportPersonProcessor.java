@@ -30,10 +30,10 @@ import org.springframework.stereotype.Component;
 public class UserImportPersonProcessor implements ItemProcessor<Person, Person> {
 
   @Value("#{jobParameters['filter']?:'FILTER'}")
-  private String filterUser;
+  String filterUser;
 
   @Value("#{jobParameters['skip']?:'SKIP'}")
-  private String skipUser;
+  String skipUser;
 
   @Override
   public Person process(Person person) {
@@ -46,7 +46,7 @@ public class UserImportPersonProcessor implements ItemProcessor<Person, Person> 
     }
 
     var transformedPerson =
-        new Person(person.getFirstName().toUpperCase(), person.getLastName().toUpperCase());
+        new Person(person.getLastName().toUpperCase(), person.getFirstName().toUpperCase());
     transformedPerson.setEmailAddress(person.getEmailAddress());
     transformedPerson.setBirthday(person.getBirthday());
 
