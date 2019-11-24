@@ -30,7 +30,7 @@ import org.springframework.stereotype.Component;
  * @author Frank Rahn
  */
 @Component
-public class CustomizedExitStatusListener implements JobExecutionListener, StepExecutionListener {
+class CustomizedExitStatusListener implements JobExecutionListener, StepExecutionListener {
 
   @Override
   public void beforeJob(JobExecution jobExecution) {
