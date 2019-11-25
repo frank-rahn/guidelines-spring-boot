@@ -78,7 +78,7 @@ public class JobReportBuilder {
         .writeText("ID des Batchlaufes ist ")
         .writeText(jobExecution.getId())
         .writeNewLine()
-        .writeText("ID der Instanz des Batchlaufes ")
+        .writeText("ID der Instanz des Batchlaufes ist ")
         .writeText(jobExecution.getJobInstance().getInstanceId())
         .writeText(" (Für Wiederanlauf, ...)")
         .writeNewLine()
@@ -90,8 +90,7 @@ public class JobReportBuilder {
         .writeNewLine()
         .writeText("Exit Meldung: ")
         .writeText(jobExecution.getExitStatus().getExitDescription())
-        .writeNewLine()
-        .writeFilledLine('*');
+        .writeNewLine();
   }
 
   public JobReportBuilder writeFooter(@SuppressWarnings("unused") JobExecution jobExecution) {
@@ -108,6 +107,8 @@ public class JobReportBuilder {
 
   @SuppressWarnings("UnusedReturnValue")
   public JobReportBuilder writeStepExecution(StepExecution stepExecution) {
+    writeFilledLine('*');
+
     if (stepExecution != null) {
       ZonedDateTime zonedStartDateTime = computeZonedDateTime(stepExecution.getStartTime());
       ZonedDateTime zonedEndDateTime =
@@ -128,6 +129,7 @@ public class JobReportBuilder {
           .writeTitle("Exit Meldung")
           .writeText(stepExecution.getExitStatus().getExitDescription())
           .writeNewLine()
+          .writeText('\t')
           .writeFilled('*', 5)
           .writeNewLine()
           .writeCount("Read", stepExecution.getReadCount())

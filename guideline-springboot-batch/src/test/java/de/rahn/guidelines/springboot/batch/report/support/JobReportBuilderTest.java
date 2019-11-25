@@ -478,7 +478,7 @@ class JobReportBuilderTest {
     // Then
     assertThat(result).isNotNull();
     assertThat(result).isEqualTo(classUnderTest);
-    assertThat(result.build()).isEqualTo(JobReportBuilder.NULL + '\n');
+    assertThat(result.build()).contains(JobReportBuilder.NULL, "\n");
   }
 
   @Test
