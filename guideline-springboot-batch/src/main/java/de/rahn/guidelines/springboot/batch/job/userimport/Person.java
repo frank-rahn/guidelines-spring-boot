@@ -15,25 +15,24 @@
  */
 package de.rahn.guidelines.springboot.batch.job.userimport;
 
-import static org.apache.commons.lang3.builder.EqualsBuilder.reflectionEquals;
-import static org.apache.commons.lang3.builder.HashCodeBuilder.reflectionHashCode;
-import static org.apache.commons.lang3.builder.ToStringBuilder.reflectionToString;
-import static org.apache.commons.lang3.builder.ToStringStyle.JSON_STYLE;
-
 import java.time.LocalDate;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 
 /**
  * @author Frank Rahn
  */
-@NoArgsConstructor
-@RequiredArgsConstructor
 @Getter
 @Setter
+@NoArgsConstructor
+@RequiredArgsConstructor
+@ToString
+@EqualsAndHashCode
 public class Person {
 
   @NonNull
@@ -45,27 +44,4 @@ public class Person {
   private String emailAddress;
 
   private LocalDate birthday;
-
-  @Override
-  public boolean equals(Object obj) {
-    if (this == obj) {
-      return true;
-    }
-
-    if (obj == null || getClass() != obj.getClass()) {
-      return false;
-    }
-
-    return reflectionEquals(this, obj, false);
-  }
-
-  @Override
-  public int hashCode() {
-    return reflectionHashCode(this, false);
-  }
-
-  @Override
-  public String toString() {
-    return reflectionToString(this, JSON_STYLE);
-  }
 }
