@@ -16,6 +16,7 @@
 package de.rahn.guidelines.springboot.batch.job.userimport;
 
 import java.time.LocalDate;
+import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -23,14 +24,17 @@ import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
+import lombok.With;
 
 /**
  * @author Frank Rahn
  */
 @Getter
 @Setter
+@With
 @NoArgsConstructor
 @RequiredArgsConstructor
+@AllArgsConstructor
 @ToString
 @EqualsAndHashCode
 public class Person {

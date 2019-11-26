@@ -45,12 +45,10 @@ public class UserImportJobCompletionNotificationListener extends JobExecutionLis
       jdbcTemplate
           .query(
               "SELECT person_id, first_name, last_name, email_address, birth_day FROM people",
-              (rs, row) -> {
-                Person person = new Person(rs.getString(3), rs.getString(2));
-                person.setEmailAddress(rs.getString(4));
-                person.setBirthday(rs.getObject(5, LocalDate.class));
-                return person;
-              })
+              (rs, row) ->
+                  new Person(rs.getString(3), rs.getString(2))
+                      .withEmailAddress(rs.getString(4))
+                      .withBirthday(rs.getObject(5, LocalDate.class)))
           .forEach(person -> LOGGER.info("Found <" + person + "> in the database."));
     }
   }

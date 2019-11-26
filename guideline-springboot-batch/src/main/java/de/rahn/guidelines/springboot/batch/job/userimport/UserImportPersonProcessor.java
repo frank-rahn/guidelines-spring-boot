@@ -46,9 +46,9 @@ public class UserImportPersonProcessor implements ItemProcessor<Person, Person> 
     }
 
     var transformedPerson =
-        new Person(person.getLastName().toUpperCase(), person.getFirstName().toUpperCase());
-    transformedPerson.setEmailAddress(person.getEmailAddress());
-    transformedPerson.setBirthday(person.getBirthday());
+        new Person(person.getLastName().toUpperCase(), person.getFirstName().toUpperCase())
+            .withEmailAddress(person.getEmailAddress())
+            .withBirthday(person.getBirthday());
 
     LOGGER.info("Converting (" + person + ") into (" + transformedPerson + ")");
 
