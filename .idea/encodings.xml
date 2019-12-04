@@ -3,9 +3,14 @@
   <component name="Encoding">
     <file url="file://$PROJECT_DIR$" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/guideline-springboot-app-core" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/guideline-springboot-app-core/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/guideline-springboot-app-jpa" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/guideline-springboot-app-jpa/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/guideline-springboot-batch" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/guideline-springboot-batch/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/guideline-springboot-rest" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/guideline-springboot-rest/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/guideline-springboot-web" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/guideline-springboot-web/src/main/java" charset="UTF-8" />
   </component>
 </project>

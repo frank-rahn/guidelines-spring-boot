@@ -17,6 +17,7 @@ package de.rahn.guidelines.springboot.batch.job.userimport;
 
 import static org.springframework.batch.core.BatchStatus.COMPLETED;
 
+import de.rahn.guidelines.springboot.batch.report.support.ReportHelper;
 import java.time.LocalDate;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -35,12 +36,14 @@ public class UserImportJobCompletionNotificationListener extends JobExecutionLis
 
   private final JdbcTemplate jdbcTemplate;
 
+  private final ReportHelper reportHelper;
+
   @Override
   public void afterJob(JobExecution jobExecution) {
     LOGGER.info(jobExecution.toString());
 
     if (jobExecution.getStatus() == COMPLETED) {
-      LOGGER.info("Time to verify the results:");
+      reportHelper.reportInformation("Time to verify the results!");
 
       jdbcTemplate
           .query(
@@ -49,7 +52,8 @@ public class UserImportJobCompletionNotificationListener extends JobExecutionLis
                   new Person(rs.getString(3), rs.getString(2))
                       .withEmailAddress(rs.getString(4))
                       .withBirthday(rs.getObject(5, LocalDate.class)))
-          .forEach(person -> LOGGER.info("Found <" + person + "> in the database."));
+          .forEach(
+              person -> reportHelper.reportInformation("Found Person in the database:\n" + person));
     }
   }
 }

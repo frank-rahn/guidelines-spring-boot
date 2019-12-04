@@ -15,7 +15,9 @@
  */
 package de.rahn.guidelines.springboot.batch.report;
 
-import de.rahn.guidelines.springboot.batch.report.support.JobReportBuilder;
+import de.rahn.guidelines.springboot.batch.report.support.ReportBuilder;
+import de.rahn.guidelines.springboot.batch.report.support.ReportHelper;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.batch.core.JobExecution;
 import org.springframework.batch.core.listener.JobExecutionListenerSupport;
@@ -25,23 +27,25 @@ import org.springframework.stereotype.Component;
 /**
  * @author Frank Rahn
  */
-@Component(JobReportListener.JOBREPORT)
+@Component(ReportJobExecutionListener.REPORT)
 @Order
-@Slf4j(topic = "JOBREPORT")
-public class JobReportListener extends JobExecutionListenerSupport {
+@Slf4j
+@RequiredArgsConstructor
+public class ReportJobExecutionListener extends JobExecutionListenerSupport {
+
+  private final ReportHelper reportHelper;
 
   /**
    * Die Konstante für den Logger.
    */
-  @SuppressWarnings("WeakerAccess")
-  public static final String JOBREPORT = "JOBREPORT";
+  public static final String REPORT = "REPORT";
 
   @Override
   public void afterJob(JobExecution jobExecution) {
-    JobReportBuilder jobReportBuilder = JobReportBuilder.of().writeHeader(jobExecution);
+    ReportBuilder reportBuilder = ReportBuilder.of().writeHeader(jobExecution);
 
-    jobExecution.getStepExecutions().forEach(jobReportBuilder::writeStepExecution);
+    jobExecution.getStepExecutions().forEach(reportBuilder::writeStepExecution);
 
-    LOGGER.info(jobReportBuilder.writeFooter(jobExecution).build());
+    reportHelper.reportInformation(reportBuilder.writeFooter(jobExecution).build());
   }
 }

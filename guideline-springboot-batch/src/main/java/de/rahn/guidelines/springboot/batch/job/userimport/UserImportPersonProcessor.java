@@ -15,7 +15,8 @@
  */
 package de.rahn.guidelines.springboot.batch.job.userimport;
 
-import lombok.extern.slf4j.Slf4j;
+import de.rahn.guidelines.springboot.batch.report.support.ReportHelper;
+import lombok.RequiredArgsConstructor;
 import org.springframework.batch.core.configuration.annotation.StepScope;
 import org.springframework.batch.item.ItemProcessor;
 import org.springframework.beans.factory.annotation.Value;
@@ -26,7 +27,7 @@ import org.springframework.stereotype.Component;
  */
 @Component
 @StepScope
-@Slf4j
+@RequiredArgsConstructor
 public class UserImportPersonProcessor implements ItemProcessor<Person, Person> {
 
   @Value("#{jobParameters['filter']?:'FILTER'}")
@@ -35,13 +36,15 @@ public class UserImportPersonProcessor implements ItemProcessor<Person, Person> 
   @Value("#{jobParameters['skip']?:'SKIP'}")
   String skipUser;
 
+  private final ReportHelper reportHelper;
+
   @Override
   public Person process(Person person) {
     if (filterUser.toUpperCase().equals(person.getLastName().toUpperCase())) {
-      // Filter this record
+      reportHelper.reportWarning("Filter Person:\n" + person);
       return null;
     } else if (skipUser.toUpperCase().equals(person.getLastName().toUpperCase())) {
-      // Skip this record
+      reportHelper.reportError("Skip Person:\n" + person);
       throw new RuntimeException("Skip " + skipUser);
     }
 
@@ -50,7 +53,7 @@ public class UserImportPersonProcessor implements ItemProcessor<Person, Person> 
             .withEmailAddress(person.getEmailAddress())
             .withBirthday(person.getBirthday());
 
-    LOGGER.info("Converting (" + person + ") into (" + transformedPerson + ")");
+    reportHelper.reportInformation("Converting Persons:\n" + person + " into " + transformedPerson);
 
     return transformedPerson;
   }

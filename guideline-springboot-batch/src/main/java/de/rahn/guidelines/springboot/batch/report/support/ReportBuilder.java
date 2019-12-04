@@ -29,15 +29,22 @@ import org.springframework.batch.core.JobExecution;
 import org.springframework.batch.core.JobParameters;
 import org.springframework.batch.core.StepExecution;
 
-public class JobReportBuilder {
+public class ReportBuilder {
 
-  @SuppressWarnings("WeakerAccess")
   public static final String NULL = "<null>";
+
+  public static final String TAB = "    ";
+
+  public static final char FILLER = '*';
+
+  public static final int LINE_SIZE = 80;
 
   private StringBuilder report = new StringBuilder();
 
-  public static JobReportBuilder of() {
-    return new JobReportBuilder();
+  private int reportCurrentLineLength = 0;
+
+  public static ReportBuilder of() {
+    return new ReportBuilder();
   }
 
   private static ZonedDateTime computeZonedDateTime(Date dateTime) {
@@ -52,19 +59,18 @@ public class JobReportBuilder {
     }
   }
 
-  public JobReportBuilder writeHeader(JobExecution jobExecution) {
+  public ReportBuilder writeHeader(JobExecution jobExecution) {
     ZonedDateTime zonedStartDateTime =
         computeZonedDateTime(jobExecution.getStartTime(), jobExecution.getCreateTime());
     ZonedDateTime zonedEndDateTime =
         computeZonedDateTime(jobExecution.getEndTime(), jobExecution.getCreateTime());
 
-    return writeNewLine()
-        .writeFilledLine('*')
-        .writeFilled('*', 5)
-        .writeText(' ')
+    return writeFilledLine(FILLER)
+        .writeFilled(FILLER, 5)
+        .writeText(" Batch ")
         .writeText(jobExecution.getJobInstance().getJobName())
-        .writeNewLine()
-        .writeFilledLine('*')
+        .writeTextAtEndOfLine(fill(FILLER, 5))
+        .writeFilledLine(FILLER)
         .writeText("Start am ")
         .writeText(zonedStartDateTime.toLocalDate())
         .writeText(" um ")
@@ -75,26 +81,36 @@ public class JobReportBuilder {
         .writeText(" um ")
         .writeText(zonedEndDateTime.toLocalTime())
         .writeNewLine()
-        .writeText("ID des Batchlaufes ist ")
+        .writeText("ID des Batchlaufes")
+        .writeFillUpToMiddleOfLine(' ')
+        .writeText(": ")
         .writeText(jobExecution.getId())
         .writeNewLine()
-        .writeText("ID der Instanz des Batchlaufes ist ")
+        .writeText("ID der Instanz des Batchlaufes")
+        .writeFillUpToMiddleOfLine(' ')
+        .writeText(": ")
         .writeText(jobExecution.getJobInstance().getInstanceId())
         .writeText(" (Für Wiederanlauf, ...)")
         .writeNewLine()
-        .writeText("Parameters  : ")
+        .writeText("Parameters")
+        .writeFillUpToMiddleOfLine(' ')
+        .writeText(": ")
         .writeText(jobExecution.getJobParameters())
         .writeNewLine()
-        .writeText("Exit Code   : ")
+        .writeText("Exit Code")
+        .writeFillUpToMiddleOfLine(' ')
+        .writeText(": ")
         .writeText(jobExecution.getExitStatus().getExitCode())
         .writeNewLine()
-        .writeText("Exit Meldung: ")
+        .writeText("Exit Meldung")
+        .writeFillUpToMiddleOfLine(' ')
+        .writeText(": ")
         .writeText(jobExecution.getExitStatus().getExitDescription())
         .writeNewLine();
   }
 
-  public JobReportBuilder writeFooter(@SuppressWarnings("unused") JobExecution jobExecution) {
-    return writeFilledLine('*');
+  public ReportBuilder writeFooter(@SuppressWarnings("unused") JobExecution jobExecution) {
+    return writeFilledLine(FILLER);
   }
 
   public String build() {
@@ -102,12 +118,12 @@ public class JobReportBuilder {
       return report.toString();
     } finally {
       report.setLength(0);
+      reportCurrentLineLength = 0;
     }
   }
 
-  @SuppressWarnings("UnusedReturnValue")
-  public JobReportBuilder writeStepExecution(StepExecution stepExecution) {
-    writeFilledLine('*');
+  public ReportBuilder writeStepExecution(StepExecution stepExecution) {
+    writeFilledLine(FILLER);
 
     if (stepExecution != null) {
       ZonedDateTime zonedStartDateTime = computeZonedDateTime(stepExecution.getStartTime());
@@ -129,8 +145,6 @@ public class JobReportBuilder {
           .writeTitle("Exit Meldung")
           .writeText(stepExecution.getExitStatus().getExitDescription())
           .writeNewLine()
-          .writeText('\t')
-          .writeFilled('*', 5)
           .writeNewLine()
           .writeCount("Read", stepExecution.getReadCount())
           .writeCount("Incorrect", stepExecution.getSkipCount())
@@ -143,8 +157,7 @@ public class JobReportBuilder {
     return writeNull().writeNewLine();
   }
 
-  @SuppressWarnings("WeakerAccess")
-  public JobReportBuilder writeCount(String title, Integer counter) {
+  public ReportBuilder writeCount(String title, Integer counter) {
     writeTitle(title);
 
     if (counter != null) {
@@ -156,25 +169,21 @@ public class JobReportBuilder {
     return writeNewLine();
   }
 
-  @SuppressWarnings("WeakerAccess")
-  public JobReportBuilder writeTitle(String title) {
+  public ReportBuilder writeTitle(String title) {
     if (title == null) {
       title = NULL;
     }
-    return writeText('\t').writeText(rightPad(title, 12)).writeText(": ");
+    return writeTab().writeText(rightPad(title, 12)).writeFillUpToMiddleOfLine(' ').writeText(": ");
   }
 
-  @SuppressWarnings("WeakerAccess")
-  public JobReportBuilder writeText(JobParameters jobParameters) {
+  public ReportBuilder writeText(JobParameters jobParameters) {
     if (jobParameters != null) {
       jobParameters
           .getParameters()
           .forEach(
               (key, value) ->
                   writeNewLine()
-                      .writeText('\t')
-                      .writeText(key)
-                      .writeText(" -> ")
+                      .writeTitle(key)
                       .writeText(value.getValue()));
       return this;
     }
@@ -182,8 +191,7 @@ public class JobReportBuilder {
     return writeNull();
   }
 
-  @SuppressWarnings("WeakerAccess")
-  public JobReportBuilder writeText(LocalTime localTime) {
+  public ReportBuilder writeText(LocalTime localTime) {
     if (localTime != null) {
       return writeText(localTime.format(ISO_LOCAL_TIME));
     }
@@ -191,8 +199,7 @@ public class JobReportBuilder {
     return writeNull();
   }
 
-  @SuppressWarnings("WeakerAccess")
-  public JobReportBuilder writeText(LocalDate localDate) {
+  public ReportBuilder writeText(LocalDate localDate) {
     if (localDate != null) {
       return writeText(localDate.format(ISO_LOCAL_DATE));
     }
@@ -200,9 +207,9 @@ public class JobReportBuilder {
     return writeNull();
   }
 
-  @SuppressWarnings("WeakerAccess")
-  public JobReportBuilder writeText(String text) {
+  public ReportBuilder writeText(String text) {
     if (text != null) {
+      reportCurrentLineLength += text.length();
       report.append(text);
       return this;
     }
@@ -210,8 +217,7 @@ public class JobReportBuilder {
     return writeNull();
   }
 
-  @SuppressWarnings("WeakerAccess")
-  public JobReportBuilder writeText(Long value) {
+  public ReportBuilder writeText(Long value) {
     if (value != null) {
       return writeText(value.toString());
     }
@@ -219,8 +225,7 @@ public class JobReportBuilder {
     return writeNull();
   }
 
-  @SuppressWarnings("WeakerAccess")
-  public JobReportBuilder writeText(Integer value) {
+  public ReportBuilder writeText(Integer value) {
     if (value != null) {
       return writeText(value.toString());
     }
@@ -228,13 +233,11 @@ public class JobReportBuilder {
     return writeNull();
   }
 
-  @SuppressWarnings("WeakerAccess")
-  public JobReportBuilder writeText(char character) {
+  public ReportBuilder writeText(char character) {
     return writeText(Character.toString(character));
   }
 
-  @SuppressWarnings("WeakerAccess")
-  public JobReportBuilder writeText(Object value) {
+  public ReportBuilder writeText(Object value) {
     if (value != null) {
       return writeText(value.toString());
     }
@@ -242,23 +245,39 @@ public class JobReportBuilder {
     return writeNull();
   }
 
-  @SuppressWarnings("WeakerAccess")
-  public JobReportBuilder writeNull() {
+  public ReportBuilder writeNull() {
     return writeText(NULL);
   }
 
-  @SuppressWarnings("WeakerAccess")
-  public JobReportBuilder writeFilledLine(char filler) {
-    return writeFilled(filler, 40).writeNewLine();
+  public ReportBuilder writeFilledLine(char filler) {
+    return writeFilled(filler, LINE_SIZE).writeNewLine();
   }
 
-  @SuppressWarnings("WeakerAccess")
-  public JobReportBuilder writeFilled(char filler, int count) {
-    return writeText(leftPad("", count, filler));
+  public ReportBuilder writeFilled(char filler, int count) {
+    return writeText(fill(filler, count));
   }
 
-  @SuppressWarnings("WeakerAccess")
-  public JobReportBuilder writeNewLine() {
-    return writeText('\n');
+  public ReportBuilder writeNewLine() {
+    try {
+      return writeText('\n');
+    } finally {
+      reportCurrentLineLength = 0;
+    }
+  }
+
+  public ReportBuilder writeTextAtEndOfLine(String text) {
+    return writeText(leftPad(text, LINE_SIZE - reportCurrentLineLength)).writeNewLine();
+  }
+
+  public ReportBuilder writeFillUpToMiddleOfLine(char filler) {
+    return writeText(fill(filler, LINE_SIZE / 2 - reportCurrentLineLength));
+  }
+
+  public ReportBuilder writeTab() {
+    return writeText(TAB);
+  }
+
+  public String fill(char filler, int count) {
+    return leftPad("", count, filler);
   }
 }

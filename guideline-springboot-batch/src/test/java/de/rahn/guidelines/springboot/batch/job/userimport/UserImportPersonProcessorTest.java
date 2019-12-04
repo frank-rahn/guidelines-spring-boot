@@ -17,13 +17,23 @@ package de.rahn.guidelines.springboot.batch.job.userimport;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import de.rahn.guidelines.springboot.batch.report.support.ReportHelper;
 import java.time.LocalDate;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 
+@ExtendWith(MockitoExtension.class)
 class UserImportPersonProcessorTest {
 
-  private UserImportPersonProcessor classUnderTest = new UserImportPersonProcessor();
+  @Mock
+  private ReportHelper reportHelper;
+
+  @InjectMocks
+  private UserImportPersonProcessor classUnderTest;
 
   @Test
   void givenPersonAndNotFilterUserAndNotSkipUser_whenProcess_thenReturnPersonIsOk() {

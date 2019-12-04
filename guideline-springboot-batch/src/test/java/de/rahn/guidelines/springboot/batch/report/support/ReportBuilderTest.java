@@ -32,14 +32,14 @@ import org.springframework.batch.core.JobParameter;
 import org.springframework.batch.core.JobParameters;
 import org.springframework.batch.core.StepExecution;
 
-class JobReportBuilderTest {
+class ReportBuilderTest {
 
-  private JobReportBuilder classUnderTest = new JobReportBuilder();
+  private ReportBuilder classUnderTest = new ReportBuilder();
 
   @Test
   void givenNothing_whenOf_thenReturnJobReportBuilder() {
     // When
-    JobReportBuilder result = JobReportBuilder.of();
+    ReportBuilder result = ReportBuilder.of();
 
     // Then
     assertThat(result).isNotNull();
@@ -49,7 +49,7 @@ class JobReportBuilderTest {
   @Test
   void givenNothing_whenWriteNewLine_thenReportOnlyNewLine() {
     // When
-    JobReportBuilder result = classUnderTest.writeNewLine();
+    ReportBuilder result = classUnderTest.writeNewLine();
 
     // Then
     assertThat(result).isNotNull();
@@ -60,12 +60,12 @@ class JobReportBuilderTest {
   @Test
   void givenNothing_whenWriteNull_thenReportNull() {
     // When
-    JobReportBuilder result = classUnderTest.writeNull();
+    ReportBuilder result = classUnderTest.writeNull();
 
     // Then
     assertThat(result).isNotNull();
     assertThat(result).isEqualTo(classUnderTest);
-    assertThat(result.build()).isEqualTo(JobReportBuilder.NULL);
+    assertThat(result.build()).isEqualTo(ReportBuilder.NULL);
   }
 
   @Test
@@ -75,7 +75,7 @@ class JobReportBuilderTest {
     int count = 0;
 
     // When
-    JobReportBuilder result = classUnderTest.writeFilled(filler, count);
+    ReportBuilder result = classUnderTest.writeFilled(filler, count);
 
     // Then
     assertThat(result).isNotNull();
@@ -90,7 +90,7 @@ class JobReportBuilderTest {
     int count = 5;
 
     // When
-    JobReportBuilder result = classUnderTest.writeFilled(filler, count);
+    ReportBuilder result = classUnderTest.writeFilled(filler, count);
 
     // Then
     assertThat(result).isNotNull();
@@ -104,12 +104,13 @@ class JobReportBuilderTest {
     char filler = '#';
 
     // When
-    JobReportBuilder result = classUnderTest.writeFilledLine(filler);
+    ReportBuilder result = classUnderTest.writeFilledLine(filler);
 
     // Then
     assertThat(result).isNotNull();
     assertThat(result).isEqualTo(classUnderTest);
-    assertThat(result.build()).isEqualTo(Character.toString(filler).repeat(40) + '\n');
+    assertThat(result.build())
+        .isEqualTo(Character.toString(filler).repeat(ReportBuilder.LINE_SIZE) + '\n');
   }
 
   @Test
@@ -118,7 +119,7 @@ class JobReportBuilderTest {
     char character = '#';
 
     // When
-    JobReportBuilder result = classUnderTest.writeText(character);
+    ReportBuilder result = classUnderTest.writeText(character);
 
     // Then
     assertThat(result).isNotNull();
@@ -132,7 +133,7 @@ class JobReportBuilderTest {
     Object obj = new Object();
 
     // When
-    JobReportBuilder result = classUnderTest.writeText(obj);
+    ReportBuilder result = classUnderTest.writeText(obj);
 
     // Then
     assertThat(result).isNotNull();
@@ -147,12 +148,12 @@ class JobReportBuilderTest {
 
     // When
     @SuppressWarnings("ConstantConditions")
-    JobReportBuilder result = classUnderTest.writeText(obj);
+    ReportBuilder result = classUnderTest.writeText(obj);
 
     // Then
     assertThat(result).isNotNull();
     assertThat(result).isEqualTo(classUnderTest);
-    assertThat(result.build()).isEqualTo(JobReportBuilder.NULL);
+    assertThat(result.build()).isEqualTo(ReportBuilder.NULL);
   }
 
   @Test
@@ -161,12 +162,12 @@ class JobReportBuilderTest {
     Long value = null;
 
     // When
-    JobReportBuilder result = classUnderTest.writeText(value);
+    ReportBuilder result = classUnderTest.writeText(value);
 
     // Then
     assertThat(result).isNotNull();
     assertThat(result).isEqualTo(classUnderTest);
-    assertThat(result.build()).isEqualTo(JobReportBuilder.NULL);
+    assertThat(result.build()).isEqualTo(ReportBuilder.NULL);
   }
 
   @Test
@@ -175,7 +176,7 @@ class JobReportBuilderTest {
     Long value = 100L;
 
     // When
-    JobReportBuilder result = classUnderTest.writeText(value);
+    ReportBuilder result = classUnderTest.writeText(value);
 
     // Then
     assertThat(result).isNotNull();
@@ -189,12 +190,12 @@ class JobReportBuilderTest {
     Integer value = null;
 
     // When
-    JobReportBuilder result = classUnderTest.writeText(value);
+    ReportBuilder result = classUnderTest.writeText(value);
 
     // Then
     assertThat(result).isNotNull();
     assertThat(result).isEqualTo(classUnderTest);
-    assertThat(result.build()).isEqualTo(JobReportBuilder.NULL);
+    assertThat(result.build()).isEqualTo(ReportBuilder.NULL);
   }
 
   @Test
@@ -203,7 +204,7 @@ class JobReportBuilderTest {
     Integer value = 100;
 
     // When
-    JobReportBuilder result = classUnderTest.writeText(value);
+    ReportBuilder result = classUnderTest.writeText(value);
 
     // Then
     assertThat(result).isNotNull();
@@ -217,7 +218,7 @@ class JobReportBuilderTest {
     String text = "100L";
 
     // When
-    JobReportBuilder result = classUnderTest.writeText(text);
+    ReportBuilder result = classUnderTest.writeText(text);
 
     // Then
     assertThat(result).isNotNull();
@@ -232,12 +233,12 @@ class JobReportBuilderTest {
 
     // When
     @SuppressWarnings("ConstantConditions")
-    JobReportBuilder result = classUnderTest.writeText(test);
+    ReportBuilder result = classUnderTest.writeText(test);
 
     // Then
     assertThat(result).isNotNull();
     assertThat(result).isEqualTo(classUnderTest);
-    assertThat(result.build()).isEqualTo(JobReportBuilder.NULL);
+    assertThat(result.build()).isEqualTo(ReportBuilder.NULL);
   }
 
   @Test
@@ -246,7 +247,7 @@ class JobReportBuilderTest {
     LocalDate date = LocalDate.now();
 
     // When
-    JobReportBuilder result = classUnderTest.writeText(date);
+    ReportBuilder result = classUnderTest.writeText(date);
 
     // Then
     assertThat(result).isNotNull();
@@ -261,12 +262,12 @@ class JobReportBuilderTest {
 
     // When
     @SuppressWarnings("ConstantConditions")
-    JobReportBuilder result = classUnderTest.writeText(date);
+    ReportBuilder result = classUnderTest.writeText(date);
 
     // Then
     assertThat(result).isNotNull();
     assertThat(result).isEqualTo(classUnderTest);
-    assertThat(result.build()).isEqualTo(JobReportBuilder.NULL);
+    assertThat(result.build()).isEqualTo(ReportBuilder.NULL);
   }
 
   @Test
@@ -275,7 +276,7 @@ class JobReportBuilderTest {
     LocalTime time = LocalTime.now();
 
     // When
-    JobReportBuilder result = classUnderTest.writeText(time);
+    ReportBuilder result = classUnderTest.writeText(time);
 
     // Then
     assertThat(result).isNotNull();
@@ -290,12 +291,12 @@ class JobReportBuilderTest {
 
     // When
     @SuppressWarnings("ConstantConditions")
-    JobReportBuilder result = classUnderTest.writeText(time);
+    ReportBuilder result = classUnderTest.writeText(time);
 
     // Then
     assertThat(result).isNotNull();
     assertThat(result).isEqualTo(classUnderTest);
-    assertThat(result.build()).isEqualTo(JobReportBuilder.NULL);
+    assertThat(result.build()).isEqualTo(ReportBuilder.NULL);
   }
 
   @Test
@@ -305,12 +306,12 @@ class JobReportBuilderTest {
 
     // When
     @SuppressWarnings("ConstantConditions")
-    JobReportBuilder result = classUnderTest.writeText(jobParameters);
+    ReportBuilder result = classUnderTest.writeText(jobParameters);
 
     // Then
     assertThat(result).isNotNull();
     assertThat(result).isEqualTo(classUnderTest);
-    assertThat(result.build()).isEqualTo(JobReportBuilder.NULL);
+    assertThat(result.build()).isEqualTo(ReportBuilder.NULL);
   }
 
   @Test
@@ -319,7 +320,7 @@ class JobReportBuilderTest {
     JobParameters jobParameters = new JobParameters();
 
     // When
-    JobReportBuilder result = classUnderTest.writeText(jobParameters);
+    ReportBuilder result = classUnderTest.writeText(jobParameters);
 
     // Then
     assertThat(result).isNotNull();
@@ -335,12 +336,12 @@ class JobReportBuilderTest {
     JobParameters jobParameters = new JobParameters(parameters);
 
     // When
-    JobReportBuilder result = classUnderTest.writeText(jobParameters);
+    ReportBuilder result = classUnderTest.writeText(jobParameters);
 
     // Then
     assertThat(result).isNotNull();
     assertThat(result).isEqualTo(classUnderTest);
-    assertThat(result.build()).isEqualTo("\n\tname -> value");
+    assertThat(result.build()).contains("\n", "name", ": value");
   }
 
   @Test
@@ -359,12 +360,12 @@ class JobReportBuilderTest {
     jobExecution.setExitStatus(ExitStatus.COMPLETED.addExitDescription("Completed"));
 
     // When
-    JobReportBuilder result = classUnderTest.writeHeader(jobExecution);
+    ReportBuilder result = classUnderTest.writeHeader(jobExecution);
 
     // Then
     assertThat(result).isNotNull();
     assertThat(result).isEqualTo(classUnderTest);
-    assertThat(result.build()).contains("Job-Name", "Completed", "name -> value", "4711");
+    assertThat(result.build()).contains("Job-Name", "Completed", "name", ": value", "4711");
   }
 
   @Test
@@ -383,7 +384,7 @@ class JobReportBuilderTest {
     jobExecution.setExitStatus(ExitStatus.COMPLETED.addExitDescription("Completed"));
 
     // When
-    JobReportBuilder result = classUnderTest.writeFooter(jobExecution);
+    ReportBuilder result = classUnderTest.writeFooter(jobExecution);
 
     // Then
     assertThat(result).isNotNull();
@@ -398,12 +399,12 @@ class JobReportBuilderTest {
 
     // When
     @SuppressWarnings("ConstantConditions")
-    JobReportBuilder result = classUnderTest.writeTitle(title);
+    ReportBuilder result = classUnderTest.writeTitle(title);
 
     // Then
     assertThat(result).isNotNull();
     assertThat(result).isEqualTo(classUnderTest);
-    assertThat(result.build()).contains("\t", JobReportBuilder.NULL);
+    assertThat(result.build()).contains(ReportBuilder.NULL);
   }
 
   @Test
@@ -412,12 +413,12 @@ class JobReportBuilderTest {
     String title = "Title";
 
     // When
-    JobReportBuilder result = classUnderTest.writeTitle(title);
+    ReportBuilder result = classUnderTest.writeTitle(title);
 
     // Then
     assertThat(result).isNotNull();
     assertThat(result).isEqualTo(classUnderTest);
-    assertThat(result.build()).contains("\t", "Title");
+    assertThat(result.build()).contains("Title");
   }
 
   @Test
@@ -428,12 +429,12 @@ class JobReportBuilderTest {
 
     // When
     @SuppressWarnings("ConstantConditions")
-    JobReportBuilder result = classUnderTest.writeCount(title, counter);
+    ReportBuilder result = classUnderTest.writeCount(title, counter);
 
     // Then
     assertThat(result).isNotNull();
     assertThat(result).isEqualTo(classUnderTest);
-    assertThat(result.build()).contains("\t", JobReportBuilder.NULL, JobReportBuilder.NULL, "\n");
+    assertThat(result.build()).contains(ReportBuilder.NULL, ReportBuilder.NULL, "\n");
   }
 
   @Test
@@ -443,12 +444,12 @@ class JobReportBuilderTest {
     Integer counter = null;
 
     // When
-    JobReportBuilder result = classUnderTest.writeCount(title, counter);
+    ReportBuilder result = classUnderTest.writeCount(title, counter);
 
     // Then
     assertThat(result).isNotNull();
     assertThat(result).isEqualTo(classUnderTest);
-    assertThat(result.build()).contains("\t", title, JobReportBuilder.NULL, "\n");
+    assertThat(result.build()).contains(title, ReportBuilder.NULL, "\n");
   }
 
   @Test
@@ -458,12 +459,12 @@ class JobReportBuilderTest {
     Integer counter = 100;
 
     // When
-    JobReportBuilder result = classUnderTest.writeCount(title, counter);
+    ReportBuilder result = classUnderTest.writeCount(title, counter);
 
     // Then
     assertThat(result).isNotNull();
     assertThat(result).isEqualTo(classUnderTest);
-    assertThat(result.build()).contains("\t", title, "100", "\n").hasSize(19);
+    assertThat(result.build()).contains(title, ": 100", "\n").hasSize(46);
   }
 
   @Test
@@ -473,12 +474,12 @@ class JobReportBuilderTest {
 
     // When
     @SuppressWarnings("ConstantConditions")
-    JobReportBuilder result = classUnderTest.writeStepExecution(stepExecution);
+    ReportBuilder result = classUnderTest.writeStepExecution(stepExecution);
 
     // Then
     assertThat(result).isNotNull();
     assertThat(result).isEqualTo(classUnderTest);
-    assertThat(result.build()).contains(JobReportBuilder.NULL, "\n");
+    assertThat(result.build()).contains(ReportBuilder.NULL, "\n");
   }
 
   @Test
@@ -499,7 +500,7 @@ class JobReportBuilderTest {
     StepExecution stepExecution = new StepExecution("Step-Name", jobExecution);
 
     // When
-    JobReportBuilder result = classUnderTest.writeStepExecution(stepExecution);
+    ReportBuilder result = classUnderTest.writeStepExecution(stepExecution);
 
     // Then
     assertThat(result).isNotNull();

@@ -28,7 +28,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.JobExecutionListener;
 import org.springframework.batch.core.Step;
-import org.springframework.batch.core.StepExecutionListener;
+import org.springframework.batch.core.StepListener;
 import org.springframework.batch.core.configuration.annotation.EnableBatchProcessing;
 import org.springframework.batch.core.configuration.annotation.JobBuilderFactory;
 import org.springframework.batch.core.configuration.annotation.StepBuilderFactory;
@@ -120,7 +120,7 @@ class BatchConfiguration {
       FlatFileItemReader<Person> userImportPersonReader,
       UserImportPersonProcessor userImportPersonProcessor,
       JdbcBatchItemWriter<Person> userImportPersonWriter,
-      Collection<StepExecutionListener> stepExecutionListeners) {
+      Collection<StepListener> stepListeners) {
     var builder =
         stepBuilderFactory
             .get("userImportStep")
@@ -132,8 +132,8 @@ class BatchConfiguration {
             .processor(userImportPersonProcessor)
             .writer(userImportPersonWriter);
 
-    if (stepExecutionListeners != null) {
-      stepExecutionListeners.forEach(builder::listener);
+    if (stepListeners != null) {
+      stepListeners.forEach(builder::listener);
     }
 
     return builder.build();
