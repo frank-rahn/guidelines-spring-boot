@@ -117,14 +117,14 @@
             <execution>
               <phase>install</phase>
               <goals>
-                <goal>build</goal>
+                <goal>dockerBuild</goal>
               </goals>
               <configuration>
                 <from>
                   <image>${docker-basis-image.version}</image>
                 </from>
                 <to>
-                  <image>docker.io/rahn/${project.artifactId}</image>
+                  <!--image>docker.io/rahn/${project.artifactId}</image-->
                   <tags>
                     <tag>latest</tag>
                     <tag>${project.version}</tag>
