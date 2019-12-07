@@ -1,10 +1,19 @@
 = Guidelines for Spring Boot
 Frank Rahn <frank@frank-rahn.de>
+ifdef::env-github[]
+:tip-caption: :bulb:
+:note-caption: :information_source:
+:important-caption: :heavy_exclamation_mark:
+:caution-caption: :fire:
+:warning-caption: :warning:
+endif::[]
 :toc:
 :toclevels: 3
 :toc-title: Inhaltsverzeichnis
 :toc-placement!:
 :sectanchors:
+:sectnums:
+:icons: font
 
 image:https://img.shields.io/badge/license-Apache_License_2-blue.svg[title="Apache License 2", alt="Apache License 2", link="https://www.apache.org/licenses/LICENSE-2.0"]
 image:https://github.com/frank-rahn/guidelines-spring-boot/workflows/build/badge.svg[title="Build Status",alt="Build Status"]
