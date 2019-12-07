@@ -22,7 +22,7 @@
   <parent>
     <groupId>org.springframework.boot</groupId>
     <artifactId>spring-boot-starter-parent</artifactId>
-    <version>2.2.1.RELEASE</version>
+    <version>2.2.2.RELEASE</version>
     <relativePath/> <!-- lookup parent from repository -->
   </parent>
 
@@ -45,13 +45,13 @@
     </docker-basis-image.version>
 
     <!-- Other Spring Version -->
-    <spring-cloud-dependencies.version>Hoxton.RC2</spring-cloud-dependencies.version>
+    <spring-cloud-dependencies.version>Hoxton.RELEASE</spring-cloud-dependencies.version>
 
     <!-- Other Libraries (Not in spring-boot-dependencies) -->
     <springfox-swagger2.version>2.9.2</springfox-swagger2.version>
     <jquery.version>3.4.1</jquery.version>
     <popper.js.version>1.15.0</popper.js.version>
-    <bootstrap.version>4.3.1</bootstrap.version>
+    <bootstrap.version>4.4.1</bootstrap.version>
 
     <!-- Plugins Version -->
     <jacoco-maven-plugin.version>0.8.5</jacoco-maven-plugin.version>
