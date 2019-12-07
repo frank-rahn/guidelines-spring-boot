@@ -20,9 +20,7 @@ jobs:
           key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
           restore-keys: |
             ${{ runner.os }}-maven-
-      - name: Build with Maven
-        run: mvn --batch-mode --show-version --errors install
-      - name: Submit coverage data
-        run: mvn --batch-mode test jacoco:report coveralls:report
+      - name: Build with Maven, JIB (Docker Image), Jacoco (Coveralls)
+        run: mvn --batch-mode --show-version --errors install jacoco:report coveralls:report
         env:
           COVERALLS_TOKEN: ${{ secrets.COVERALLS_TOKEN_GUIDELINE_SPRING_BOOT }}
