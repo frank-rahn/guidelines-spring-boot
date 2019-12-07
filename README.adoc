@@ -23,7 +23,7 @@ toc::[]
 
 == Beschreibung
 
-In diesem Repository befinden sich Projekte als Vorlagen rund um das Thema Spring Boot.
+In diesem Repository befinden sich Projekte als Vorlagen rund um das Thema Spring Boot. {GIT_COMMIT}
 
 == Module
 
