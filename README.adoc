@@ -9,7 +9,7 @@ ifdef::env-github[]
 endif::[]
 :toc:
 :toclevels: 3
-:toc-title: Inhaltsverzeichnis
+:toc-title: pass:[<h2>Inhaltsverzeichnis</h2>]
 :toc-placement!:
 :sectanchors:
 :sectnums:
