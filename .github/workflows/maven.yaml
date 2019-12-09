@@ -24,3 +24,4 @@ jobs:
         run: mvn --batch-mode --show-version --errors install jacoco:report -Dsonar.login=$SONAR_LOGIN sonar:sonar
         env:
           SONAR_LOGIN: ${{ secrets.SONAR_LOGIN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
