@@ -58,6 +58,12 @@
     <jacoco-maven-plugin.version>0.8.5</jacoco-maven-plugin.version>
     <jib-maven-plugin.version>1.8.0</jib-maven-plugin.version>
     <coveralls-maven-plugin.version>4.3.0</coveralls-maven-plugin.version>
+    <sonar-maven-plugin.version>3.7.0.1746</sonar-maven-plugin.version>
+    
+    <!-- Sonarcloud -->
+    <sonar.host.url>https://sonarcloud.io</sonar.host.url>
+    <sonar.organization>frank-rahn</sonar.organization>
+    <sonat.projectKey>sonar-maven-plugin<sonat.projectKey>
   </properties>
 
   <modules>
@@ -134,6 +140,12 @@
               </configuration>
             </execution>
           </executions>
+        </plugin>
+        
+        <plugin>
+          <groupId>org.sonarsource.scanner.maven</groupId>
+          <artifactId>sonar-maven-plugin</artifactId>
+          <version>${sonar-maven-plugin.version}</version>
         </plugin>
       </plugins>
     </pluginManagement>
