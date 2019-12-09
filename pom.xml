@@ -63,7 +63,6 @@
     <!-- Sonarcloud -->
     <sonar.host.url>https://sonarcloud.io</sonar.host.url>
     <sonar.organization>frank-rahn</sonar.organization>
-    <sonar.projectKey>frank-rahn_guidelines-spring-boot</sonar.projectKey>
   </properties>
 
   <modules>
