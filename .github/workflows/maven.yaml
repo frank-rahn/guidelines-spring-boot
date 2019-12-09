@@ -21,7 +21,7 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-maven-
       - name: Build with Maven, JIB (Docker Image), Jacoco, Sonar
-        run: mvn --batch-mode --show-version --errors install jacoco:report -Dsonar.login=$SONAR_LOGIN sonar:sonar
+        run: mvn --batch-mode --show-version --errors install jacoco:report sonar:sonar -Dsonar.host.url=https://sonarcloud.io -Dsonar.organization=frank-rahn -Dsonar.projectKey=frank-rahn_guidelines-spring-boot -Dsonar.login=$SONAR_LOGIN
         env:
           SONAR_LOGIN: ${{ secrets.SONAR_LOGIN }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

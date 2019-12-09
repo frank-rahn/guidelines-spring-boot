@@ -59,10 +59,6 @@
     <jib-maven-plugin.version>1.8.0</jib-maven-plugin.version>
     <coveralls-maven-plugin.version>4.3.0</coveralls-maven-plugin.version>
     <sonar-maven-plugin.version>3.7.0.1746</sonar-maven-plugin.version>
-    
-    <!-- Sonarcloud -->
-    <sonar.host.url>https://sonarcloud.io</sonar.host.url>
-    <sonar.organization>frank-rahn</sonar.organization>
   </properties>
 
   <modules>
