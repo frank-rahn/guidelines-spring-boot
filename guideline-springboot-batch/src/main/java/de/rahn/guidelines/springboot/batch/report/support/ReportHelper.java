@@ -48,8 +48,10 @@ public class ReportHelper {
   }
 
   public void reportThrowable(String message, Object item, Throwable throwable, Logger logger) {
-    LOGGER_REPORT.error(
-        "{}{}: {}", message, toStringRepresentation(item, false), throwable.getMessage());
+    if (LOGGER_REPORT.isErrorEnabled()) {
+      LOGGER_REPORT.error(
+          message + toStringRepresentation(item, false) + ": " + throwable.getMessage());
+    }
 
     logThrowable(message, item, throwable, logger);
   }
@@ -61,7 +63,9 @@ public class ReportHelper {
       final String tmp = message + toStringRepresentation(item, true);
       ((SQLException) throwable).forEach(t2 -> logger.error(tmp, t2));
     } else {
-      logger.error(message + toStringRepresentation(item, true), throwable);
+      if (logger.isErrorEnabled()) {
+        logger.error(message + toStringRepresentation(item, true), throwable);
+      }
     }
   }
 
