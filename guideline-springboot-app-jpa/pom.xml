@@ -23,12 +23,16 @@
     <groupId>de.rahn.guidelines.springboot</groupId>
     <artifactId>guideline-springboot-parent</artifactId>
     <version>1.0.0-SNAPSHOT</version>
-    <relativePath>..</relativePath>
+    <relativePath>../</relativePath>
   </parent>
 
   <artifactId>guideline-springboot-app-jpa</artifactId>
   <name>App-JPA</name>
   <description>Guidelines for Spring Boot - App-JPA</description>
+
+  <properties>
+    <sonar.coverage.exclusions>**/*Application.java</sonar.coverage.exclusions>
+  </properties>
 
   <dependencies>
     <!-- Standard -->

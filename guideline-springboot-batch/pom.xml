@@ -23,12 +23,16 @@
     <groupId>de.rahn.guidelines.springboot</groupId>
     <artifactId>guideline-springboot-parent</artifactId>
     <version>1.0.0-SNAPSHOT</version>
-    <relativePath>..</relativePath>
+    <relativePath>../</relativePath>
   </parent>
 
   <artifactId>guideline-springboot-batch</artifactId>
   <name>Batch</name>
   <description>Guidelines for Spring Boot - Batch</description>
+
+  <properties>
+    <sonar.coverage.exclusions>**/*Application.java</sonar.coverage.exclusions>
+  </properties>
 
   <dependencies>
     <!-- Standard -->

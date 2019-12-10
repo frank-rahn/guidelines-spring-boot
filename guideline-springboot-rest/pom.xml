@@ -24,16 +24,18 @@
     <groupId>de.rahn.guidelines.springboot</groupId>
     <artifactId>guideline-springboot-parent</artifactId>
     <version>1.0.0-SNAPSHOT</version>
-    <relativePath>..</relativePath>
+    <relativePath>../</relativePath>
   </parent>
 
   <artifactId>guideline-springboot-rest</artifactId>
   <name>Rest</name>
   <description>Guidelines for Spring Boot - Rest</description>
-  
+
   <properties>
     <!-- Siehe Issue #4: https://github.com/frank-rahn/guidelines-spring-boot/issues/4 -->
     <skipTests>true</skipTests>
+
+    <sonar.coverage.exclusions>**/*Application.java</sonar.coverage.exclusions>
   </properties>
 
   <dependencies>
