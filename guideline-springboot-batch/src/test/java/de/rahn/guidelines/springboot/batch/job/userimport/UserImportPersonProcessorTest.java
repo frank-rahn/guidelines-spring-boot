@@ -30,6 +30,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 class UserImportPersonProcessorTest {
 
   @Mock
+  @SuppressWarnings("unused")
   private ReportHelper reportHelper;
 
   @InjectMocks
@@ -38,7 +39,7 @@ class UserImportPersonProcessorTest {
   @Test
   void givenPersonAndNotFilterUserAndNotSkipUser_whenProcess_thenReturnPersonIsOk() {
     // Given
-    final Person person = new Person("lastName", "firstName");
+    final Person person = new Person("firstName", "lastName");
     person.setEmailAddress("emailAddress");
     person.setBirthday(LocalDate.now());
     classUnderTest.filterUser = "FILTER";
@@ -58,7 +59,7 @@ class UserImportPersonProcessorTest {
   @Test
   void givenPersonAndFilterUserAndNotSkipUser_whenProcessAndFilter_thenReturnNull() {
     // Given
-    final Person person = new Person("lastName", "firstName");
+    final Person person = new Person("firstName", "lastName");
     person.setEmailAddress("emailAddress");
     person.setBirthday(LocalDate.now());
     classUnderTest.filterUser = "LastNaMe";
@@ -74,7 +75,7 @@ class UserImportPersonProcessorTest {
   @Test
   void givenPersonAndNotFilterUserAndSkipUser_whenProcessAndFilter_thenReturnPersonIsOk() {
     // Given
-    final Person person = new Person("lastName", "firstName");
+    final Person person = new Person("firstName", "lastName");
     person.setEmailAddress("emailAddress");
     person.setBirthday(LocalDate.now());
     classUnderTest.filterUser = "FILTER";
