@@ -15,9 +15,6 @@
  */
 package de.rahn.guidelines.springboot.app.core.config.properties;
 
-import static org.apache.commons.lang3.builder.ToStringBuilder.reflectionToString;
-import static org.apache.commons.lang3.builder.ToStringStyle.JSON_STYLE;
-
 import java.time.LocalDate;
 import java.util.List;
 import javax.validation.constraints.Email;
@@ -25,6 +22,7 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.ToString;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.context.properties.ConstructorBinding;
 import org.springframework.validation.annotation.Validated;
@@ -34,28 +32,27 @@ import org.springframework.validation.annotation.Validated;
  */
 @ConfigurationProperties(prefix = "app")
 @ConstructorBinding
-@AllArgsConstructor()
+@AllArgsConstructor
 @Getter
+@ToString
 @Validated
 public class AppProperties {
 
   private final List<Person> people;
 
-  @Override
-  public String toString() {
-    return reflectionToString(this, JSON_STYLE);
-  }
-
   @ConstructorBinding
   @AllArgsConstructor
   @Getter
+  @ToString
   @Validated
   public static class Person {
 
+    @ToString.Include(rank = 1)
     private String id;
 
     private String firstName;
 
+    @ToString.Include(rank = 2)
     @NotNull
     @NotBlank
     private String lastName;
@@ -65,11 +62,5 @@ public class AppProperties {
 
     @NotNull
     private LocalDate birthday;
-
-    @Override
-    public String toString() {
-      return reflectionToString(this, JSON_STYLE);
-    }
   }
 }
-

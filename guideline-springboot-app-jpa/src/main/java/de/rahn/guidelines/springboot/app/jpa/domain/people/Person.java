@@ -28,11 +28,13 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import lombok.AccessLevel;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 import org.springframework.format.annotation.DateTimeFormat;
 
 /**
@@ -44,12 +46,15 @@ import org.springframework.format.annotation.DateTimeFormat;
 @RequiredArgsConstructor
 @Getter
 @Setter
+@ToString
+@EqualsAndHashCode(callSuper = false)
 public class Person extends AbstractAuditing {
 
   private static final long serialVersionUID = 1L;
 
   @Id
   @GeneratedValue(generator = "uuid")
+  @ToString.Include(rank = 1)
   private String id;
 
   private String firstName;
@@ -58,6 +63,7 @@ public class Person extends AbstractAuditing {
   @NotNull
   @NotBlank
   @NonNull
+  @ToString.Include(rank = 2)
   private String lastName;
 
   @Email

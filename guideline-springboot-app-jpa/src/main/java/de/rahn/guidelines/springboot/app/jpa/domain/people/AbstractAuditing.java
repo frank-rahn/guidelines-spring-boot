@@ -16,10 +16,6 @@
 package de.rahn.guidelines.springboot.app.jpa.domain.people;
 
 import static javax.persistence.AccessType.FIELD;
-import static org.apache.commons.lang3.builder.EqualsBuilder.reflectionEquals;
-import static org.apache.commons.lang3.builder.HashCodeBuilder.reflectionHashCode;
-import static org.apache.commons.lang3.builder.ToStringBuilder.reflectionToString;
-import static org.apache.commons.lang3.builder.ToStringStyle.JSON_STYLE;
 import static org.springframework.format.annotation.DateTimeFormat.ISO.DATE_TIME;
 
 import java.io.Serializable;
@@ -65,27 +61,4 @@ public abstract class AbstractAuditing implements Serializable {
 
   @LastModifiedBy
   private String lastModifiedBy;
-
-  @Override
-  public boolean equals(Object obj) {
-    if (this == obj) {
-      return true;
-    }
-
-    if (obj == null || getClass() != obj.getClass()) {
-      return false;
-    }
-
-    return reflectionEquals(this, obj, false);
-  }
-
-  @Override
-  public int hashCode() {
-    return reflectionHashCode(this, false);
-  }
-
-  @Override
-  public String toString() {
-    return reflectionToString(this, JSON_STYLE);
-  }
 }

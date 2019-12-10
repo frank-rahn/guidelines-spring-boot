@@ -40,10 +40,11 @@ import lombok.With;
 public class Person {
 
   @NonNull
-  private String lastName;
+  private String firstName;
 
   @NonNull
-  private String firstName;
+  @ToString.Include(rank = 1)
+  private String lastName;
 
   private String emailAddress;
 
