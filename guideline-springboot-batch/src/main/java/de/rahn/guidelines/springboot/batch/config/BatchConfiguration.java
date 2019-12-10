@@ -72,7 +72,7 @@ class BatchConfiguration {
                     LocalDate.class,
                     new PropertyEditorSupport() {
                       @Override
-                      public void setAsText(String text) throws IllegalArgumentException {
+                      public void setAsText(String text) {
                         if (StringUtils.isNotEmpty(text)) {
                           setValue(LocalDate.parse(text, ISO_DATE));
                         } else {

@@ -49,7 +49,7 @@ public class ReportHelper {
 
   public void reportThrowable(String message, Object item, Throwable throwable, Logger logger) {
     LOGGER_REPORT.error(
-        message + toStringRepresentation(item, false) + ": " + throwable.getMessage());
+        "{}{}: {}", message, toStringRepresentation(item, false), throwable.getMessage());
 
     logThrowable(message, item, throwable, logger);
   }

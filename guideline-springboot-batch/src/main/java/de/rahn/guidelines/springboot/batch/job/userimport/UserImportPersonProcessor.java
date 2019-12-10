@@ -40,10 +40,10 @@ public class UserImportPersonProcessor implements ItemProcessor<Person, Person> 
 
   @Override
   public Person process(Person person) {
-    if (filterUser.toUpperCase().equals(person.getLastName().toUpperCase())) {
+    if (filterUser.equalsIgnoreCase(person.getLastName())) {
       reportHelper.reportWarning("Filter Person:\n" + person);
       return null;
-    } else if (skipUser.toUpperCase().equals(person.getLastName().toUpperCase())) {
+    } else if (skipUser.equalsIgnoreCase(person.getLastName())) {
       reportHelper.reportError("Skip Person:\n" + person);
       throw new RuntimeException("Skip " + skipUser);
     }
