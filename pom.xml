@@ -46,7 +46,7 @@
     </docker-basis-image.version>
 
     <!-- Other Spring Version -->
-    <spring-cloud-dependencies.version>Hoxton.RELEASE</spring-cloud-dependencies.version>
+    <spring-cloud-dependencies.version>Hoxton.SR1</spring-cloud-dependencies.version>
 
     <!-- Other Libraries (Not in spring-boot-dependencies) -->
     <springfox-swagger2.version>2.9.2</springfox-swagger2.version>
