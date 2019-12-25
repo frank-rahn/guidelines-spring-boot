@@ -22,6 +22,7 @@ import java.util.List;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.jdbc.Sql;
 
 /**
@@ -40,7 +41,18 @@ class PersonRepositoryTest {
 
   @Test
   @Sql(statements = {"DELETE FROM person"})
-  void givenPeople_whenSaved_thenFindByName() {
+  void givenPeopleWithoutAuthentication_whenSaved_thenFindByName() {
+    givenPeople_whenSaved_thenFindByName();
+  }
+
+  @Test
+  @Sql(statements = {"DELETE FROM person"})
+  @WithMockUser
+  void givenPeopleWithAuthentication_whenSaved_thenFindByName() {
+    givenPeople_whenSaved_thenFindByName();
+  }
+
+  private void givenPeople_whenSaved_thenFindByName() {
     // Given
     final Person person = new Person("Rahn", LocalDate.of(1940, 2, 8));
     person.setFirstName("Gerd");
