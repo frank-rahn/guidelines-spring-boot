@@ -15,20 +15,17 @@
  */
 package de.rahn.guidelines.springboot.rest.api;
 
-import static java.net.HttpURLConnection.HTTP_CREATED;
-import static java.net.HttpURLConnection.HTTP_FORBIDDEN;
-import static java.net.HttpURLConnection.HTTP_NOT_FOUND;
-import static java.net.HttpURLConnection.HTTP_NO_CONTENT;
-import static java.net.HttpURLConnection.HTTP_OK;
-import static java.net.HttpURLConnection.HTTP_UNAUTHORIZED;
 import static org.springframework.security.core.context.SecurityContextHolder.getContext;
 
 import de.rahn.guidelines.springboot.rest.domain.people.Person;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiParam;
-import io.swagger.annotations.ApiResponse;
-import io.swagger.annotations.ApiResponses;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.headers.Header;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import java.net.URI;
 import java.time.LocalDate;
 import java.util.Collection;
@@ -59,7 +56,21 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 @RequestMapping(
     path = {"/api/people"},
     produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
-@Api(tags = {"People"})
+@Tag(name = "People")
+@ApiResponses({
+    @ApiResponse(
+        responseCode = "401",
+        description = "Nicht autorisiert die Personen abzurufen (Unauthorized)",
+        content = {@Content()}),
+    @ApiResponse(
+        responseCode = "403",
+        description = "Zugriff auf die Personen ist verboten (Forbidden)",
+        content = {@Content()}),
+    @ApiResponse(
+        responseCode = "500",
+        description = "Unbekannter Fehler im Service (Internal Server Error)",
+        content = {@Content()}),
+})
 @Slf4j
 class PeopleController {
 
@@ -93,11 +104,9 @@ class PeopleController {
   }
 
   @GetMapping
-  @ApiOperation("Liefert alle Personen")
+  @Operation(summary = "Liefert alle Personen")
   @ApiResponses({
-      @ApiResponse(code = HTTP_OK, message = "Personen erfolgreich abgerufen"),
-      @ApiResponse(code = HTTP_UNAUTHORIZED, message = "Nicht autorisiert die Personen abzurufen"),
-      @ApiResponse(code = HTTP_FORBIDDEN, message = "Zugriff auf die Personen ist verboten")
+      @ApiResponse(responseCode = "200", description = "Personen erfolgreich abgerufen (Ok)")
   })
   Collection<Person> getPeople() {
     LOGGER.info("GetAllPeople: Authentication={}", getContext().getAuthentication());
@@ -106,17 +115,18 @@ class PeopleController {
   }
 
   @GetMapping(path = "/{id}")
-  @ApiOperation("Suche die Person mit der Id")
+  @Operation(summary = "Suche die Person mit der Id")
   @ApiResponses({
-      @ApiResponse(code = HTTP_OK, message = "Person erfolgreich abgerufen"),
-      @ApiResponse(code = HTTP_UNAUTHORIZED, message = "Nicht autorisiert die Person abzurufen"),
-      @ApiResponse(code = HTTP_FORBIDDEN, message = "Zugriff auf die Person ist verboten"),
-      @ApiResponse(code = HTTP_NOT_FOUND, message = "Keine Person gefunden")
+      @ApiResponse(responseCode = "200", description = "Person erfolgreich abgerufen (Ok)"),
+      @ApiResponse(
+          responseCode = "404",
+          description = "Keine Person gefunden (Not Found)",
+          content = {@Content()})
   })
   ResponseEntity<Person> getPersonById(
       @SuppressWarnings("MVCPathVariableInspection")
       @PathVariable("id")
-      @ApiParam(value = "Die UUID der gesuchten Person", required = true)
+      @Parameter(description = "Die UUID der gesuchten Person")
           String id) {
     LOGGER.info("GetPersonById: Id={}, Authentication={}", id, getContext().getAuthentication());
 
@@ -124,16 +134,14 @@ class PeopleController {
   }
 
   @DeleteMapping(path = "/{id}")
-  @ApiOperation("Lösche die Person mit der Id")
+  @Operation(summary = "Lösche die Person mit der Id")
   @ApiResponses({
-      @ApiResponse(code = HTTP_NO_CONTENT, message = "Person erfolgreich gelöscht"),
-      @ApiResponse(code = HTTP_UNAUTHORIZED, message = "Nicht autorisiert die Person zu löschen"),
-      @ApiResponse(code = HTTP_FORBIDDEN, message = "Löschen der Person ist verboten")
+      @ApiResponse(responseCode = "204", description = "Person erfolgreich gelöscht (No Content)")
   })
   ResponseEntity<Void> deletePersonById(
       @SuppressWarnings("MVCPathVariableInspection")
-      @ApiParam(value = "Die UUID der zu löschenden Person", required = true)
       @PathVariable("id")
+      @Parameter(description = "Die UUID der zu löschenden Person")
           String id) {
     LOGGER.info("DeletePersonById: Id={}, Authentication={}", id, getContext().getAuthentication());
 
@@ -143,18 +151,20 @@ class PeopleController {
   }
 
   @PutMapping(path = "/{id}")
-  @ApiOperation("Füge die Person mit der Id hinzu oder ändere sie")
+  @Operation(summary = "Füge die Person mit der Id hinzu oder ändere sie")
   @ApiResponses({
-      @ApiResponse(code = HTTP_OK, message = "Person erfolgreich geändert oder angelegt"),
-      @ApiResponse(code = HTTP_UNAUTHORIZED, message = "Nicht autorisiert Personen zu bearbeiten"),
-      @ApiResponse(code = HTTP_FORBIDDEN, message = "Zugriff auf die Person ist verboten")
+      @ApiResponse(
+          responseCode = "200",
+          description = "Person erfolgreich geändert oder angelegt (Ok)")
   })
   Person putPersonById(
       @SuppressWarnings("MVCPathVariableInspection")
-      @ApiParam(value = "Die UUID der neuen oder zu ändernde Person", required = true)
       @PathVariable("id")
+      @Parameter(description = "Die UUID der neuen oder zu ändernde Person")
           String id,
-      @ApiParam(value = "Die neue oder zu ändernde Person", required = true) @RequestBody @Valid
+      @RequestBody
+      @Parameter(description = "Die neue oder zu ändernde Person", required = true)
+      @Valid
           Person person) {
     LOGGER.info(
         "PutPerson: Id={}, Person={}, Authentication={}",
@@ -166,14 +176,22 @@ class PeopleController {
   }
 
   @PostMapping
-  @ApiOperation("Füge eine Person hinzu")
+  @Operation(description = "Füge eine Person hinzu")
   @ApiResponses({
-      @ApiResponse(code = HTTP_CREATED, message = "Person erfolgreich angelegt"),
-      @ApiResponse(code = HTTP_UNAUTHORIZED, message = "Nicht autorisiert Personen zu bearbeiten"),
-      @ApiResponse(code = HTTP_FORBIDDEN, message = "Zugriff auf die Person ist verboten")
+      @ApiResponse(
+          responseCode = "201",
+          description = "Person erfolgreich angelegt (CREATED)",
+          headers = {
+              @Header(
+                  name = "location",
+                  description = "URI der angelegten Person",
+                  required = true,
+                  schema = @Schema(name = "string", format = "uri"))
+          })
   })
   ResponseEntity<Person> postPerson(
-      @ApiParam(value = "Die neue Person", required = true) @RequestBody @Valid Person person) {
+      @RequestBody @Parameter(description = "Die neue Person", required = true) @Valid
+          Person person) {
     LOGGER.info(
         "PostPerson: Person={}, Authentication={}", person, getContext().getAuthentication());
 

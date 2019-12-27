@@ -17,13 +17,15 @@ package de.rahn.guidelines.springboot.rest.domain.book;
 
 import static org.hibernate.validator.constraints.ISBN.Type.ISBN_10;
 
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import org.hibernate.validator.constraints.ISBN;
@@ -31,23 +33,28 @@ import org.hibernate.validator.constraints.ISBN;
 /**
  * @author Frank Rahn
  */
-@ApiModel(description = "Ein Buch")
+@Schema(description = "Ein Buch")
 @XmlRootElement
 @Getter
 @Setter
 @RequiredArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
 public class Book {
 
-  @ApiModelProperty(value = "Die Artikelnummer", required = true, example = "4711")
+  @Schema(description = "Die Artikelnummer", example = "7b6a3a11-0873-46b5-9d62-05fe6a436ea9")
   @NotBlank
-  private final String id;
+  @NonNull
+  private String id;
 
-  @ApiModelProperty(value = "Die zehnstellige ISBN", required = true, example = "0123456789")
+  @Schema(description = "Die zehnstellige ISBN", example = "0123456789")
+  @NotNull
   @ISBN(type = ISBN_10)
-  private final String isbn;
+  @NonNull
+  private String isbn;
 
-  @ApiModelProperty("Der Titel des Buches sollte mindestens 5 Zeichen umfassen")
+  @Schema(description = "Der Titel des Buches sollte mindestens 5 Zeichen umfassen", example = "Mein Buch")
+  @NotNull
   @Size(min = 5)
   private String title;
 }

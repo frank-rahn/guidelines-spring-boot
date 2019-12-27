@@ -49,7 +49,7 @@
     <spring-cloud-dependencies.version>Hoxton.SR1</spring-cloud-dependencies.version>
 
     <!-- Other Libraries (Not in spring-boot-dependencies) -->
-    <springfox-swagger2.version>2.9.2</springfox-swagger2.version>
+    <springdoc-openapi.version>1.2.21</springdoc-openapi.version>
     <jquery.version>3.4.1</jquery.version>
     <popper.js.version>1.15.0</popper.js.version>
     <bootstrap.version>4.4.1</bootstrap.version>
@@ -79,14 +79,19 @@
       </dependency>
       <!-- Libraries -->
       <dependency>
-        <groupId>io.springfox</groupId>
-        <artifactId>springfox-swagger2</artifactId>
-        <version>${springfox-swagger2.version}</version>
+        <groupId>org.springdoc</groupId>
+        <artifactId>springdoc-openapi-ui</artifactId>
+        <version>${springdoc-openapi.version}</version>
       </dependency>
       <dependency>
-        <groupId>io.springfox</groupId>
-        <artifactId>springfox-swagger-ui</artifactId>
-        <version>${springfox-swagger2.version}</version>
+        <groupId>org.springdoc</groupId>
+        <artifactId>springdoc-openapi-data-rest</artifactId>
+        <version>${springdoc-openapi.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.springdoc</groupId>
+        <artifactId>springdoc-openapi-security</artifactId>
+        <version>${springdoc-openapi.version}</version>
       </dependency>
       <!-- JavaScript -->
       <dependency>

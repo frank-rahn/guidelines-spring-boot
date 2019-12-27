@@ -21,8 +21,7 @@ import static org.apache.commons.lang3.builder.ToStringBuilder.reflectionToStrin
 import static org.apache.commons.lang3.builder.ToStringStyle.JSON_STYLE;
 import static org.springframework.format.annotation.DateTimeFormat.ISO.DATE;
 
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import java.time.LocalDate;
 import java.util.List;
 import javax.validation.constraints.Email;
@@ -31,6 +30,7 @@ import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlRootElement;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
@@ -39,37 +39,37 @@ import org.springframework.format.annotation.DateTimeFormat;
 /**
  * @author Frank Rahn
  */
-@ApiModel(description = "Eine Person")
+@Schema(description = "Eine Person")
 @XmlRootElement
 @Getter
 @Setter
 @RequiredArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
 public class Person {
 
-  @ApiModelProperty("Die UUID der Person")
+  @Schema(description = "Die UUID der Person", example = "7b6a3a11-0873-46b5-9d62-05fe6a436ea9")
   private String id;
 
-  @ApiModelProperty("Der Vorname der Person")
+  @Schema(description = "Der Vorname der Person", example = "Martin")
   private String firstName;
 
-  @NotNull
   @NotBlank
-  @ApiModelProperty(value = "Der Nachname der Person", required = true)
+  @Schema(description = "Der Nachname der Person", example = "Rahn")
   @NonNull
   private String lastName;
 
   @Email
-  @ApiModelProperty("Die E-Mail der Person")
+  @Schema(description = "Die E-Mail der Person", example = "martin@frank-rahn.de")
   private String emailAddress;
 
   @DateTimeFormat(iso = DATE)
   @NotNull
-  @ApiModelProperty(value = "Das Geburtsdatum der Person", required = true)
+  @Schema(description = "Das Geburtsdatum der Person", example = "1979-03-25")
   @NonNull
   private LocalDate birthday;
 
-  @ApiModelProperty("Allgemeine Informationen über die Person")
+  @Schema(description = "Allgemeine Informationen über die Person", example = "[\"Tester\"]")
   private List<String> infos;
 
   @Override

@@ -32,9 +32,6 @@
   <description>Guidelines for Spring Boot - Rest</description>
 
   <properties>
-    <!-- Siehe Issue #4: https://github.com/frank-rahn/guidelines-spring-boot/issues/4 -->
-    <skipTests>true</skipTests>
-
     <sonar.coverage.exclusions>**/*Application.java</sonar.coverage.exclusions>
   </properties>
 
@@ -80,12 +77,8 @@
       <artifactId>jackson-dataformat-xml</artifactId>
     </dependency>
     <dependency>
-      <groupId>io.springfox</groupId>
-      <artifactId>springfox-swagger2</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>io.springfox</groupId>
-      <artifactId>springfox-swagger-ui</artifactId>
+      <groupId>org.springdoc</groupId>
+      <artifactId>springdoc-openapi-ui</artifactId>
     </dependency>
 
     <!-- Dev & Runtime -->
