@@ -17,11 +17,14 @@ package de.rahn.guidelines.springboot.rest.api;
 
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.startsWith;
 import static org.springframework.http.MediaType.APPLICATION_JSON;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.header;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -57,13 +60,15 @@ class PeopleControllerTest {
   @Autowired
   private PeopleController classUnderTest;
 
+  private Person person;
+
   @BeforeEach
   void resetPeopleController() {
-    classUnderTest.reset();
+    person = classUnderTest.reset();
   }
 
   @Test
-  void givenPeople_whenGetPeople_andNoAuth_thenReturnStatusUnauthorized() throws Exception {
+  void givenPeopleAndNoAuth_whenGetPeople_thenReturnStatusUnauthorized() throws Exception {
     mockMvc
         .perform(get("/api/people").contentType(APPLICATION_JSON))
         .andExpect(status().isUnauthorized());
@@ -77,7 +82,43 @@ class PeopleControllerTest {
         .andExpect(status().isOk())
         .andExpect(content().contentType(APPLICATION_JSON))
         .andExpect(jsonPath("$", hasSize(1)))
-        .andExpect(jsonPath("$[0].lastName", is("Rahn")));
+        .andExpect(jsonPath("$[0].lastName", is(person.getLastName())))
+        .andExpect(jsonPath("$[0].id", is(person.getId())));
+  }
+
+  @Test
+  @WithMockUser
+  void givenInvalidId_whenGetPeopleById_thenReturnHttpStatus404() throws Exception {
+    mockMvc
+        .perform(get("/api/people/4711").contentType(APPLICATION_JSON))
+        .andExpect(status().isNotFound());
+  }
+
+  @Test
+  @WithMockUser
+  void givenValidId_whenGetPeopleById_thenReturnJsonElement() throws Exception {
+    mockMvc
+        .perform(get("/api/people/" + person.getId()).contentType(APPLICATION_JSON))
+        .andExpect(status().isOk())
+        .andExpect(content().contentType(APPLICATION_JSON))
+        .andExpect(jsonPath("$.lastName", is(person.getLastName())))
+        .andExpect(jsonPath("$.id", is(person.getId())));
+  }
+
+  @Test
+  @WithMockUser
+  void givenInvalidId_whenDeletePeopleById_thenReturnHttpStatus204() throws Exception {
+    mockMvc
+        .perform(delete("/api/people/4711").contentType(APPLICATION_JSON))
+        .andExpect(status().isNoContent());
+  }
+
+  @Test
+  @WithMockUser
+  void givenValidId_whenDeletePeopleById_thenReturnHttpStatus204() throws Exception {
+    mockMvc
+        .perform(delete("/api/people/" + person.getId()).contentType(APPLICATION_JSON))
+        .andExpect(status().isNoContent());
   }
 
   @Test
@@ -95,7 +136,8 @@ class PeopleControllerTest {
                 .content(objectMapper.writeValueAsString(person)))
         .andExpect(status().isOk())
         .andExpect(content().contentType(APPLICATION_JSON))
-        .andExpect(jsonPath("$.lastName", is("Rahn")));
+        .andExpect(jsonPath("$.lastName", is("Rahn")))
+        .andExpect(jsonPath("$.id", is(uuid)));
   }
 
   @Test
@@ -110,7 +152,8 @@ class PeopleControllerTest {
                 .content(objectMapper.writeValueAsString(person)))
         .andExpect(status().isCreated())
         .andExpect(content().contentType(APPLICATION_JSON))
-        .andExpect(jsonPath("$.lastName", is("Rahn")));
+        .andExpect(jsonPath("$.lastName", is("Rahn")))
+        .andExpect(header().string("location", startsWith("http://localhost/api/people/")));
   }
 
   @Test

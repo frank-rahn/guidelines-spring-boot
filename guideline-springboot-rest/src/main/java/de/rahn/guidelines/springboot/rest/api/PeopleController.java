@@ -24,7 +24,6 @@ import io.swagger.v3.oas.annotations.headers.Header;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
-import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import java.net.URI;
 import java.time.LocalDate;
@@ -57,20 +56,18 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
     path = {"/api/people"},
     produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
 @Tag(name = "People")
-@ApiResponses({
-    @ApiResponse(
-        responseCode = "401",
-        description = "Nicht autorisiert die Personen abzurufen (Unauthorized)",
-        content = {@Content()}),
-    @ApiResponse(
-        responseCode = "403",
-        description = "Zugriff auf die Personen ist verboten (Forbidden)",
-        content = {@Content()}),
-    @ApiResponse(
-        responseCode = "500",
-        description = "Unbekannter Fehler im Service (Internal Server Error)",
-        content = {@Content()}),
-})
+@ApiResponse(
+    responseCode = "401",
+    description = "Nicht autorisiert die Personen abzurufen (Unauthorized)",
+    content = {@Content()})
+@ApiResponse(
+    responseCode = "403",
+    description = "Zugriff auf die Personen ist verboten (Forbidden)",
+    content = {@Content()})
+@ApiResponse(
+    responseCode = "500",
+    description = "Unbekannter Fehler im Service (Internal Server Error)",
+    content = {@Content()})
 @Slf4j
 class PeopleController {
 
@@ -95,19 +92,17 @@ class PeopleController {
   }
 
   @PostConstruct
-  void setup() {
+  Person setup() {
     Person person = new Person("Rahn", LocalDate.of(1967, 5, 5));
     person.setId(UUID.randomUUID().toString());
     person.setFirstName("Frank");
 
-    addPersonToPeople(person);
+    return addPersonToPeople(person);
   }
 
   @GetMapping
   @Operation(summary = "Liefert alle Personen")
-  @ApiResponses({
-      @ApiResponse(responseCode = "200", description = "Personen erfolgreich abgerufen (Ok)")
-  })
+  @ApiResponse(responseCode = "200", description = "Personen erfolgreich abgerufen (Ok)")
   Collection<Person> getPeople() {
     LOGGER.info("GetAllPeople: Authentication={}", getContext().getAuthentication());
 
@@ -116,13 +111,11 @@ class PeopleController {
 
   @GetMapping(path = "/{id}")
   @Operation(summary = "Suche die Person mit der Id")
-  @ApiResponses({
-      @ApiResponse(responseCode = "200", description = "Person erfolgreich abgerufen (Ok)"),
-      @ApiResponse(
-          responseCode = "404",
-          description = "Keine Person gefunden (Not Found)",
-          content = {@Content()})
-  })
+  @ApiResponse(responseCode = "200", description = "Person erfolgreich abgerufen (Ok)")
+  @ApiResponse(
+      responseCode = "404",
+      description = "Keine Person gefunden (Not Found)",
+      content = {@Content()})
   ResponseEntity<Person> getPersonById(
       @SuppressWarnings("MVCPathVariableInspection")
       @PathVariable("id")
@@ -135,9 +128,7 @@ class PeopleController {
 
   @DeleteMapping(path = "/{id}")
   @Operation(summary = "Lösche die Person mit der Id")
-  @ApiResponses({
-      @ApiResponse(responseCode = "204", description = "Person erfolgreich gelöscht (No Content)")
-  })
+  @ApiResponse(responseCode = "204", description = "Person erfolgreich gelöscht (No Content)")
   ResponseEntity<Void> deletePersonById(
       @SuppressWarnings("MVCPathVariableInspection")
       @PathVariable("id")
@@ -152,11 +143,7 @@ class PeopleController {
 
   @PutMapping(path = "/{id}")
   @Operation(summary = "Füge die Person mit der Id hinzu oder ändere sie")
-  @ApiResponses({
-      @ApiResponse(
-          responseCode = "200",
-          description = "Person erfolgreich geändert oder angelegt (Ok)")
-  })
+  @ApiResponse(responseCode = "200", description = "Person erfolgreich geändert oder angelegt (Ok)")
   Person putPersonById(
       @SuppressWarnings("MVCPathVariableInspection")
       @PathVariable("id")
@@ -177,18 +164,16 @@ class PeopleController {
 
   @PostMapping
   @Operation(description = "Füge eine Person hinzu")
-  @ApiResponses({
-      @ApiResponse(
-          responseCode = "201",
-          description = "Person erfolgreich angelegt (CREATED)",
-          headers = {
-              @Header(
-                  name = "location",
-                  description = "URI der angelegten Person",
-                  required = true,
-                  schema = @Schema(name = "string", format = "uri"))
-          })
-  })
+  @ApiResponse(
+      responseCode = "201",
+      description = "Person erfolgreich angelegt (CREATED)",
+      headers = {
+          @Header(
+              name = "location",
+              description = "URI der angelegten Person",
+              required = true,
+              schema = @Schema(name = "string", format = "uri"))
+      })
   ResponseEntity<Person> postPerson(
       @RequestBody @Parameter(description = "Die neue Person", required = true) @Valid
           Person person) {
@@ -203,9 +188,9 @@ class PeopleController {
     return ResponseEntity.created(location).body(person);
   }
 
-  void reset() {
+  Person reset() {
     people.clear();
 
-    setup();
+    return setup();
   }
 }
