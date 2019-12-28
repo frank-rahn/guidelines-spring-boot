@@ -180,7 +180,7 @@ class PeopleController {
     LOGGER.info(
         "PostPerson: Person={}, Authentication={}", person, getContext().getAuthentication());
 
-    person = addPersonToPeople(null, person);
+    addPersonToPeople(null, person);
     URI location =
         ServletUriComponentsBuilder.fromCurrentRequestUri().path("/{id}").build(person.getId());
     LOGGER.info("PostPerson: Location={}", location);
