@@ -15,13 +15,11 @@
  */
 package de.rahn.guidelines.springboot.web.config.properties;
 
-import static org.apache.commons.lang3.builder.ToStringBuilder.reflectionToString;
-import static org.apache.commons.lang3.builder.ToStringStyle.JSON_STYLE;
-
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.validation.annotation.Validated;
 
@@ -31,15 +29,11 @@ import org.springframework.validation.annotation.Validated;
 @ConfigurationProperties(prefix = "app")
 @Getter
 @Setter
+@ToString
 @Validated
 public class AppProperties {
 
   @NotNull
   @NotBlank
   private String url;
-
-  @Override
-  public String toString() {
-    return reflectionToString(this, JSON_STYLE);
-  }
 }

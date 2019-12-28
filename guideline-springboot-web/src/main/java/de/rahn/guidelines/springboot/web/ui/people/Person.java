@@ -15,10 +15,6 @@
  */
 package de.rahn.guidelines.springboot.web.ui.people;
 
-import static org.apache.commons.lang3.builder.EqualsBuilder.reflectionEquals;
-import static org.apache.commons.lang3.builder.HashCodeBuilder.reflectionHashCode;
-import static org.apache.commons.lang3.builder.ToStringBuilder.reflectionToString;
-import static org.apache.commons.lang3.builder.ToStringStyle.JSON_STYLE;
 import static org.springframework.format.annotation.DateTimeFormat.ISO.DATE;
 
 import java.time.LocalDate;
@@ -26,11 +22,13 @@ import java.util.List;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 import org.springframework.format.annotation.DateTimeFormat;
 
 /**
@@ -38,8 +36,10 @@ import org.springframework.format.annotation.DateTimeFormat;
  */
 @Getter
 @Setter
+@EqualsAndHashCode
 @RequiredArgsConstructor
 @NoArgsConstructor
+@ToString
 public class Person {
 
   private String id;
@@ -60,27 +60,4 @@ public class Person {
   private LocalDate birthday;
 
   private List<String> infos;
-
-  @Override
-  public boolean equals(Object obj) {
-    if (this == obj) {
-      return true;
-    }
-
-    if (obj == null || getClass() != obj.getClass()) {
-      return false;
-    }
-
-    return reflectionEquals(this, obj, false);
-  }
-
-  @Override
-  public int hashCode() {
-    return reflectionHashCode(this, false);
-  }
-
-  @Override
-  public String toString() {
-    return reflectionToString(this, JSON_STYLE);
-  }
 }

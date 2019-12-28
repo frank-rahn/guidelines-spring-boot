@@ -52,6 +52,4 @@ import org.springframework.context.annotation.Configuration;
         @Tag(name = "Actuator", description = "Spring Boot 2 Actuator API")
     })
 @SecurityScheme(name = "basicAuth", type = SecuritySchemeType.HTTP, scheme = "basic")
-public class OpenAPIConfiguration {
-
-}
+class OpenAPIConfiguration {}

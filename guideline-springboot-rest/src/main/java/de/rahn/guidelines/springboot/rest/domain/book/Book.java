@@ -23,11 +23,13 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import lombok.AllArgsConstructor;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 import org.hibernate.validator.constraints.ISBN;
 
 /**
@@ -37,9 +39,11 @@ import org.hibernate.validator.constraints.ISBN;
 @XmlRootElement
 @Getter
 @Setter
+@EqualsAndHashCode
 @RequiredArgsConstructor
 @AllArgsConstructor
 @NoArgsConstructor
+@ToString
 public class Book {
 
   @Schema(description = "Die Artikelnummer", example = "7b6a3a11-0873-46b5-9d62-05fe6a436ea9")
@@ -53,7 +57,9 @@ public class Book {
   @NonNull
   private String isbn;
 
-  @Schema(description = "Der Titel des Buches sollte mindestens 5 Zeichen umfassen", example = "Mein Buch")
+  @Schema(
+      description = "Der Titel des Buches sollte mindestens 5 Zeichen umfassen",
+      example = "Mein Buch")
   @NotNull
   @Size(min = 5)
   private String title;

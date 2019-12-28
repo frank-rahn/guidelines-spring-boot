@@ -15,10 +15,6 @@
  */
 package de.rahn.guidelines.springboot.rest.domain.people;
 
-import static org.apache.commons.lang3.builder.EqualsBuilder.reflectionEquals;
-import static org.apache.commons.lang3.builder.HashCodeBuilder.reflectionHashCode;
-import static org.apache.commons.lang3.builder.ToStringBuilder.reflectionToString;
-import static org.apache.commons.lang3.builder.ToStringStyle.JSON_STYLE;
 import static org.springframework.format.annotation.DateTimeFormat.ISO.DATE;
 
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -29,11 +25,13 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlRootElement;
 import lombok.AllArgsConstructor;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 import org.springframework.format.annotation.DateTimeFormat;
 
 /**
@@ -43,9 +41,11 @@ import org.springframework.format.annotation.DateTimeFormat;
 @XmlRootElement
 @Getter
 @Setter
+@EqualsAndHashCode
 @RequiredArgsConstructor
 @AllArgsConstructor
 @NoArgsConstructor
+@ToString
 public class Person {
 
   @Schema(description = "Die UUID der Person", example = "7b6a3a11-0873-46b5-9d62-05fe6a436ea9")
@@ -71,27 +71,4 @@ public class Person {
 
   @Schema(description = "Allgemeine Informationen über die Person", example = "[\"Tester\"]")
   private List<String> infos;
-
-  @Override
-  public boolean equals(Object obj) {
-    if (this == obj) {
-      return true;
-    }
-
-    if (obj == null || getClass() != obj.getClass()) {
-      return false;
-    }
-
-    return reflectionEquals(this, obj, false);
-  }
-
-  @Override
-  public int hashCode() {
-    return reflectionHashCode(this, false);
-  }
-
-  @Override
-  public String toString() {
-    return reflectionToString(this, JSON_STYLE);
-  }
 }
