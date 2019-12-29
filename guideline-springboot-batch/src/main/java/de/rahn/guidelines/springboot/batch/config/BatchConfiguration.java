@@ -21,6 +21,7 @@ import de.rahn.guidelines.springboot.batch.job.userimport.Person;
 import de.rahn.guidelines.springboot.batch.job.userimport.UserImportPersonProcessor;
 import java.beans.PropertyEditorSupport;
 import java.sql.Date;
+import java.sql.Types;
 import java.time.LocalDate;
 import java.util.Collection;
 import javax.sql.DataSource;
@@ -108,6 +109,8 @@ class BatchConfiguration {
               ps.setString(3, person.getEmailAddress());
               if (person.getBirthday() != null) {
                 ps.setDate(4, Date.valueOf(person.getBirthday()));
+              } else {
+                ps.setNull(4, Types.DATE);
               }
             })
         .dataSource(dataSource)

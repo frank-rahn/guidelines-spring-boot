@@ -49,7 +49,7 @@ public class UserImportJobCompletionNotificationListener extends JobExecutionLis
           .query(
               "SELECT person_id, first_name, last_name, email_address, birth_day FROM people",
               (rs, row) ->
-                  new Person(rs.getString(3), rs.getString(2))
+                  new Person(rs.getString(2), rs.getString(3))
                       .withEmailAddress(rs.getString(4))
                       .withBirthday(rs.getObject(5, LocalDate.class)))
           .forEach(

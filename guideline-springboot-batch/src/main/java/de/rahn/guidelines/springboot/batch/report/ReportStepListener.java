@@ -19,8 +19,12 @@ import de.rahn.guidelines.springboot.batch.report.support.ReportHelper;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.batch.core.SkipListener;
-import org.springframework.batch.core.listener.ItemListenerSupport;
+import org.springframework.batch.core.StepListener;
+import org.springframework.batch.core.annotation.OnProcessError;
+import org.springframework.batch.core.annotation.OnSkipInProcess;
+import org.springframework.batch.core.annotation.OnSkipInRead;
+import org.springframework.batch.core.annotation.OnSkipInWrite;
+import org.springframework.batch.core.annotation.OnWriteError;
 import org.springframework.stereotype.Component;
 
 /**
@@ -29,40 +33,39 @@ import org.springframework.stereotype.Component;
 @Component
 @Slf4j
 @RequiredArgsConstructor
-public class ReportStepListener extends ItemListenerSupport<Object, Object>
-    implements SkipListener<Object, Object> {
+public class ReportStepListener implements StepListener {
 
   private final ReportHelper reportHelper;
 
-  @Override
+  @OnProcessError
   public void onProcessError(Object item, Exception exception) {
     final String message = "Exception inside ItemProcessor for Item -> ";
 
     reportHelper.reportThrowable(message, item, exception, LOGGER);
   }
 
-  @Override
+  @OnWriteError
   public void onWriteError(Exception exception, List<?> items) {
     final String message = "Exception inside ItemProcessor for Items -> ";
 
     reportHelper.reportThrowable(message, items, exception, LOGGER);
   }
 
-  @Override
+  @OnSkipInRead
   public void onSkipInRead(Throwable throwable) {
     final String message = "Skippable Exception inside ItemReader -> ";
 
     reportHelper.reportThrowable(message, null, throwable, LOGGER);
   }
 
-  @Override
+  @OnSkipInWrite
   public void onSkipInWrite(Object item, Throwable throwable) {
     final String message = "Skippable Exception inside ItemWriter for Item -> ";
 
     reportHelper.reportThrowable(message, item, throwable, LOGGER);
   }
 
-  @Override
+  @OnSkipInProcess
   public void onSkipInProcess(Object item, Throwable throwable) {
     final String message = "Skippable Exception inside ItemProcessor for Item -> ";
 

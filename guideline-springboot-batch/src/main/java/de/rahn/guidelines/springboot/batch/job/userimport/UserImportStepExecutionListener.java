@@ -18,7 +18,9 @@ package de.rahn.guidelines.springboot.batch.job.userimport;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.batch.core.ExitStatus;
 import org.springframework.batch.core.StepExecution;
-import org.springframework.batch.core.StepExecutionListener;
+import org.springframework.batch.core.StepListener;
+import org.springframework.batch.core.annotation.AfterStep;
+import org.springframework.batch.core.annotation.BeforeStep;
 import org.springframework.stereotype.Component;
 
 /**
@@ -26,16 +28,16 @@ import org.springframework.stereotype.Component;
  */
 @Component
 @Slf4j
-public class UserImportStepExecutionListener implements StepExecutionListener {
+public class UserImportStepExecutionListener implements StepListener {
 
-  @Override
+  @BeforeStep
   public void beforeStep(StepExecution stepExecution) {
     stepExecution.getExecutionContext().put("start", System.currentTimeMillis());
 
     LOGGER.info("Step name: {} started", stepExecution.getStepName());
   }
 
-  @Override
+  @AfterStep
   public ExitStatus afterStep(StepExecution stepExecution) {
     long elapsed =
         System.currentTimeMillis() - stepExecution.getExecutionContext().getLong("start");

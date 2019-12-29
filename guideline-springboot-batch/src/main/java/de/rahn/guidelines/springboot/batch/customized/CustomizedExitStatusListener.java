@@ -23,26 +23,22 @@ import org.springframework.batch.core.ExitStatus;
 import org.springframework.batch.core.JobExecution;
 import org.springframework.batch.core.JobExecutionListener;
 import org.springframework.batch.core.StepExecution;
-import org.springframework.batch.core.StepExecutionListener;
+import org.springframework.batch.core.StepListener;
+import org.springframework.batch.core.annotation.AfterStep;
 import org.springframework.stereotype.Component;
 
 /**
  * @author Frank Rahn
  */
 @Component
-class CustomizedExitStatusListener implements JobExecutionListener, StepExecutionListener {
+class CustomizedExitStatusListener implements JobExecutionListener, StepListener {
 
   @Override
   public void beforeJob(JobExecution jobExecution) {
     // Empty
   }
 
-  @Override
-  public void beforeStep(StepExecution stepExecution) {
-    // Empty
-  }
-
-  @Override
+  @AfterStep
   public ExitStatus afterStep(StepExecution stepExecution) {
     String exitCode = stepExecution.getExitStatus().getExitCode();
 
