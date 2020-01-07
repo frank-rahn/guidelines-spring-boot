@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019-2019 the original author or authors.
+ * Copyright (c) 2019-2020 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -24,6 +24,7 @@ import static org.springframework.http.HttpMethod.GET;
 import static org.springframework.http.HttpStatus.OK;
 
 import java.util.List;
+import java.util.UUID;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -89,12 +90,13 @@ class PeopleControllerTest {
   @Test
   void givenPerson_whenGetPersonById_thenOk() {
     // Given
-    Person person = new Person();
-    doReturn(person).when(template).getForObject(eq("/4711"), eq(Person.class));
     ExtendedModelMap model = new ExtendedModelMap();
+    UUID id = UUID.randomUUID();
+    Person person = new Person();
+    doReturn(person).when(template).getForObject(eq("/" + id.toString()), eq(Person.class));
 
     // When
-    String result = classUnderTest.getPersonById("4711", model);
+    String result = classUnderTest.getPersonById(id, model);
 
     // Then
     assertThat(result).isEqualTo("person");

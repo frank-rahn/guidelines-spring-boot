@@ -30,3 +30,5 @@ management:
         include: '*'
 app:
   url: http://localhost:8081/api/people
+  user: user
+  password: user

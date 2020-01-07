@@ -7,8 +7,20 @@
   ],
   "properties": [
     {
+      "name": "app.password",
+      "description": "Das Passwort für die Authentifizierung am REST-Service.",
+      "type": "java.lang.String",
+      "sourceType": "de.rahn.guidelines.springboot.web.config.properties.AppProperties"
+    },
+    {
       "name": "app.url",
       "description": "Die URL für den REST-Service.",
+      "type": "java.lang.String",
+      "sourceType": "de.rahn.guidelines.springboot.web.config.properties.AppProperties"
+    },
+    {
+      "name": "app.user",
+      "description": "Der Benutzername für die Authentifizierung am REST-Service.",
       "type": "java.lang.String",
       "sourceType": "de.rahn.guidelines.springboot.web.config.properties.AppProperties"
     }

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019-2019 the original author or authors.
+ * Copyright (c) 2019-2020 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -117,26 +117,20 @@ class PeopleController {
       description = "Keine Person gefunden (Not Found)",
       content = {@Content()})
   ResponseEntity<Person> getPersonById(
-      @SuppressWarnings("MVCPathVariableInspection")
-      @PathVariable("id")
-      @Parameter(description = "Die UUID der gesuchten Person")
-          String id) {
+      @PathVariable @Parameter(description = "Die UUID der gesuchten Person") UUID id) {
     LOGGER.info("GetPersonById: Id={}, Authentication={}", id, getContext().getAuthentication());
 
-    return ResponseEntity.of(Optional.ofNullable(people.get(id)));
+    return ResponseEntity.of(Optional.ofNullable(people.get(id.toString())));
   }
 
   @DeleteMapping(path = "/{id}")
   @Operation(summary = "Lösche die Person mit der Id")
   @ApiResponse(responseCode = "204", description = "Person erfolgreich gelöscht (No Content)")
   ResponseEntity<Void> deletePersonById(
-      @SuppressWarnings("MVCPathVariableInspection")
-      @PathVariable("id")
-      @Parameter(description = "Die UUID der zu löschenden Person")
-          String id) {
+      @PathVariable @Parameter(description = "Die UUID der zu löschenden Person") UUID id) {
     LOGGER.info("DeletePersonById: Id={}, Authentication={}", id, getContext().getAuthentication());
 
-    people.remove(id);
+    people.remove(id.toString());
 
     return ResponseEntity.noContent().build();
   }
@@ -145,10 +139,8 @@ class PeopleController {
   @Operation(summary = "Füge die Person mit der Id hinzu oder ändere sie")
   @ApiResponse(responseCode = "200", description = "Person erfolgreich geändert oder angelegt (Ok)")
   Person putPersonById(
-      @SuppressWarnings("MVCPathVariableInspection")
-      @PathVariable("id")
-      @Parameter(description = "Die UUID der neuen oder zu ändernde Person")
-          String id,
+      @PathVariable @Parameter(description = "Die UUID der neuen oder zu ändernde Person")
+          UUID id,
       @RequestBody
       @Parameter(description = "Die neue oder zu ändernde Person", required = true)
       @Valid
@@ -159,7 +151,7 @@ class PeopleController {
         person,
         getContext().getAuthentication());
 
-    return addPersonToPeople(id, person);
+    return addPersonToPeople(id.toString(), person);
   }
 
   @PostMapping

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019-2019 the original author or authors.
+ * Copyright (c) 2019-2020 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -90,7 +90,7 @@ class PeopleControllerTest {
   @WithMockUser
   void givenInvalidId_whenGetPeopleById_thenReturnHttpStatus404() throws Exception {
     mockMvc
-        .perform(get("/api/people/4711").contentType(APPLICATION_JSON))
+        .perform(get("/api/people/" + UUID.randomUUID().toString()).contentType(APPLICATION_JSON))
         .andExpect(status().isNotFound());
   }
 
@@ -109,7 +109,8 @@ class PeopleControllerTest {
   @WithMockUser
   void givenInvalidId_whenDeletePeopleById_thenReturnHttpStatus204() throws Exception {
     mockMvc
-        .perform(delete("/api/people/4711").contentType(APPLICATION_JSON))
+        .perform(
+            delete("/api/people/" + UUID.randomUUID().toString()).contentType(APPLICATION_JSON))
         .andExpect(status().isNoContent());
   }
 

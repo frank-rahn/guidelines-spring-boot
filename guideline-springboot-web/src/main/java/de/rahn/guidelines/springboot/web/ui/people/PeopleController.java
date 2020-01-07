@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019-2019 the original author or authors.
+ * Copyright (c) 2019-2020 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,6 +19,7 @@ import static org.springframework.http.HttpMethod.GET;
 import static org.springframework.security.core.context.SecurityContextHolder.getContext;
 
 import java.util.List;
+import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.ParameterizedTypeReference;
@@ -54,11 +55,10 @@ class PeopleController {
   }
 
   @GetMapping(path = "/{id}")
-  String getPersonById(
-      @SuppressWarnings("MVCPathVariableInspection") @PathVariable("id") String id, Model model) {
+  String getPersonById(@PathVariable UUID id, Model model) {
     LOGGER.info("GetPersonById: Id={}, Authentication={}", id, getContext().getAuthentication());
 
-    var person = template.getForObject("/" + id, Person.class);
+    var person = template.getForObject("/" + id.toString(), Person.class);
 
     model.addAttribute("person", person);
 
