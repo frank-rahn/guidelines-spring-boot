@@ -37,6 +37,7 @@ import javax.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.util.Assert;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -55,6 +56,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 @RequestMapping(
     path = {"/api/people"},
     produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
+@Secured("ROLE_USER")
 @Tag(name = "People")
 @ApiResponse(
     responseCode = "401",
@@ -92,7 +94,7 @@ class PeopleController {
   }
 
   @PostConstruct
-  Person setup() {
+  private Person setup() {
     Person person = new Person("Rahn", LocalDate.of(1967, 5, 5));
     person.setId(UUID.randomUUID().toString());
     person.setFirstName("Frank");
@@ -103,7 +105,7 @@ class PeopleController {
   @GetMapping
   @Operation(summary = "Liefert alle Personen")
   @ApiResponse(responseCode = "200", description = "Personen erfolgreich abgerufen (Ok)")
-  Collection<Person> getPeople() {
+  public Collection<Person> getPeople() {
     LOGGER.info("GetAllPeople: Authentication={}", getContext().getAuthentication());
 
     return people.values();
@@ -116,7 +118,7 @@ class PeopleController {
       responseCode = "404",
       description = "Keine Person gefunden (Not Found)",
       content = {@Content()})
-  ResponseEntity<Person> getPersonById(
+  public ResponseEntity<Person> getPersonById(
       @PathVariable @Parameter(description = "Die UUID der gesuchten Person") UUID id) {
     LOGGER.info("GetPersonById: Id={}, Authentication={}", id, getContext().getAuthentication());
 
@@ -126,7 +128,7 @@ class PeopleController {
   @DeleteMapping(path = "/{id}")
   @Operation(summary = "Lösche die Person mit der Id")
   @ApiResponse(responseCode = "204", description = "Person erfolgreich gelöscht (No Content)")
-  ResponseEntity<Void> deletePersonById(
+  public ResponseEntity<Void> deletePersonById(
       @PathVariable @Parameter(description = "Die UUID der zu löschenden Person") UUID id) {
     LOGGER.info("DeletePersonById: Id={}, Authentication={}", id, getContext().getAuthentication());
 
@@ -138,9 +140,8 @@ class PeopleController {
   @PutMapping(path = "/{id}")
   @Operation(summary = "Füge die Person mit der Id hinzu oder ändere sie")
   @ApiResponse(responseCode = "200", description = "Person erfolgreich geändert oder angelegt (Ok)")
-  Person putPersonById(
-      @PathVariable @Parameter(description = "Die UUID der neuen oder zu ändernde Person")
-          UUID id,
+  public Person putPersonById(
+      @PathVariable @Parameter(description = "Die UUID der neuen oder zu ändernde Person") UUID id,
       @RequestBody
       @Parameter(description = "Die neue oder zu ändernde Person", required = true)
       @Valid
@@ -166,7 +167,7 @@ class PeopleController {
               required = true,
               schema = @Schema(name = "string", format = "uri"))
       })
-  ResponseEntity<Person> postPerson(
+  public ResponseEntity<Person> postPerson(
       @RequestBody @Parameter(description = "Die neue Person", required = true) @Valid
           Person person) {
     LOGGER.info(

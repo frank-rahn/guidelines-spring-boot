@@ -24,6 +24,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -36,6 +37,7 @@ import org.springframework.web.client.RestTemplate;
  */
 @Controller
 @RequestMapping(path = "/people")
+@Secured("ROLE_USER")
 @Slf4j
 @RequiredArgsConstructor
 class PeopleController {
@@ -43,11 +45,12 @@ class PeopleController {
   private final RestTemplate template;
 
   @GetMapping
-  String getAllPeople(Model model) {
+  public String getAllPeople(Model model) {
     LOGGER.info("GetAllPeople: Authentication={}", getContext().getAuthentication());
 
     ResponseEntity<List<Person>> people =
-        template.exchange("/", GET, null, new ParameterizedTypeReference<>() {});
+        template.exchange("/", GET, null, new ParameterizedTypeReference<>() {
+        });
 
     model.addAttribute("people", people.getBody());
 
@@ -55,7 +58,7 @@ class PeopleController {
   }
 
   @GetMapping(path = "/{id}")
-  String getPersonById(@PathVariable UUID id, Model model) {
+  public String getPersonById(@PathVariable UUID id, Model model) {
     LOGGER.info("GetPersonById: Id={}, Authentication={}", id, getContext().getAuthentication());
 
     var person = template.getForObject("/" + id.toString(), Person.class);

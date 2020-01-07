@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019-2019 the original author or authors.
+ * Copyright (c) 2019-2020 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,6 +17,7 @@ package de.rahn.guidelines.springboot.web.config;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
@@ -25,6 +26,7 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
  * @author Frank Rahn
  */
 @Configuration
+@EnableGlobalMethodSecurity(securedEnabled = true)
 class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 
   @Override
@@ -39,17 +41,19 @@ class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 
   @Override
   protected void configure(HttpSecurity http) throws Exception {
-    http.authorizeRequests()
-        .antMatchers("/css/*.css", "/js/*.js", "/webjars/**")
-        .permitAll()
-        .anyRequest()
-        .hasRole("USER");
-
-    http.formLogin().loginPage("/login").permitAll();
-
-    http.logout()
-        .permitAll()
-        .deleteCookies()
-        .logoutRequestMatcher(new AntPathRequestMatcher("/logout"));
+    http.authorizeRequests(
+        authorizeRequestsCustomizer ->
+            authorizeRequestsCustomizer
+                .antMatchers("/css/*.css", "/js/*.js", "/webjars/**")
+                .permitAll()
+                .anyRequest()
+                .hasRole("USER"))
+        .formLogin(formLoginCustomizer -> formLoginCustomizer.loginPage("/login").permitAll())
+        .logout(
+            logoutConfigurer ->
+                logoutConfigurer
+                    .permitAll()
+                    .deleteCookies()
+                    .logoutRequestMatcher(new AntPathRequestMatcher("/logout")));
   }
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019-2019 the original author or authors.
+ * Copyright (c) 2019-2020 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,13 +20,16 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 
 /**
  * @author Frank Rahn
  */
 @Configuration
+@EnableGlobalMethodSecurity(securedEnabled = true)
 class WebSecurityConfiguration {
 
   @Value("${spring.application.name}")
@@ -48,11 +51,12 @@ class WebSecurityConfiguration {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-      http.antMatcher("/actuator/**").authorizeRequests().anyRequest().hasRole("ADMIN");
-
-      http.httpBasic().realmName("Actuator-API");
-
-      http.csrf().disable();
+      http.antMatcher("/actuator/**")
+          .authorizeRequests(
+              authorizeRequestsCustomizer ->
+                  authorizeRequestsCustomizer.anyRequest().hasRole("ADMIN"))
+          .httpBasic(httpBasicCustomizer -> httpBasicCustomizer.realmName("Actuator-API"))
+          .csrf(AbstractHttpConfigurer::disable);
     }
   }
 
@@ -62,11 +66,12 @@ class WebSecurityConfiguration {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-      http.antMatcher("/api/**").authorizeRequests().anyRequest().hasRole("USER");
-
-      http.httpBasic().realmName(applicationName + "-API");
-
-      http.csrf().disable();
+      http.antMatcher("/api/**")
+          .authorizeRequests(
+              authorizeRequestsCustomizer ->
+                  authorizeRequestsCustomizer.anyRequest().hasRole("USER"))
+          .httpBasic(httpBasicCustomizer -> httpBasicCustomizer.realmName(applicationName + "API"))
+          .csrf(AbstractHttpConfigurer::disable);
     }
   }
 }
