@@ -6,6 +6,7 @@ ifdef::env-github[]
 :important-caption: :heavy_exclamation_mark:
 :caution-caption: :fire:
 :warning-caption: :warning:
+:badges:
 endif::[]
 :toc:
 :toclevels: 3
@@ -15,9 +16,11 @@ endif::[]
 :sectnums:
 :icons: font
 
+ifdef::badges[]
 image:https://img.shields.io/badge/license-Apache_License_2-blue.svg[title="Apache License 2", alt="Apache License 2", link="https://www.apache.org/licenses/LICENSE-2.0"]
 image:https://github.com/frank-rahn/guidelines-spring-boot/workflows/build/badge.svg[title="Build Status",alt="Build Status", link="https://github.com/frank-rahn/guidelines-spring-boot/actions?query=workflow%3Abuild"]
 image:https://sonarcloud.io/api/project_badges/measure?project=frank-rahn_guidelines-spring-boot&metric=alert_status[title="Quality Gate Status", alt="Quality Gate Status", link="https://sonarcloud.io/dashboard?id=frank-rahn_guidelines-spring-boot"]
+endif::[]
 
 toc::[]
 
@@ -25,33 +28,57 @@ toc::[]
 
 In diesem Repository befinden sich Projekte als Vorlagen rund um das Thema Spring Boot.
 
-== Module
+=== Java Style Guide
 
-In allen Modulen wird der Java Style Guide aus den
-link:https://google.github.io/styleguide/[Google Style Guides] genutzt.
+In allen Modulen wird der Java Style Guide aus den https://google.github.io/styleguide/[Google Style Guides] genutzt.
+
+Zusätzlich wird das Tool https://projectlombok.org/[Lombok] eingesetzt.
+
+=== CI
+
+Alle Module werden mit https://github.com/features/actions[GitHub Actions] gebaut.
+
+=== Code Qualität
+
+Alle Module besitzen Unit-Tests, die mit https://junit.org/junit5/[JUnit5], https://joel-costigliola.github.io/assertj/[AssertJ] und https://site.mockito.org/[Mockito] sowie Test-Utilities der eingesetzen Spring-Projekte.
+
+Die Code-Qualität wird beim CI mit https://sonarcloud.io/dashboard?id=frank-rahn_guidelines-spring-boot[SonarCloud] überprüft.
+
+=== Docker-Image
+
+Jedes Module wird mit dem Google Maven Plugin https://github.com/GoogleContainerTools/jib/tree/master/jib-maven-plugin[jib-maven-plugin] in ein Docker-Image überführt.
+
+== Module
 
 === App-Core
 
-Es wird eine Anwendung gestartet, die einige Dinge erledigt, und sich wieder beendet.
-Dabei wird ein entsprechender Exit-Code zurückgeliefert.
+Es wird mit Spring Boot eine Anwendung umgesetzt, die einige Dinge erledigt und sich wieder beendet - dabei wird ein entsprechender `exit code` zurückgeliefert.
 
-Weiterhin werden ...
+link:guideline-springboot-app-core/README.adoc[Mehr zur Anwendung]
 
 === App-JPA
 
-Eine Anwendung mit Datenbankzugriffen ...
+Es wird mit Spring Boot eine Anwendung umgesetzt, die mit Spring Data JPA auf eine Datenbank zugreift.
+
+link:guideline-springboot-app-jpa/README.adoc[Mehr zur Anwendung]
 
 === Batch
 
-Eine Batch-Anwendung ...
+Eine Spring Batch Anwendung mit Spring Boot.
+
+link:guideline-springboot-batch/README.adoc[Mehr zur Anwendung]
 
 === Rest
 
-Eine Rest-Service ...
+Es wird mit Spring Boot ein Rest-Service umgesetzt.
+
+link:guideline-springboot-rest/README.adoc[Mehr zur Anwendung]
 
 === Web
 
-Eine Webanwendung ...
+Es wird mit Spring Boot eine Webanwendung umgesetzt.
+
+link:guideline-springboot-web/README.adoc[Mehr zur Anwendung]
 
 == Hilfen
 

@@ -1,0 +1,37 @@
+= Guidelines for Spring Boot - App-JPA
+Frank Rahn <frank@frank-rahn.de>
+ifdef::env-github[]
+:tip-caption: :bulb:
+:note-caption: :information_source:
+:important-caption: :heavy_exclamation_mark:
+:caution-caption: :fire:
+:warning-caption: :warning:
+endif::[]
+:toc:
+:toclevels: 3
+:toc-title: pass:[<h2>Inhaltsverzeichnis</h2>]
+:toc-placement!:
+:sectanchors:
+:sectnums:
+:icons: font
+
+link:../README.adoc[Zurück]
+
+toc::[]
+
+== Beschreibung
+
+Diese Spring Boot Anwendung implementiert mit Spring Data JPA eine Datenbankanwendung.
+Nach dem Erzeugen einiger Datensätze beendet sich die Spring Boot Anwendung und liefert einen
+`exit code` zurück.
+
+In diesem Module `App-JPA` werden die folgende Technologien angewendet.
+
+* JPA mit https://spring.io/projects/spring-data-jpa[Spring Data JPA]
+** Berücksichtigung von *_Auditing_* und *_Versioning_* mit https://spring.io/projects/spring-security[Spring Security]
+* Setzen eines `exit code` in Abhängigkeit von Ausnahmen
+* Unit-Tests mit `@SpringBootTest`, `@DataJpaTest`, `@WithMockUser` und `@Sql`
+
+== Homepage des Autors
+
+https://www.frank-rahn.de/?utm_source=github&utm_medium=readme&utm_campaign=guidelines-spring-boot&utm_content=app-core[Frank W. Rahn]

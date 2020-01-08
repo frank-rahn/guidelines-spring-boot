@@ -1,0 +1,42 @@
+= Guidelines for Spring Boot - Batch
+Frank Rahn <frank@frank-rahn.de>
+ifdef::env-github[]
+:tip-caption: :bulb:
+:note-caption: :information_source:
+:important-caption: :heavy_exclamation_mark:
+:caution-caption: :fire:
+:warning-caption: :warning:
+endif::[]
+:toc:
+:toclevels: 3
+:toc-title: pass:[<h2>Inhaltsverzeichnis</h2>]
+:toc-placement!:
+:sectanchors:
+:sectnums:
+:icons: font
+
+link:../README.adoc[Zurück]
+
+toc::[]
+
+== Beschreibung
+
+Diese Spring Boot Anwendung implementiert einen https://spring.io/projects/spring-batch[Spring Batch].
+Nach der Abarbeitung des Jobs beendet sich die Anwendung und liefert in Abhängigkeit von Batch-Status einen `exit code` zurück.
+
+In diesem Module `Batch` werden die folgende Technologien angewendet.
+
+* Konfigurieren des Batch-Jobs `userImportJob` in der Java-Config (link:src/main/java/de/rahn/guidelines/springboot/batch/config/BatchConfiguration.java[BatchConfiguration])
+** Import-Daten werden aus einer link:src/main/resources/sample-data.csv[CSV-Datei] gelesen und in eine Datenbank geschrieben
+** Anwenden von einigen anwendungsspezifischen Listener (Siehe link:src/main/java/de/rahn/guidelines/springboot/batch/job/userimport/[Package userimport])
+* Konfigurieren von mehreren Datenbanken mit maximaler Spring-Boot-Auto-Configuration (link:src/main/java/de/rahn/guidelines/springboot/batch/config/DataSourceConfiguration.java[DataSourceConfiguration])
+** `spring.datasource` für die Anwendung (JPA-fähig)
+** `batch.datasource` für die Metadaten des Batches
+* Konfiguration und Implementierung von neuen `ExitStatus` eines Batches
+** Setzen eines `exit code` der Anwendung in Abhängigkeit vom `ExitStatus` des Batches
+* Erstellen eines Reports für die Fehler, die der Fachbereich beheben muss
+* Unit-Tests mit `@SpringBootTest` und `@SpringBatchTest`
+
+== Homepage des Autors
+
+https://www.frank-rahn.de/?utm_source=github&utm_medium=readme&utm_campaign=guidelines-spring-boot&utm_content=batch[Frank W. Rahn]

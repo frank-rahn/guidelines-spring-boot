@@ -1,0 +1,42 @@
+= Guidelines for Spring Boot - Rest
+Frank Rahn <frank@frank-rahn.de>
+ifdef::env-github[]
+:tip-caption: :bulb:
+:note-caption: :information_source:
+:important-caption: :heavy_exclamation_mark:
+:caution-caption: :fire:
+:warning-caption: :warning:
+endif::[]
+:toc:
+:toclevels: 3
+:toc-title: pass:[<h2>Inhaltsverzeichnis</h2>]
+:toc-placement!:
+:sectanchors:
+:sectnums:
+:icons: font
+
+link:../README.adoc[Zurück]
+
+toc::[]
+
+== Beschreibung
+
+Diese Spring Boot Anwendung implementiert eine Rest-Service.
+Dieser Service kann die Anfragen mit den Nachrichtenformate *_JSON_* oder *_XML_* beantworten.
+
+In diesem Module `Rest` werden die folgende Technologien angewendet.
+
+* Rest-Service mit Spring MVC und https://spring.io/projects/spring-security[Spring Security]
+** Nachrichtenformate *_JSON_* oder *_XML_*
+** HTTP-Methoden: `GET`, `DELETE`, `PUT`, `POST`
+** Validation (`javax.validation`) der Eingaben
+* https://www.openapis.org/[OpenAPI] v3 mit https://swagger.io/[Swagger]-UI (http://localhost:8081/swagger-ui.html[])
+** https://springdoc.github.io/springdoc-openapi-demos/[SpringDoc] anstatt http://springfox.github.io/springfox/[SpringFox]
+*** SpringFox ist noch nicht OpenAPI 3 und Spring Boot 2.2.x fähig (Siehe https://github.com/frank-rahn/guidelines-spring-boot/issues/4[Issue #4])
+* https://docs.spring.io/spring-boot/docs/current/reference/html/production-ready-features.html[Spring Boot Actuator]
+* https://opentracing.io/[OpenTracing] mit https://spring.io/projects/spring-cloud-sleuth[Spring Cloud Sleuth] und der Instrumentierungsbibliothek https://github.com/openzipkin/brave[brave] von https://zipkin.io/[Zipkin]
+* Unit-Tests mit `@SpringBootTest`, `@WebMvcTest` und `@WithMockUser`
+
+== Homepage des Autors
+
+https://www.frank-rahn.de/?utm_source=github&utm_medium=readme&utm_campaign=guidelines-spring-boot&utm_content=rest[Frank W. Rahn]

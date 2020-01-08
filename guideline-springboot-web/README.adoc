@@ -1,0 +1,43 @@
+= Guidelines for Spring Boot - Web
+Frank Rahn <frank@frank-rahn.de>
+ifdef::env-github[]
+:tip-caption: :bulb:
+:note-caption: :information_source:
+:important-caption: :heavy_exclamation_mark:
+:caution-caption: :fire:
+:warning-caption: :warning:
+endif::[]
+:toc:
+:toclevels: 3
+:toc-title: pass:[<h2>Inhaltsverzeichnis</h2>]
+:toc-placement!:
+:sectanchors:
+:sectnums:
+:icons: font
+
+link:../README.adoc[Zurück]
+
+toc::[]
+
+== Beschreibung
+
+Diese Spring Boot Anwendung implementiert eine Webanwendung.
+Die Webanwendung nutzt dazu den link:../guideline-springboot-rest/README.adoc[Rest]-Service.
+
+In diesem Module `Web` werden die folgende Technologien angewendet.
+
+* Webanwendung (http://localhost:8080[]) mit Spring MVC und https://spring.io/projects/spring-security[Spring Security]
+** Thymeleaf Web-Template-Engine für HTML-Seiten
+** https://www.webjars.org/[WebJars] - Web Komponenten als Jars und aus Maven
+*** CSS- und JavaScript-Framework https://getbootstrap.com/[Bootstrap] mit https://jquery.com/[JQuery]
+** Validation (`javax.validation`) der Eingaben
+** Konfiguration einer Login-Seite (link:src/main/java/de/rahn/guidelines/springboot/web/config/WebSecurityConfiguration.java[Login-Configuration])
+* Zugriff auf einen Rest-Service (link:src/main/java/de/rahn/guidelines/springboot/web/config/ConsumerConfiguration.java[RestTemplate])
+* Spezifische und typsichere Konfigurationen lesen (link:src/main/java/de/rahn/guidelines/springboot/web/config/properties/AppProperties.java[AppProperties], link:src/main/resources/application.yml[YAML])
+* https://docs.spring.io/spring-boot/docs/current/reference/html/production-ready-features.html[Spring Boot Actuator]
+* https://opentracing.io/[OpenTracing] mit https://spring.io/projects/spring-cloud-sleuth[Spring Cloud Sleuth] und der Instrumentierungsbibliothek https://github.com/openzipkin/brave[brave] von https://zipkin.io/[Zipkin]
+* Unit-Tests mit `@SpringBootTest`, `@WebMvcTest` und `@WithMockUser`
+
+== Homepage des Autors
+
+https://www.frank-rahn.de/?utm_source=github&utm_medium=readme&utm_campaign=guidelines-spring-boot&utm_content=web[Frank W. Rahn]
