@@ -15,10 +15,9 @@
  */
 package de.rahn.guidelines.springboot.rest.config;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.actuate.autoconfigure.security.servlet.EndpointRequest;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.core.annotation.Order;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -30,48 +29,27 @@ import org.springframework.security.config.annotation.web.configurers.AbstractHt
  */
 @Configuration
 @EnableGlobalMethodSecurity(securedEnabled = true)
-class WebSecurityConfiguration {
+class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 
   @Value("${spring.application.name}")
   private String applicationName;
 
-  @Autowired
-  void configure(AuthenticationManagerBuilder auth) throws Exception {
+  @Override
+  protected void configure(AuthenticationManagerBuilder auth) throws Exception {
     auth.inMemoryAuthentication().withUser("user").password("{noop}user").roles("USER");
     auth.inMemoryAuthentication().withUser("gast").password("{noop}gast").roles("GAST");
-    auth.inMemoryAuthentication()
-        .withUser("admin")
-        .password("{noop}admin")
-        .roles("USER", "ADMIN", "ACTUATOR");
+    auth.inMemoryAuthentication().withUser("admin").password("{noop}admin").roles("USER", "ADMIN");
   }
 
-  @Configuration
-  @Order(1)
-  static class ActuatorWebSecurityConfiguration extends WebSecurityConfigurerAdapter {
-
-    @Override
-    protected void configure(HttpSecurity http) throws Exception {
-      http.antMatcher("/actuator/**")
-          .authorizeRequests(
-              authorizeRequestsCustomizer ->
-                  authorizeRequestsCustomizer.anyRequest().hasRole("ADMIN"))
-          .httpBasic(httpBasicCustomizer -> httpBasicCustomizer.realmName("Actuator-API"))
-          .csrf(AbstractHttpConfigurer::disable);
-    }
-  }
-
-  @Configuration
-  @Order(2)
-  class ApiWebSecurityConfiguration extends WebSecurityConfigurerAdapter {
-
-    @Override
-    protected void configure(HttpSecurity http) throws Exception {
-      http.antMatcher("/api/**")
-          .authorizeRequests(
-              authorizeRequestsCustomizer ->
-                  authorizeRequestsCustomizer.anyRequest().hasRole("USER"))
-          .httpBasic(httpBasicCustomizer -> httpBasicCustomizer.realmName(applicationName + "API"))
-          .csrf(AbstractHttpConfigurer::disable);
-    }
+  @Override
+  protected void configure(HttpSecurity http) throws Exception {
+    http.authorizeRequests(
+        customizer -> {
+          customizer.antMatchers("/api/**").hasRole("USER");
+          customizer.requestMatchers(EndpointRequest.toAnyEndpoint()).hasRole("ADMIN");
+          customizer.anyRequest().authenticated();
+        })
+        .httpBasic(customizer -> customizer.realmName(applicationName + "API"))
+        .csrf(AbstractHttpConfigurer::disable);
   }
 }

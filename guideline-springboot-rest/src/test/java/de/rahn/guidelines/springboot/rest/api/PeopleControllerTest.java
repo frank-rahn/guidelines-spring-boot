@@ -29,7 +29,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import de.rahn.guidelines.springboot.rest.api.PeopleControllerTest.PeopleControllerTestConfiguration;
 import de.rahn.guidelines.springboot.rest.domain.people.Person;
 import java.time.LocalDate;
 import java.util.UUID;
@@ -37,18 +36,13 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.boot.test.context.TestConfiguration;
-import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.test.context.support.WithMockUser;
-import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 
 /**
  * @author Frank Rahn
  */
 @WebMvcTest(controllers = {PeopleController.class})
-@ContextConfiguration(classes = {PeopleControllerTestConfiguration.class})
 class PeopleControllerTest {
 
   @Autowired
@@ -167,16 +161,5 @@ class PeopleControllerTest {
     mockMvc
         .perform(post("/api/people").contentType(APPLICATION_JSON).content(personAsJson))
         .andExpect(status().isBadRequest());
-  }
-
-  @TestConfiguration
-  static class PeopleControllerTestConfiguration extends WebSecurityConfigurerAdapter {
-
-    @Override
-    protected void configure(HttpSecurity http) throws Exception {
-      http.antMatcher("/api/*").authorizeRequests().anyRequest().hasRole("USER");
-      http.httpBasic();
-      http.csrf().disable();
-    }
   }
 }

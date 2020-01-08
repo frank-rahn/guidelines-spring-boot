@@ -56,7 +56,6 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 @RequestMapping(
     path = {"/api/people"},
     produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
-@Secured("ROLE_USER")
 @Tag(name = "People")
 @ApiResponse(
     responseCode = "401",
@@ -103,6 +102,7 @@ class PeopleController {
   }
 
   @GetMapping
+  @Secured("ROLE_USER")
   @Operation(summary = "Liefert alle Personen")
   @ApiResponse(responseCode = "200", description = "Personen erfolgreich abgerufen (Ok)")
   public Collection<Person> getPeople() {
@@ -112,6 +112,7 @@ class PeopleController {
   }
 
   @GetMapping(path = "/{id}")
+  @Secured("ROLE_USER")
   @Operation(summary = "Suche die Person mit der Id")
   @ApiResponse(responseCode = "200", description = "Person erfolgreich abgerufen (Ok)")
   @ApiResponse(
@@ -126,6 +127,7 @@ class PeopleController {
   }
 
   @DeleteMapping(path = "/{id}")
+  @Secured("ROLE_USER")
   @Operation(summary = "Lösche die Person mit der Id")
   @ApiResponse(responseCode = "204", description = "Person erfolgreich gelöscht (No Content)")
   public ResponseEntity<Void> deletePersonById(
@@ -138,6 +140,7 @@ class PeopleController {
   }
 
   @PutMapping(path = "/{id}")
+  @Secured("ROLE_USER")
   @Operation(summary = "Füge die Person mit der Id hinzu oder ändere sie")
   @ApiResponse(responseCode = "200", description = "Person erfolgreich geändert oder angelegt (Ok)")
   public Person putPersonById(
@@ -156,6 +159,7 @@ class PeopleController {
   }
 
   @PostMapping
+  @Secured("ROLE_USER")
   @Operation(description = "Füge eine Person hinzu")
   @ApiResponse(
       responseCode = "201",
