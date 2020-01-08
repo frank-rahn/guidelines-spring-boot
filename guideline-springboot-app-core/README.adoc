@@ -25,9 +25,9 @@ Nach der Ausgabe der gelesenen Konfiguration beendet sich die Spring Boot Anwend
 
 In diesem Module `App-Core` werden die folgende Technologien angewendet.
 
-* Spezifische und typsichere Konfigurationen lesen (link:src/main/java/de/rahn/guidelines/springboot/app/core/util/AppProperties.java[AppProperties], link:src/main/resources/application.yml[YAML])
+* Spezifische und typsichere Konfigurationen lesen (link:src/main/java/de/rahn/guidelines/springboot/app/core/config/properties/AppProperties.java[AppProperties], link:src/main/resources/application.yml[YAML])
 ** Bereitstellung von Metadaten zu den spezifischen Konfigurationen (link:src/main/resources/META-INF/additional-spring-configuration-metadata.json[JSON])
-** Typkonvertierung: hier `String` nach `LocalDate` in link:src/main/java/de/rahn/guidelines/springboot/app/core/util/LocalDateConverter.java[LocalDateConverter]
+** Typkonvertierung: hier `String` nach `LocalDate` in link:src/main/java/de/rahn/guidelines/springboot/app/core/config/properties/LocalDateConverter.java[LocalDateConverter]
 * Setzen eines `exit code` in Abhängigkeit von Ausnahmen
 * Unit-Tests mit `@SpringBootTest`
 
