@@ -29,6 +29,7 @@ In diesem Module `App-JPA` werden die folgende Technologien angewendet.
 
 * JPA mit https://spring.io/projects/spring-data-jpa[Spring Data JPA]
 ** Berücksichtigung von *_Auditing_* und *_Versioning_* mit https://spring.io/projects/spring-security[Spring Security]
+** Schreiben eines Audit-Log durch https://hibernate.org/orm/envers/[Hibernate Envers] per https://spring.io/projects/spring-data-envers[Spring Data Envers] als eine Erweiterung von https://spring.io/projects/spring-data-jpa[Spring Data JPA]
 * Setzen eines `exit code` in Abhängigkeit von Ausnahmen
 * Unit-Tests mit `@SpringBootTest`, `@DataJpaTest`, `@WithMockUser` und `@Sql`
 

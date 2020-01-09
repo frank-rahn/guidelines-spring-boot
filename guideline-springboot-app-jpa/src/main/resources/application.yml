@@ -6,3 +6,9 @@ spring:
     properties:
       hibernate:
         format_sql: true
+      org:
+        hibernate:
+          envers:
+            audit_table_suffix: _AUDIT
+            revision_field_name: REVISION_ID
+            revision_type_field_name: REVISION_TYPE

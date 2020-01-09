@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019-2019 the original author or authors.
+ * Copyright (c) 2019-2020 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,19 +16,27 @@
 package de.rahn.guidelines.springboot.app.jpa.domain.people;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.springframework.context.annotation.FilterType.ASSIGNABLE_TYPE;
 
+import de.rahn.guidelines.springboot.app.jpa.config.JpaConfiguration;
 import java.time.LocalDate;
 import java.util.List;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.context.annotation.ComponentScan.Filter;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.jdbc.Sql;
 
 /**
  * @author Frank Rahn
  */
-@DataJpaTest
+@DataJpaTest(
+    includeFilters = {
+        @Filter(
+            type = ASSIGNABLE_TYPE,
+            classes = {JpaConfiguration.class})
+    })
 class PersonRepositoryTest {
 
   @Autowired
@@ -40,12 +48,14 @@ class PersonRepositoryTest {
   }
 
   @Test
+  @SuppressWarnings({"SqlResolve", "SqlWithoutWhere"})
   @Sql(statements = {"DELETE FROM person"})
   void givenPeopleWithoutAuthentication_whenSaved_thenFindByName() {
     givenPeople_whenSaved_thenFindByName();
   }
 
   @Test
+  @SuppressWarnings({"SqlResolve", "SqlWithoutWhere"})
   @Sql(statements = {"DELETE FROM person"})
   @WithMockUser
   void givenPeopleWithAuthentication_whenSaved_thenFindByName() {

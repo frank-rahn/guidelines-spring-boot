@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019-2019 the original author or authors.
+ * Copyright (c) 2019-2020 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,11 +15,14 @@
  */
 package de.rahn.guidelines.springboot.app.jpa.config;
 
+import de.rahn.guidelines.springboot.app.jpa.domain.people.PersonRepository;
 import java.util.Optional;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.domain.AuditorAware;
+import org.springframework.data.envers.repository.support.EnversRevisionRepositoryFactoryBean;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 
@@ -27,8 +30,11 @@ import org.springframework.security.core.context.SecurityContextHolder;
  * @author Frank Rahn
  */
 @Configuration
+@EnableJpaRepositories(
+    basePackageClasses = {PersonRepository.class},
+    repositoryFactoryBeanClass = EnversRevisionRepositoryFactoryBean.class)
 @EnableJpaAuditing
-class JpaConfiguration {
+public class JpaConfiguration {
 
   @Bean
   AuditorAware<String> auditorAware() {

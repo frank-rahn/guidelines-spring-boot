@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019-2019 the original author or authors.
+ * Copyright (c) 2019-2020 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,11 +17,13 @@ package de.rahn.guidelines.springboot.app.jpa.domain.people;
 
 import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.repository.history.RevisionRepository;
 
 /**
  * @author Frank Rahn
  */
-public interface PersonRepository extends JpaRepository<Person, String> {
+public interface PersonRepository
+    extends JpaRepository<Person, String>, RevisionRepository<Person, String, Integer> {
 
   List<Person> findByLastName(String lastname);
 }
