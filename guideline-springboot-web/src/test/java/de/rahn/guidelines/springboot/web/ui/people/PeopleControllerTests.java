@@ -37,7 +37,7 @@ import org.springframework.ui.ExtendedModelMap;
 import org.springframework.web.client.RestTemplate;
 
 @ExtendWith(MockitoExtension.class)
-class PeopleControllerTest {
+class PeopleControllerTests {
 
   @Mock
   private RestTemplate template;

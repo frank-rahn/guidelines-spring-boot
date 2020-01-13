@@ -43,7 +43,7 @@ import org.springframework.test.web.servlet.MockMvc;
  * @author Frank Rahn
  */
 @WebMvcTest(controllers = {PeopleController.class})
-class PeopleControllerTest {
+class PeopleControllerTests {
 
   @Autowired
   private MockMvc mockMvc;

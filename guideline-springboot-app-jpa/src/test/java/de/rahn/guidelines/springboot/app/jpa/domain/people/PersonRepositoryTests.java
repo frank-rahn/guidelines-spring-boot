@@ -37,7 +37,7 @@ import org.springframework.test.context.jdbc.Sql;
             type = ASSIGNABLE_TYPE,
             classes = {JpaConfiguration.class})
     })
-class PersonRepositoryTest {
+class PersonRepositoryTests {
 
   @Autowired
   PersonRepository personRepository;

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019-2019 the original author or authors.
+ * Copyright (c) 2019-2020 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -32,7 +32,7 @@ import org.springframework.batch.core.JobParameter;
 import org.springframework.batch.core.JobParameters;
 import org.springframework.batch.core.StepExecution;
 
-class ReportBuilderTest {
+class ReportBuilderTests {
 
   private ReportBuilder classUnderTest = new ReportBuilder();
 
