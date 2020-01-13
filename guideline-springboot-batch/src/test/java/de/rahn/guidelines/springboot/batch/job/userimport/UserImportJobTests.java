@@ -30,7 +30,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-@ExtendWith(SpringExtension.class)
+@ExtendWith({SpringExtension.class})
 @SpringBootTest(properties = {"spring.batch.job.enabled=false"})
 @SpringBatchTest
 class UserImportJobTests {

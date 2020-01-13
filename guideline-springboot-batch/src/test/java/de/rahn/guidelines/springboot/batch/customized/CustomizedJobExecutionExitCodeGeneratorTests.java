@@ -30,7 +30,7 @@ import org.springframework.batch.core.ExitStatus;
 import org.springframework.batch.core.JobExecution;
 import org.springframework.boot.autoconfigure.batch.JobExecutionEvent;
 
-@ExtendWith(MockitoExtension.class)
+@ExtendWith({MockitoExtension.class})
 class CustomizedJobExecutionExitCodeGeneratorTests {
 
   @Mock

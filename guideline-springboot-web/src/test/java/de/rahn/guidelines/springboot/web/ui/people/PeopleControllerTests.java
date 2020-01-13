@@ -36,7 +36,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.ui.ExtendedModelMap;
 import org.springframework.web.client.RestTemplate;
 
-@ExtendWith(MockitoExtension.class)
+@ExtendWith({MockitoExtension.class})
 class PeopleControllerTests {
 
   @Mock
