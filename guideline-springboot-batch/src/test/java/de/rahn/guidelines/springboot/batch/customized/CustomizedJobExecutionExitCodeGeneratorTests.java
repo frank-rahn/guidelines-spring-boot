@@ -33,105 +33,102 @@ import org.springframework.boot.autoconfigure.batch.JobExecutionEvent;
 @ExtendWith({MockitoExtension.class})
 class CustomizedJobExecutionExitCodeGeneratorTests {
 
-  @Mock
-  private JobExecution jobExecution;
-
   @Spy
   private CustomizedJobExecutionExitCodeGenerator classUnderTest =
       new CustomizedJobExecutionExitCodeGenerator();
 
   @Test
-  void givenJobExecution_whenGetExitCode_thenExitCodeIs0() {
+  void givenJobExecution_whenGetExitCode_thenExitCodeIs0(@Mock JobExecution jobExecution) {
     // Given
     ExitStatus givenExitStatus = ExitStatus.COMPLETED;
     int expectedErrorCode = 0;
 
     // When & Then
-    assertCustomizedJobExecutionExitCodeGenerator(givenExitStatus, expectedErrorCode);
+    assertCustomizedJobExecutionExitCodeGenerator(givenExitStatus, expectedErrorCode, jobExecution);
   }
 
   @Test
-  void givenJobExecution_whenGetExitCode_thenExitCodeIs1() {
+  void givenJobExecution_whenGetExitCode_thenExitCodeIs1(@Mock JobExecution jobExecution) {
     // Given
     ExitStatus givenExitStatus = CustomizedExitStatus.COMPLETED_WITH_ERRORS;
     int expectedErrorCode = 1;
 
     // When & Then
-    assertCustomizedJobExecutionExitCodeGenerator(givenExitStatus, expectedErrorCode);
+    assertCustomizedJobExecutionExitCodeGenerator(givenExitStatus, expectedErrorCode, jobExecution);
   }
 
   @Test
-  void givenJobExecution_whenGetExitCode_thenExitCodeIs2() {
+  void givenJobExecution_whenGetExitCode_thenExitCodeIs2(@Mock JobExecution jobExecution) {
     // Given
     ExitStatus givenExitStatus = CustomizedExitStatus.COMPLETED_WITH_SKIPS;
     int expectedErrorCode = 2;
 
     // When & Then
-    assertCustomizedJobExecutionExitCodeGenerator(givenExitStatus, expectedErrorCode);
+    assertCustomizedJobExecutionExitCodeGenerator(givenExitStatus, expectedErrorCode, jobExecution);
   }
 
   @Test
-  void givenJobExecution_whenGetExitCode_thenExitCodeIs3() {
+  void givenJobExecution_whenGetExitCode_thenExitCodeIs3(@Mock JobExecution jobExecution) {
     // Given
     ExitStatus givenExitStatus = ExitStatus.NOOP;
     int expectedErrorCode = 3;
 
     // When & Then
-    assertCustomizedJobExecutionExitCodeGenerator(givenExitStatus, expectedErrorCode);
+    assertCustomizedJobExecutionExitCodeGenerator(givenExitStatus, expectedErrorCode, jobExecution);
   }
 
   @Test
-  void givenJobExecution_whenGetExitCode_thenExitCodeIs4() {
+  void givenJobExecution_whenGetExitCode_thenExitCodeIs4(@Mock JobExecution jobExecution) {
     // Given
     ExitStatus givenExitStatus = ExitStatus.FAILED;
     int expectedErrorCode = 4;
 
     // When & Then
-    assertCustomizedJobExecutionExitCodeGenerator(givenExitStatus, expectedErrorCode);
+    assertCustomizedJobExecutionExitCodeGenerator(givenExitStatus, expectedErrorCode, jobExecution);
   }
 
   @Test
-  void givenJobExecution_whenGetExitCode_thenExitCodeIs5() {
+  void givenJobExecution_whenGetExitCode_thenExitCodeIs5(@Mock JobExecution jobExecution) {
     // Given
     ExitStatus givenExitStatus = ExitStatus.EXECUTING;
     int expectedErrorCode = 5;
 
     // When & Then
-    assertCustomizedJobExecutionExitCodeGenerator(givenExitStatus, expectedErrorCode);
+    assertCustomizedJobExecutionExitCodeGenerator(givenExitStatus, expectedErrorCode, jobExecution);
   }
 
   @Test
-  void givenJobExecution_whenGetExitCode_thenExitCodeIs6() {
+  void givenJobExecution_whenGetExitCode_thenExitCodeIs6(@Mock JobExecution jobExecution) {
     // Given
     ExitStatus givenExitStatus = ExitStatus.STOPPED;
     int expectedErrorCode = 6;
 
     // When & Then
-    assertCustomizedJobExecutionExitCodeGenerator(givenExitStatus, expectedErrorCode);
+    assertCustomizedJobExecutionExitCodeGenerator(givenExitStatus, expectedErrorCode, jobExecution);
   }
 
   @Test
-  void givenJobExecution_whenGetExitCode_thenExitCodeIs7() {
+  void givenJobExecution_whenGetExitCode_thenExitCodeIs7(@Mock JobExecution jobExecution) {
     // Given
     ExitStatus givenExitStatus = ExitStatus.UNKNOWN;
     int expectedErrorCode = 7;
 
     // When & Then
-    assertCustomizedJobExecutionExitCodeGenerator(givenExitStatus, expectedErrorCode);
+    assertCustomizedJobExecutionExitCodeGenerator(givenExitStatus, expectedErrorCode, jobExecution);
   }
 
   @Test
-  void givenJobExecution_whenGetExitCode_thenExitCodeIs8() {
+  void givenJobExecution_whenGetExitCode_thenExitCodeIs8(@Mock JobExecution jobExecution) {
     // Given
     ExitStatus givenExitStatus = new ExitStatus("exitCode", "description");
     int expectedErrorCode = 8;
 
     // When & Then
-    assertCustomizedJobExecutionExitCodeGenerator(givenExitStatus, expectedErrorCode);
+    assertCustomizedJobExecutionExitCodeGenerator(givenExitStatus, expectedErrorCode, jobExecution);
   }
 
   private void assertCustomizedJobExecutionExitCodeGenerator(
-      ExitStatus givenExitStatus, int expectedErrorCode) {
+      ExitStatus givenExitStatus, int expectedErrorCode, JobExecution jobExecution) {
     // Given
     doReturn(givenExitStatus).when(jobExecution).getExitStatus();
     JobExecutionEvent jobExecutionEvent = spy(new JobExecutionEvent(jobExecution));

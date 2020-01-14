@@ -36,9 +36,10 @@ class BatchApplicationTests {
 
   @Test
   void givenContext_whenLoads_thenOk() {
-    // Then
+    // When
     int exitCode = customizedJobExecutionExitCodeGenerator.getExitCode();
 
+    // Then
     assertThat(exitCode).isEqualTo(1);
   }
 }

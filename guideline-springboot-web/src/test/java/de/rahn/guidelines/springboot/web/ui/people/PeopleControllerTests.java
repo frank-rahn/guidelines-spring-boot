@@ -15,7 +15,6 @@
  */
 package de.rahn.guidelines.springboot.web.ui.people;
 
-import static java.util.Collections.emptyList;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.eq;
@@ -46,9 +45,9 @@ class PeopleControllerTests {
   private PeopleController classUnderTest;
 
   @Test
-  void givenPeople_WhenGetAllPeople_ThenOk() {
+  void givenPeople_WhenGetAllPeople_ThenOk(@Mock Person person) {
     // Given
-    List<Person> personList = List.of(new Person());
+    List<Person> personList = List.of(person);
     ResponseEntity<List<Person>> people = new ResponseEntity<>(personList, OK);
 
     doReturn(people)
@@ -67,9 +66,8 @@ class PeopleControllerTests {
   }
 
   @Test
-  void givenNothing_WhenGetAllPeople_ThenOk() {
+  void givenNothing_WhenGetAllPeople_ThenOk(@Mock List<Person> personList) {
     // Given
-    List<Person> personList = emptyList();
     ResponseEntity<List<Person>> people = new ResponseEntity<>(personList, OK);
 
     doReturn(people)
@@ -88,11 +86,10 @@ class PeopleControllerTests {
   }
 
   @Test
-  void givenPerson_whenGetPersonById_thenOk() {
+  void givenPerson_whenGetPersonById_thenOk(@Mock Person person) {
     // Given
     ExtendedModelMap model = new ExtendedModelMap();
     UUID id = UUID.randomUUID();
-    Person person = new Person();
     doReturn(person).when(template).getForObject(eq("/" + id.toString()), eq(Person.class));
 
     // When

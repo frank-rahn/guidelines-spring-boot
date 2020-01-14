@@ -41,8 +41,6 @@ class UserImportJobTests {
 
   @Test
   void givenJobWithoutParameters_whenJobExecuted_thenSuccess() throws Exception {
-    // Given
-
     // When
     JobExecution jobExecution = jobLauncherTestUtils.launchJob();
 
