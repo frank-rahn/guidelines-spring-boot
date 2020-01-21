@@ -12,3 +12,13 @@ spring:
             audit_table_suffix: _AUDIT
             revision_field_name: REVISION_ID
             revision_type_field_name: REVISION_TYPE
+            do_not_audit_optimistic_locking_field: false
+
+logging:
+  level:
+    org:
+      hibernate:
+        type:
+          descriptor:
+            sql:
+              BasicBinder: trace
