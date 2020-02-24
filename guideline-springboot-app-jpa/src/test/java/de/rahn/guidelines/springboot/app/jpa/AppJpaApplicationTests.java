@@ -15,9 +15,16 @@
  */
 package de.rahn.guidelines.springboot.app.jpa;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
+import de.rahn.guidelines.springboot.app.jpa.domain.people.Person;
+import de.rahn.guidelines.springboot.app.jpa.domain.people.PersonRepository;
+import java.util.Optional;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 /**
@@ -27,8 +34,19 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 @SpringBootTest
 class AppJpaApplicationTests {
 
+  @Autowired
+  private PersonRepository repository;
+
   @Test
-  void givenContext_whenLoads_thenOk() {
-    // Empty
+  @WithMockUser
+  void givenContextWithUser_whenLoads_thenOk() {
+    Optional<Person> personOpt = repository.findByLastName("Rahn").stream().findFirst();
+
+    assertThat(personOpt).isPresent();
+
+    Person person = personOpt.get();
+    person.setEmailAddress("rahn@koeln.de");
+
+    repository.save(person);
   }
 }
