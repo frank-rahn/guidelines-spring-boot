@@ -18,11 +18,20 @@ package de.rahn.guidelines.springboot.app.jpa.config;
 import de.rahn.guidelines.springboot.app.jpa.domain.people.Person;
 import de.rahn.guidelines.springboot.app.jpa.domain.people.PersonRepository;
 import java.time.LocalDate;
+import java.util.List;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import lombok.extern.slf4j.Slf4j;
+import org.hibernate.envers.AuditReader;
+import org.hibernate.envers.AuditReaderFactory;
+import org.hibernate.envers.query.AuditEntity;
+import org.hibernate.envers.query.AuditQuery;
+import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * @author Frank Rahn
@@ -56,5 +65,42 @@ class AppJpaConfiguration {
             .map(Person::getId)
             .flatMap(id -> repository.findRevisions(id).stream())
             .forEach(revision -> LOGGER.info(revision.toString()));
+  }
+
+  @Bean
+  @Order(3)
+  @PersistenceContext
+  ApplicationRunner usingEnvers(final EntityManager entityManager) {
+    return new ApplicationRunner() {
+      @Override
+      @Transactional
+      public void run(ApplicationArguments args) {
+        AuditReader auditReader = AuditReaderFactory.get(entityManager);
+        AuditQuery auditQuery =
+            auditReader
+                .createQuery()
+                .forRevisionsOfEntity(Person.class, false, true)
+                .add(AuditEntity.property("lastName").eq("Rahn"));
+
+        List<?> results = auditQuery.getResultList();
+
+        results.forEach(
+            result -> {
+              if (result instanceof Object[]) {
+                Object[] revisionArray = (Object[]) result;
+
+                if (revisionArray.length == 3) {
+                  LOGGER.info("Entity: {}", revisionArray[0]);
+                  LOGGER.info("Revision: {}", revisionArray[1]);
+                  LOGGER.info("RevisionType: {}", revisionArray[2]);
+                } else {
+                  LOGGER.error("Unknown RevisionArray: {}", revisionArray);
+                }
+              } else {
+                LOGGER.error("Unknown Result: {}", result);
+              }
+            });
+      }
+    };
   }
 }
