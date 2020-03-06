@@ -22,6 +22,7 @@ import lombok.ToString;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.ApplicationListener;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.domain.Persistable;
 import org.springframework.data.relational.core.mapping.event.BeforeSaveEvent;
 
 /**
@@ -29,20 +30,27 @@ import org.springframework.data.relational.core.mapping.event.BeforeSaveEvent;
  */
 @ToString(includeFieldNames = false)
 @EqualsAndHashCode
-public abstract class WithUUID {
+public abstract class WithUUIDPersistable implements Persistable<UUID> {
 
   @Id
   @Getter
   protected UUID id;
+
+  @Override
+  public boolean isNew() {
+    return id == null;
+  }
 
   @Slf4j
   public static class BeforeUuidSaveListener implements ApplicationListener<BeforeSaveEvent> {
 
     @Override
     public void onApplicationEvent(BeforeSaveEvent event) {
-      if (event.getEntity() instanceof WithUUID) {
-        WithUUID entity = (WithUUID) event.getEntity();
-        entity.id = UUID.randomUUID();
+      if (event.getEntity() instanceof WithUUIDPersistable) {
+        WithUUIDPersistable entity = (WithUUIDPersistable) event.getEntity();
+        if (entity.id == null) {
+          entity.id = UUID.randomUUID();
+        }
 
         LOGGER.info("BeforeSaveEvent aufgerufen: Entity={}", entity);
       }

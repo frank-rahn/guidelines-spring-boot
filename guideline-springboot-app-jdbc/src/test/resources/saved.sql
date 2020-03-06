@@ -13,16 +13,8 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package de.rahn.guidelines.springboot.app.jdbc.domain.people;
 
-import java.util.List;
-import java.util.UUID;
-import org.springframework.data.jdbc.repository.query.Query;
-import org.springframework.data.repository.CrudRepository;
-import org.springframework.data.repository.query.Param;
-
-public interface PersonRepository extends CrudRepository<Person, UUID> {
-
-  @Query("select * from PERSON where LAST_NAME = :lastName")
-  List<Person> findByLastName(@Param("lastName") String lastName);
-}
+INSERT INTO PERSON (FIRST_NAME, LAST_NAME, BIRTHDAY, CREATED_BY, CREATED_DATE, LAST_MODIFIED_BY,
+                    LAST_MODIFIED_DATE, ID)
+VALUES ('Frank', 'Rahn', '1967-05-05', 'user', '2020-03-06T22:58:45.563323', 'user',
+        '2020-03-06T22:58:45.563323', '48f303fd-aabc-48e5-ad8e-58820297ab87');

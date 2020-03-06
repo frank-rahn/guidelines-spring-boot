@@ -18,13 +18,14 @@ package de.rahn.guidelines.springboot.app.jdbc.config;
 import static java.util.Optional.of;
 import static java.util.Optional.ofNullable;
 
-import de.rahn.guidelines.springboot.app.jdbc.domain.WithUUID;
+import de.rahn.guidelines.springboot.app.jdbc.domain.WithUUIDPersistable;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.domain.AuditorAware;
 import org.springframework.data.jdbc.repository.config.AbstractJdbcConfiguration;
+import org.springframework.data.jdbc.repository.config.EnableJdbcAuditing;
 import org.springframework.data.jdbc.repository.config.EnableJdbcRepositories;
 import org.springframework.data.relational.core.mapping.event.BeforeSaveEvent;
 import org.springframework.security.core.Authentication;
@@ -35,12 +36,13 @@ import org.springframework.security.core.context.SecurityContextHolder;
  */
 @Configuration
 @EnableJdbcRepositories(basePackages = {"de.rahn.guidelines.springboot.app.jdbc.domain"})
+@EnableJdbcAuditing
 @Slf4j
 public class AggregateConfiguration extends AbstractJdbcConfiguration {
 
   @Bean
   ApplicationListener<BeforeSaveEvent> idSetting() {
-    return new WithUUID.BeforeUuidSaveListener();
+    return new WithUUIDPersistable.BeforeUuidSaveListener();
   }
 
   @Bean

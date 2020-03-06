@@ -13,11 +13,29 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
+-- Tabelle Person
 CREATE TABLE PERSON
 (
-    ID            CHAR(36) PRIMARY KEY,
-    FIRST_NAME    VARCHAR(255),
-    LAST_NAME     VARCHAR(255) NOT NULL,
-    EMAIL_ADDRESS VARCHAR(255),
-    BIRTHDAY      DATE         NOT NULL
+    ID                 CHAR(36) PRIMARY KEY,
+    FIRST_NAME         VARCHAR(255),
+    LAST_NAME          VARCHAR(255) NOT NULL,
+    EMAIL_ADDRESS      VARCHAR(255),
+    BIRTHDAY           DATE         NOT NULL,
+    CREATED_BY         VARCHAR(200),
+    CREATED_DATE       DATETIME,
+    LAST_MODIFIED_BY   VARCHAR(200),
+    LAST_MODIFIED_DATE DATETIME
 );
+
+-- Tabelle Adresse
+CREATE TABLE ADDRESS
+(
+    ID        CHAR(36) PRIMARY KEY,
+    PERSON_ID CHAR(36) NOT NULL,
+    STREET    VARCHAR(255),
+    CITY      VARCHAR(255)
+);
+
+ALTER TABLE ADDRESS
+    ADD CONSTRAINT FK_ADDRESS_PERSON FOREIGN KEY (PERSON_ID) REFERENCES PERSON (ID);

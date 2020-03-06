@@ -18,8 +18,9 @@ package de.rahn.guidelines.springboot.app.jdbc.domain.people;
 import static lombok.AccessLevel.PRIVATE;
 import static org.springframework.format.annotation.DateTimeFormat.ISO.DATE;
 
-import de.rahn.guidelines.springboot.app.jdbc.domain.WithUUID;
+import de.rahn.guidelines.springboot.app.jdbc.domain.WithUUIDPersistable;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -30,6 +31,10 @@ import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
+import org.springframework.data.annotation.CreatedBy;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedBy;
+import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.annotation.PersistenceConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -39,11 +44,11 @@ import org.springframework.format.annotation.DateTimeFormat;
 @AllArgsConstructor(access = PRIVATE, onConstructor = @__(@PersistenceConstructor))
 @RequiredArgsConstructor
 @Getter
-@Setter
 @ToString(callSuper = true)
 @EqualsAndHashCode(callSuper = true)
-public class Person extends WithUUID {
+public class Person extends WithUUIDPersistable {
 
+  @Setter
   private String firstName;
 
   @NotNull
@@ -52,10 +57,23 @@ public class Person extends WithUUID {
   private String lastName;
 
   @Email
+  @Setter
   private String emailAddress;
 
   @DateTimeFormat(iso = DATE)
   @NotNull
   @NonNull
   private LocalDate birthday;
+
+  @CreatedBy
+  private String createdBy;
+
+  @CreatedDate
+  private LocalDateTime createdDate;
+
+  @LastModifiedBy
+  private String lastModifiedBy;
+
+  @LastModifiedDate
+  private LocalDateTime lastModifiedDate;
 }
