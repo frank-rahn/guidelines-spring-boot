@@ -15,8 +15,10 @@
  */
 package de.rahn.guidelines.springboot.app.jpa.config;
 
+import static java.util.Optional.of;
+import static java.util.Optional.ofNullable;
+
 import de.rahn.guidelines.springboot.app.jpa.domain.people.PersonRepository;
-import java.util.Optional;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.domain.AuditorAware;
@@ -39,13 +41,12 @@ public class JpaConfiguration {
   @Bean
   AuditorAware<String> auditorAware() {
     return () -> {
-      Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+      String currentAuditor =
+          ofNullable(SecurityContextHolder.getContext().getAuthentication())
+              .map(Authentication::getName)
+              .orElse("anonymous");
 
-      if (authentication == null || !authentication.isAuthenticated()) {
-        return Optional.of("anonymous");
-      }
-
-      return Optional.of(authentication.getName());
+      return of(currentAuditor);
     };
   }
 }
