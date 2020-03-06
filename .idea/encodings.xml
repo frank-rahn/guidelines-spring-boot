@@ -4,6 +4,8 @@
     <file url="file://$PROJECT_DIR$" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/guideline-springboot-app-core" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/guideline-springboot-app-core/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/guideline-springboot-app-jdbc/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/guideline-springboot-app-jdbc/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/guideline-springboot-app-jpa" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/guideline-springboot-app-jpa/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/guideline-springboot-batch" charset="UTF-8" />

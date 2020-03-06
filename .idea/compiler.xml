@@ -10,17 +10,19 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
+        <module name="guideline-springboot-rest" />
+        <module name="guideline-springboot-web" />
         <module name="guideline-springboot-app-core" />
         <module name="guideline-springboot-app-jpa" />
-        <module name="guideline-springboot-web" />
+        <module name="guideline-springboot-app-jdbc" />
         <module name="guideline-springboot-batch" />
-        <module name="guideline-springboot-rest" />
       </profile>
     </annotationProcessing>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="guideline-springboot-app-core" options="-parameters" />
+      <module name="guideline-springboot-app-jdbc" options="-parameters" />
       <module name="guideline-springboot-app-jpa" options="-parameters" />
       <module name="guideline-springboot-batch" options="-parameters" />
       <module name="guideline-springboot-rest" options="-parameters" />
