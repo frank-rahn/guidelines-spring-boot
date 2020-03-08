@@ -27,6 +27,9 @@ import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.jdbc.Sql;
 
+/**
+ * @author Frank Rahn
+ */
 @DataJdbcTest
 @ContextConfiguration(classes = AggregateConfiguration.class)
 class PersonTests {
