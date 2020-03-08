@@ -18,6 +18,9 @@ package de.rahn.guidelines.springboot.app.jdbc;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
+/**
+ * @author Frank Rahn
+ */
 @SpringBootTest
 class AppJdbcApplicationTests {
 
