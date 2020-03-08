@@ -13,11 +13,24 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+package de.rahn.guidelines.springboot.app.jdbc.domain.people;
 
-INSERT INTO PERSON (FIRST_NAME, LAST_NAME, BIRTHDAY, CREATED_BY, CREATED_DATE, LAST_MODIFIED_BY,
-                    LAST_MODIFIED_DATE, ID)
-VALUES ('Frank', 'Rahn', '1967-05-05', 'user', '2020-03-06T22:58:45.563323', 'user',
-        '2020-03-06T22:58:45.563323', '48f303fd-aabc-48e5-ad8e-58820297ab87');
+import lombok.AllArgsConstructor;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.ToString;
+import org.springframework.data.annotation.PersistenceConstructor;
 
-INSERT INTO ADDRESS (PERSON, STREET, CITY)
-VALUES ('48f303fd-aabc-48e5-ad8e-58820297ab87', null, 'Köln');
+/**
+ * @author Frank Rahn
+ */
+@AllArgsConstructor(onConstructor = @__(@PersistenceConstructor))
+@Getter
+@ToString
+@EqualsAndHashCode
+public class Address {
+
+  private String street;
+
+  private String city;
+}

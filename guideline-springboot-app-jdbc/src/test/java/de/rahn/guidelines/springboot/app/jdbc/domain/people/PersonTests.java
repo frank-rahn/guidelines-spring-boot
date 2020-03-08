@@ -61,6 +61,34 @@ class PersonTests {
   }
 
   @Test
+  @WithMockUser(username = "user")
+  void givenPersonWithAddress_whenSave_thenPersonHasUuidAndAuditorInformation() {
+    // Given
+    final String creator = "user";
+    final String auditor = "user";
+    final String name = "Rahn";
+    final LocalDate birthday = LocalDate.of(1967, 5, 5);
+    Person person = new Person(name, birthday);
+    Address address = new Address("Neusser Str. 594", "50737 Köln");
+    person.getAddresses().add(address);
+
+    // When
+    Person savedPerson = repository.save(person);
+
+    // Then
+    assertThat(savedPerson).isNotNull();
+    assertThat(savedPerson.getId()).isNotNull();
+    assertThat(savedPerson.getFirstName()).isNull();
+    assertThat(savedPerson.getLastName()).isEqualTo(name);
+    assertThat(savedPerson.getEmailAddress()).isNull();
+    assertThat(savedPerson.getBirthday()).isEqualTo(birthday);
+    assertThat(savedPerson.getCreatedBy()).isEqualTo(creator);
+    assertThat(savedPerson.getCreatedDate()).isNotNull();
+    assertThat(savedPerson.getLastModifiedBy()).isEqualTo(auditor);
+    assertThat(savedPerson.getLastModifiedDate()).isNotNull();
+  }
+
+  @Test
   @WithMockUser(username = "gast")
   @Sql(scripts = "classpath:saved.sql")
   void givenPerson_whenLoadAndUpdate_thenChangedFirstNameAndVersion() {

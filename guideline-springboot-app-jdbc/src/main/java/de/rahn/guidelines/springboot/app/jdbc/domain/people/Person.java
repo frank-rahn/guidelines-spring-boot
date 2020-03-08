@@ -21,6 +21,8 @@ import static org.springframework.format.annotation.DateTimeFormat.ISO.DATE;
 import de.rahn.guidelines.springboot.app.jdbc.domain.WithUUIDPersistable;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.HashSet;
+import java.util.Set;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -64,6 +66,9 @@ public class Person extends WithUUIDPersistable {
   @NotNull
   @NonNull
   private LocalDate birthday;
+
+  @EqualsAndHashCode.Exclude
+  private Set<Address> addresses = new HashSet<>();
 
   @CreatedBy
   private String createdBy;
