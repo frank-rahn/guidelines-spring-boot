@@ -84,22 +84,16 @@ class AppJpaConfiguration {
 
         List<?> results = auditQuery.getResultList();
 
-        results.forEach(
-            result -> {
-              if (result instanceof Object[]) {
-                Object[] revisionArray = (Object[]) result;
-
-                if (revisionArray.length == 3) {
+        results.stream()
+            .filter(result -> result instanceof Object[])
+            .map(result -> (Object[]) result)
+            .filter(revisionArray -> revisionArray.length == 3)
+            .forEach(
+                revisionArray -> {
                   LOGGER.info("Entity: {}", revisionArray[0]);
                   LOGGER.info("Revision: {}", revisionArray[1]);
                   LOGGER.info("RevisionType: {}", revisionArray[2]);
-                } else {
-                  LOGGER.error("Unknown RevisionArray: {}", revisionArray);
-                }
-              } else {
-                LOGGER.error("Unknown Result: {}", result);
-              }
-            });
+                });
       }
     };
   }
