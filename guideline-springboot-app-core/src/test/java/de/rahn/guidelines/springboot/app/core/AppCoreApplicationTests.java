@@ -66,7 +66,7 @@ class AppCoreApplicationTests {
 
   @Test
   void givenContext_whenLoads_thenExitCodeExceptionMapper() {
-    // Then
+    // Given
     Throwable throwable = new RuntimeException("Unknown Exception");
 
     // When
