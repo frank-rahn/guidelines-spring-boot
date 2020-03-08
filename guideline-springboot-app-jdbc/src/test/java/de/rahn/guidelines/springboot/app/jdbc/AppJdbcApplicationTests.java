@@ -22,7 +22,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 class AppJdbcApplicationTests {
 
   @Test
-  void contextLoads() {
+  void givenContext_whenLoads_thenOk() {
     // Empty
   }
 }
