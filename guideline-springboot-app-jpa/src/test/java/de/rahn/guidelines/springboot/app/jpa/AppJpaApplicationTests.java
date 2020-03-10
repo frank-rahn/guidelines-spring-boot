@@ -21,21 +21,22 @@ import de.rahn.guidelines.springboot.app.jpa.domain.people.Person;
 import de.rahn.guidelines.springboot.app.jpa.domain.people.PersonRepository;
 import java.util.Optional;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.ExitCodeExceptionMapper;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.test.context.support.WithMockUser;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 /**
  * @author Frank Rahn
  */
-@ExtendWith({SpringExtension.class})
 @SpringBootTest
 class AppJpaApplicationTests {
 
   @Autowired
   private PersonRepository repository;
+
+  @Autowired
+  private ExitCodeExceptionMapper exitCodeExceptionMapper;
 
   @Test
   @WithMockUser
@@ -48,5 +49,22 @@ class AppJpaApplicationTests {
     person.setEmailAddress("rahn@koeln.de");
 
     repository.save(person);
+  }
+
+  @Test
+  void givenContext_whenLoads_thenExitCodeExceptionMapper() {
+    // Given
+    Throwable throwable = new RuntimeException("Unknown Exception");
+
+    // When
+    int exitCode2 = exitCodeExceptionMapper.getExitCode(throwable);
+
+    //noinspection UnnecessaryInitCause
+    throwable.initCause(new IllegalArgumentException("Known Exception"));
+    int exitCode3 = exitCodeExceptionMapper.getExitCode(throwable);
+
+    // Then
+    assertThat(exitCode2).isEqualTo(2);
+    assertThat(exitCode3).isEqualTo(3);
   }
 }

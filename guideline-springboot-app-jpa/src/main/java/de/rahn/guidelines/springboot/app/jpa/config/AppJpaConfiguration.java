@@ -28,6 +28,7 @@ import org.hibernate.envers.query.AuditEntity;
 import org.hibernate.envers.query.AuditQuery;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
+import org.springframework.boot.ExitCodeExceptionMapper;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
@@ -95,6 +96,24 @@ class AppJpaConfiguration {
                   LOGGER.info("RevisionType: {}", revisionArray[2]);
                 });
       }
+    };
+  }
+
+  @Bean
+  ExitCodeExceptionMapper exitCodeExceptionMapper() {
+    return exception -> {
+      Throwable cause = exception.getCause();
+
+      if (cause == null) {
+        cause = exception;
+      }
+
+      if (cause instanceof IllegalArgumentException) {
+        return 3;
+      }
+
+      // Unknown Exception
+      return 2;
     };
   }
 }
