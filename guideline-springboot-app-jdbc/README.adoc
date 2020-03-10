@@ -1,0 +1,39 @@
+= Guidelines for Spring Boot - App-JDBC
+Frank Rahn <frank@frank-rahn.de>
+ifdef::env-github[]
+:tip-caption: :bulb:
+:note-caption: :information_source:
+:important-caption: :heavy_exclamation_mark:
+:caution-caption: :fire:
+:warning-caption: :warning:
+endif::[]
+:toc:
+:toclevels: 3
+:toc-title: pass:[<h2>Inhaltsverzeichnis</h2>]
+:toc-placement!:
+:sectanchors:
+:sectnums:
+:icons: font
+
+link:../README.adoc[Zurück]
+
+toc::[]
+
+== Beschreibung
+
+Diese Spring Boot Anwendung implementiert mit Spring Data JDBC eine Datenbankanwendung.
+Nach dem Erzeugen einiger Datensätze beendet sich die Spring Boot Anwendung und liefert einen
+`exit code` zurück.
+
+In diesem Module `App-JDBC` werden die folgende Technologien angewendet.
+
+* JDBC mit https://spring.io/projects/spring-data-jdbc[Spring Data JDBC]
+** Berücksichtigung von *_Auditing_* mit https://spring.io/projects/spring-security[Spring Security]
+** Lesen, Schreiben und Ändern eines link:src/main/java/de/rahn/guidelines/springboot/app/jdbc/domain/people/Person.java[Aggregates] mit seinem link:src/main/java/de/rahn/guidelines/springboot/app/jdbc/domain/people/Address.java[Value-Objekt]
+** Verwenden von UUIDs als Primärschlüssel
+* Setzen eines `exit code` in Abhängigkeit von Ausnahmen
+* Unit-Tests mit `@SpringBootTest`, `@DataJdbcTest`, `@WithMockUser` und `@Sql`
+
+== Homepage des Autors
+
+https://www.frank-rahn.de/?utm_source=github&utm_medium=readme&utm_campaign=guidelines-spring-boot&utm_content=app-core[Frank W. Rahn]

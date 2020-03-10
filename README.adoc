@@ -56,6 +56,12 @@ Es wird mit Spring Boot eine Anwendung umgesetzt, die einige Dinge erledigt und 
 
 link:guideline-springboot-app-core/README.adoc[Mehr zur Anwendung]
 
+=== App-JDBC
+
+Es wird mit Spring Boot eine Anwendung umgesetzt, die mit Spring Data JDBC auf eine Datenbank zugreift.
+
+link:guideline-springboot-app-jdbc/README.adoc[Mehr zur Anwendung]
+
 === App-JPA
 
 Es wird mit Spring Boot eine Anwendung umgesetzt, die mit Spring Data JPA auf eine Datenbank zugreift.
