@@ -33,9 +33,7 @@ import org.springframework.boot.autoconfigure.batch.JobExecutionEvent;
 import org.springframework.context.ApplicationListener;
 import org.springframework.stereotype.Component;
 
-/**
- * @author Frank Rahn
- */
+/** @author Frank Rahn */
 @Component
 public class CustomizedJobExecutionExitCodeGenerator
     implements ApplicationListener<JobExecutionEvent>, ExitCodeGenerator {
