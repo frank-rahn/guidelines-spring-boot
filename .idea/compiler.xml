@@ -18,6 +18,16 @@
         <module name="guideline-springboot-batch" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="guideline-springboot-app-core" target="11" />
+      <module name="guideline-springboot-app-jdbc" target="11" />
+      <module name="guideline-springboot-app-jpa" target="11" />
+      <module name="guideline-springboot-batch" target="11" />
+      <module name="guideline-springboot-parent" target="11" />
+      <module name="guideline-springboot-rest" target="11" />
+      <module name="guideline-springboot-web" target="11" />
+      <module name="guidelines-spring-boot" target="11" />
+    </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
