@@ -20,9 +20,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;
 
-/**
- * @author Frank Rahn
- */
+/** @author Frank Rahn */
 @SpringBootApplication
 @Slf4j
 public class AppCoreApplication {

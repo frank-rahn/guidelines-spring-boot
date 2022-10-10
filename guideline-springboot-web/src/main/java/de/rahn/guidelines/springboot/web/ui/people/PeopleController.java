@@ -32,9 +32,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.client.RestTemplate;
 
-/**
- * @author Frank Rahn
- */
+/** @author Frank Rahn */
 @Controller
 @RequestMapping(path = "/people")
 @Secured("ROLE_USER")
@@ -49,8 +47,7 @@ class PeopleController {
     LOGGER.info("GetAllPeople: Authentication={}", getContext().getAuthentication());
 
     ResponseEntity<List<Person>> people =
-        template.exchange("/", GET, null, new ParameterizedTypeReference<>() {
-        });
+        template.exchange("/", GET, null, new ParameterizedTypeReference<>() {});
 
     model.addAttribute("people", people.getBody());
 

@@ -24,9 +24,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
 
-/**
- * @author Frank Rahn
- */
+/** @author Frank Rahn */
 @Configuration
 @EnableConfigurationProperties({AppProperties.class})
 @Slf4j

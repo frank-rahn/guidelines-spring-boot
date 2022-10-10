@@ -28,12 +28,10 @@ import org.springframework.data.relational.core.conversion.AggregateChange;
 import org.springframework.data.relational.core.mapping.event.BeforeSaveEvent;
 import org.springframework.data.relational.core.mapping.event.Identifier;
 
-/**
- * @author Frank Rahn
- */
+/** @author Frank Rahn */
 class WithUUIDPersistableTests {
 
-  private BeforeUuidSaveListener classUnderTest = new BeforeUuidSaveListener();
+  private final BeforeUuidSaveListener classUnderTest = new BeforeUuidSaveListener();
 
   @Test
   void givenBeforeSaveEventWithPersonWithoutUUID_whenOnApplicationEvent_thenSetUuid() {

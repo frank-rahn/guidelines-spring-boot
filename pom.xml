@@ -16,7 +16,7 @@
   -->
 <project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xmlns="http://maven.apache.org/POM/4.0.0"
-  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
   <parent>
@@ -40,9 +40,9 @@
 
     <!-- Java Version -->
     <java.version>11</java.version>
-    <!-- Docker Tagging: adoptopenjdk/openjdk11:jdk-11.0.4_11-alpine -->
+    <!-- Docker Tagging: adoptopenjdk/openjdk11:jdk-11.0.8_10-alpine -->
     <docker-basis-image.version>
-      adoptopenjdk/openjdk11@sha256:ab91daa73b009e181a67c6bf78f0f6e2fd4535a4613dadf3cc62ef19588c40b4
+      adoptopenjdk/openjdk11@sha256:8a1d4211a3c1e6d9e6e4b67a7afda229fba7ddd233014e893216170675954622
     </docker-basis-image.version>
 
     <!-- Other Spring Version -->

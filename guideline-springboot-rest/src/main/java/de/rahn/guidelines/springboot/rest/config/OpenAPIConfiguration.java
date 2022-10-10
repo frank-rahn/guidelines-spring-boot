@@ -25,31 +25,29 @@ import io.swagger.v3.oas.annotations.security.SecurityScheme;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.context.annotation.Configuration;
 
-/**
- * @author Frank Rahn
- */
+/** @author Frank Rahn */
 @Configuration
 @OpenAPIDefinition(
     info =
-    @Info(
-        title = "Guidelines for Spring Boot API",
-        description = "Guidelines for Spring Boot - Rest",
-        version = "1.0",
-        termsOfService = "https://www.frank-rahn.de/",
-        license =
-        @License(
-            name = "Apache License Version 2.0",
-            url = "https://www.apache.org/licenses/LICENSE-2.0"),
-        contact =
-        @Contact(
-            name = "Frank Rahn",
-            url = "https://www.frank-rahn.de/",
-            email = "frank@frank-rahn.de")),
+        @Info(
+            title = "Guidelines for Spring Boot API",
+            description = "Guidelines for Spring Boot - Rest",
+            version = "1.0",
+            termsOfService = "https://www.frank-rahn.de/",
+            license =
+                @License(
+                    name = "Apache License Version 2.0",
+                    url = "https://www.apache.org/licenses/LICENSE-2.0"),
+            contact =
+                @Contact(
+                    name = "Frank Rahn",
+                    url = "https://www.frank-rahn.de/",
+                    email = "frank@frank-rahn.de")),
     security = {@SecurityRequirement(name = "basicAuth")},
     tags = {
-        @Tag(name = "People", description = "API für den Zugriff auf die Personen"),
-        @Tag(name = "Book", description = "API für den Zugriff auf die Bücher"),
-        @Tag(name = "Actuator", description = "Spring Boot 2 Actuator API")
+      @Tag(name = "People", description = "API für den Zugriff auf die Personen"),
+      @Tag(name = "Book", description = "API für den Zugriff auf die Bücher"),
+      @Tag(name = "Actuator", description = "Spring Boot 2 Actuator API")
     })
 @SecurityScheme(name = "basicAuth", type = SecuritySchemeType.HTTP, scheme = "basic")
 class OpenAPIConfiguration {}

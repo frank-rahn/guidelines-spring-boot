@@ -24,7 +24,7 @@ toc::[]
 Diese Spring Boot Anwendung implementiert einen https://spring.io/projects/spring-batch[Spring Batch].
 Nach der Abarbeitung des Jobs beendet sich die Anwendung und liefert in Abhängigkeit von Batch-Status einen `exit code` zurück.
 
-In diesem Module `Batch` werden die folgende Technologien angewendet.
+In diesem Module `Batch` werden die folgenden Technologien angewendet.
 
 * Konfigurieren des Batch-Jobs `userImportJob` in der Java-Config (link:src/main/java/de/rahn/guidelines/springboot/batch/config/BatchConfiguration.java[BatchConfiguration])
 ** Import-Daten werden aus einer link:src/main/resources/sample-data.csv[CSV-Datei] gelesen und in eine Datenbank geschrieben

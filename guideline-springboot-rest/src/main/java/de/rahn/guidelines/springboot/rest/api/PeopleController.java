@@ -49,9 +49,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-/**
- * @author Frank Rahn
- */
+/** @author Frank Rahn */
 @RestController
 @RequestMapping(
     path = {"/api/people"},
