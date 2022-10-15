@@ -40,6 +40,6 @@ class BatchApplicationTests {
     int exitCode = customizedJobExecutionExitCodeGenerator.getExitCode();
 
     // Then
-    assertThat(exitCode).isEqualTo(0);
+    assertThat(exitCode).isEqualTo(1);
   }
 }

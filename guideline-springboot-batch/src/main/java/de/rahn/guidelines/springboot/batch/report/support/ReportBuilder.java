@@ -39,7 +39,7 @@ public class ReportBuilder {
 
   public static final int LINE_SIZE = 80;
 
-  private StringBuilder report = new StringBuilder();
+  private final StringBuilder report = new StringBuilder();
 
   private int reportCurrentLineLength = 0;
 
