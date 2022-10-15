@@ -112,7 +112,10 @@ class PeopleController {
   @GetMapping(path = "/{id}")
   @Secured("ROLE_USER")
   @Operation(summary = "Suche die Person mit der Id")
-  @ApiResponse(responseCode = "200", description = "Person erfolgreich abgerufen (Ok)")
+  @ApiResponse(
+      responseCode = "200",
+      description = "Person erfolgreich abgerufen (Ok)",
+      content = @Content(schema = @Schema(implementation = Person.class)))
   @ApiResponse(
       responseCode = "404",
       description = "Keine Person gefunden (Not Found)",
@@ -127,7 +130,7 @@ class PeopleController {
   @DeleteMapping(path = "/{id}")
   @Secured("ROLE_USER")
   @Operation(summary = "Lösche die Person mit der Id")
-  @ApiResponse(responseCode = "204", description = "Person erfolgreich gelöscht (No Content)")
+  @ApiResponse(responseCode = "204", description = "Person erfolgreich gelöscht (No Content)", content = @Content())
   public ResponseEntity<Void> deletePersonById(
       @PathVariable @Parameter(description = "Die UUID der zu löschenden Person") UUID id) {
     LOGGER.info("DeletePersonById: Id={}, Authentication={}", id, getContext().getAuthentication());
@@ -144,8 +147,8 @@ class PeopleController {
   public Person putPersonById(
       @PathVariable @Parameter(description = "Die UUID der neuen oder zu ändernde Person") UUID id,
       @RequestBody
-      @Parameter(description = "Die neue oder zu ändernde Person", required = true)
-      @Valid
+          @Parameter(description = "Die neue oder zu ändernde Person", required = true)
+          @Valid
           Person person) {
     LOGGER.info(
         "PutPerson: Id={}, Person={}, Authentication={}",
@@ -163,11 +166,11 @@ class PeopleController {
       responseCode = "201",
       description = "Person erfolgreich angelegt (CREATED)",
       headers = {
-          @Header(
-              name = "location",
-              description = "URI der angelegten Person",
-              required = true,
-              schema = @Schema(name = "string", format = "uri"))
+        @Header(
+            name = "location",
+            description = "URI der angelegten Person",
+            required = true,
+            schema = @Schema(name = "string", format = "uri"))
       })
   public ResponseEntity<Person> postPerson(
       @RequestBody @Parameter(description = "Die neue Person", required = true) @Valid
