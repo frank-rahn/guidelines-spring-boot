@@ -16,7 +16,6 @@
 package de.rahn.guidelines.springboot.app.jdbc.domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.springframework.data.relational.core.conversion.AggregateChange.Kind.SAVE;
 
 import de.rahn.guidelines.springboot.app.jdbc.domain.WithUUIDPersistable.BeforeUuidSaveListener;
 import de.rahn.guidelines.springboot.app.jdbc.domain.people.Address;
@@ -25,8 +24,8 @@ import java.time.LocalDate;
 import java.util.UUID;
 import org.junit.jupiter.api.Test;
 import org.springframework.data.relational.core.conversion.AggregateChange;
+import org.springframework.data.relational.core.conversion.MutableAggregateChange;
 import org.springframework.data.relational.core.mapping.event.BeforeSaveEvent;
-import org.springframework.data.relational.core.mapping.event.Identifier;
 
 /** @author Frank Rahn */
 class WithUUIDPersistableTests {
@@ -38,8 +37,8 @@ class WithUUIDPersistableTests {
     // Given
     LocalDate birthday = LocalDate.of(1967, 5, 5);
     Person entity = new Person("Rahn", birthday);
-    AggregateChange<Person> change = new AggregateChange<>(SAVE, Person.class, entity);
-    BeforeSaveEvent event = new BeforeSaveEvent(Identifier.of(entity), entity, change);
+    AggregateChange<Person> change = MutableAggregateChange.forSave(entity);
+    BeforeSaveEvent<Person> event = new BeforeSaveEvent<>(entity, change);
 
     // When
     classUnderTest.onApplicationEvent(event);
@@ -56,8 +55,8 @@ class WithUUIDPersistableTests {
     UUID uuid = UUID.randomUUID();
     Person entity = new Person("Rahn", birthday);
     entity.id = uuid;
-    AggregateChange<Person> change = new AggregateChange<>(SAVE, Person.class, entity);
-    BeforeSaveEvent event = new BeforeSaveEvent(Identifier.of(entity), entity, change);
+    AggregateChange<Person> change = MutableAggregateChange.forSave(entity);
+    BeforeSaveEvent<Person> event = new BeforeSaveEvent<>(entity, change);
 
     // When
     classUnderTest.onApplicationEvent(event);
@@ -71,8 +70,8 @@ class WithUUIDPersistableTests {
   void givenBeforeSaveEventWithAddress_whenOnApplicationEvent_thenDoNothing() {
     // Given
     Address entity = new Address("street", "city");
-    AggregateChange<Address> change = new AggregateChange<>(SAVE, Address.class, entity);
-    BeforeSaveEvent event = new BeforeSaveEvent(Identifier.of(entity), entity, change);
+    AggregateChange<Address> change = MutableAggregateChange.forSave(entity);
+    BeforeSaveEvent<Address> event = new BeforeSaveEvent<>(entity, change);
 
     // When
     classUnderTest.onApplicationEvent(event);

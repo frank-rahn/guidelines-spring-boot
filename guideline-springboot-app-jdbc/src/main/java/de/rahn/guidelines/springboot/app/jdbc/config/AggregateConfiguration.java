@@ -41,7 +41,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 public class AggregateConfiguration extends AbstractJdbcConfiguration {
 
   @Bean
-  ApplicationListener<BeforeSaveEvent> idSetting() {
+  ApplicationListener<BeforeSaveEvent<?>> idSetting() {
     return new WithUUIDPersistable.BeforeUuidSaveListener();
   }
 

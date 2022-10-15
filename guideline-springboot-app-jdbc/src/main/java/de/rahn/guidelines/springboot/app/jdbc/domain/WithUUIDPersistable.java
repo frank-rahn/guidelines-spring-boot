@@ -32,9 +32,7 @@ import org.springframework.data.relational.core.mapping.event.BeforeSaveEvent;
 @EqualsAndHashCode
 public abstract class WithUUIDPersistable implements Persistable<UUID> {
 
-  @Id
-  @Getter
-  protected UUID id;
+  @Id @Getter protected UUID id;
 
   @Override
   public boolean isNew() {
@@ -42,13 +40,13 @@ public abstract class WithUUIDPersistable implements Persistable<UUID> {
   }
 
   @Slf4j
-  public static class BeforeUuidSaveListener implements ApplicationListener<BeforeSaveEvent> {
+  public static class BeforeUuidSaveListener implements ApplicationListener<BeforeSaveEvent<?>> {
 
     @Override
-    public void onApplicationEvent(BeforeSaveEvent event) {
+    public void onApplicationEvent(BeforeSaveEvent<?> event) {
       if (event.getEntity() instanceof WithUUIDPersistable) {
         WithUUIDPersistable entity = (WithUUIDPersistable) event.getEntity();
-        if (entity.id == null) {
+        if (entity != null && entity.id == null) {
           entity.id = UUID.randomUUID();
         }
 
