@@ -24,7 +24,7 @@ toc::[]
 Diese Spring Boot Anwendung implementiert eine Webanwendung.
 Die Webanwendung nutzt dazu den link:../guideline-springboot-rest/README.adoc[Rest]-Service.
 
-In diesem Module `Web` werden die folgende Technologien angewendet.
+In diesem Modul `Web` werden die folgenden Technologien angewendet.
 
 * Webanwendung (http://localhost:8080[]) mit Spring MVC und https://spring.io/projects/spring-security[Spring Security]
 ** Thymeleaf Web-Template-Engine für HTML-Seiten

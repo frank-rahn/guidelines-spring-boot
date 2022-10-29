@@ -46,7 +46,7 @@ Die Code-Qualität wird beim CI mit https://sonarcloud.io/dashboard?id=frank-rah
 
 === Docker-Image
 
-Jedes Module wird mit dem Google Maven Plugin https://github.com/GoogleContainerTools/jib/tree/master/jib-maven-plugin[jib-maven-plugin] in ein Docker-Image überführt.
+Jedes Modul wird mit dem Google Maven Plugin https://github.com/GoogleContainerTools/jib/tree/master/jib-maven-plugin[jib-maven-plugin] in ein Docker-Image überführt.
 
 == Module
 
@@ -89,6 +89,8 @@ link:guideline-springboot-web/README.adoc[Mehr zur Anwendung]
 == Hilfen
 
 link:HELP.adoc[Getting Started]
+
+Falls mit dem https://start.spring.io/[spring-initializer] die Abhängigkeiten erneuert werden sollen, kann mit der letzten https://start.spring.io/#!type=maven-project&language=java&platformVersion=2.7.4&packaging=jar&jvmVersion=11&groupId=de.rahn.guidelines.springboot&artifactId=guideline-springboot-parent&name=Parent&description=Guidelines%20for%20Spring%20Boot%20-%20Parent&packageName=de.rahn.guidelines.springboot.parent&dependencies=lombok,configuration-processor,devtools,validation,security,cloud-starter-sleuth,data-jdbc,h2,actuator,hsql,batch,web,hateoas,thymeleaf,data-jpa,jdbc[Konfiguration] verwendet werden.
 
 == Homepage des Autors
 

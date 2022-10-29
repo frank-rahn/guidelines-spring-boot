@@ -21,10 +21,10 @@ toc::[]
 
 == Beschreibung
 
-Diese Spring Boot Anwendung implementiert eine Rest-Service.
+Diese Spring Boot Anwendung implementiert ein Rest-Service.
 Dieser Service kann die Anfragen mit den Nachrichtenformate *_JSON_* oder *_XML_* beantworten.
 
-In diesem Module `Rest` werden die folgende Technologien angewendet.
+In diesem Modul `Rest` werden die folgenden Technologien angewendet.
 
 * Rest-Service mit Spring MVC und https://spring.io/projects/spring-security[Spring Security]
 ** Nachrichtenformate *_JSON_* oder *_XML_*

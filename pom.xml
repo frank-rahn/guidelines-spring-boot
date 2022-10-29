@@ -22,7 +22,7 @@
   <parent>
     <groupId>org.springframework.boot</groupId>
     <artifactId>spring-boot-starter-parent</artifactId>
-    <version>2.5.2</version>
+    <version>2.7.5</version>
     <relativePath/> <!-- lookup parent from repository -->
   </parent>
 
@@ -34,30 +34,30 @@
   <packaging>pom</packaging>
 
   <properties>
-    <!-- Standard -->
-    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-
     <!-- Java Version -->
     <java.version>11</java.version>
+
+    <!-- Maven Version für super-pom -->
+    <maven.version>3.2.5</maven.version>
+
     <!-- Docker Tagging: adoptopenjdk/openjdk11:jdk-11.0.8_10-alpine -->
     <docker-basis-image.version>
       adoptopenjdk/openjdk11@sha256:8a1d4211a3c1e6d9e6e4b67a7afda229fba7ddd233014e893216170675954622
     </docker-basis-image.version>
 
     <!-- Other Spring Version -->
-    <spring-cloud-dependencies.version>2020.0.3</spring-cloud-dependencies.version>
+    <spring-cloud-dependencies.version>2021.0.4</spring-cloud-dependencies.version>
 
     <!-- Other Libraries (Not in spring-boot-dependencies) -->
-    <springdoc-openapi.version>1.5.9</springdoc-openapi.version>
-    <jquery.version>3.6.0</jquery.version>
-    <popper.js.version>2.9.2</popper.js.version>
-    <bootstrap.version>4.6.0-1</bootstrap.version>
+    <springdoc-openapi.version>1.6.11</springdoc-openapi.version>
+    <jquery.version>3.6.1</jquery.version>
+    <popper.js.version>2.9.3</popper.js.version>
+    <bootstrap.version>4.6.2</bootstrap.version>
 
     <!-- Plugins Version -->
-    <jacoco-maven-plugin.version>0.8.7</jacoco-maven-plugin.version>
-    <jib-maven-plugin.version>3.1.1</jib-maven-plugin.version>
-    <sonar-maven-plugin.version>3.9.0.2155</sonar-maven-plugin.version>
+    <jacoco-maven-plugin.version>0.8.8</jacoco-maven-plugin.version>
+    <jib-maven-plugin.version>3.3.0</jib-maven-plugin.version>
+    <sonar-maven-plugin.version>3.9.1.2184</sonar-maven-plugin.version>
   </properties>
 
   <modules>
@@ -78,10 +78,16 @@
         <type>pom</type>
         <scope>import</scope>
       </dependency>
+
       <!-- Libraries -->
       <dependency>
         <groupId>org.springdoc</groupId>
         <artifactId>springdoc-openapi-ui</artifactId>
+        <version>${springdoc-openapi.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.springdoc</groupId>
+        <artifactId>springdoc-openapi-hateoas</artifactId>
         <version>${springdoc-openapi.version}</version>
       </dependency>
       <dependency>
@@ -94,6 +100,7 @@
         <artifactId>springdoc-openapi-security</artifactId>
         <version>${springdoc-openapi.version}</version>
       </dependency>
+
       <!-- JavaScript -->
       <dependency>
         <groupId>org.webjars</groupId>
@@ -116,6 +123,49 @@
   <build>
     <pluginManagement>
       <plugins>
+        <plugin>
+          <groupId>org.springframework.boot</groupId>
+          <artifactId>spring-boot-maven-plugin</artifactId>
+          <executions>
+            <execution>
+              <id>build-info</id>
+              <goals>
+                <goal>build-info</goal>
+              </goals>
+            </execution>
+          </executions>
+          <configuration>
+            <excludes>
+              <exclude>
+                <groupId>org.projectlombok</groupId>
+                <artifactId>lombok</artifactId>
+              </exclude>
+            </excludes>
+          </configuration>
+        </plugin>
+
+        <plugin>
+          <groupId>pl.project13.maven</groupId>
+          <artifactId>git-commit-id-plugin</artifactId>
+          <executions>
+            <execution>
+              <id>get-the-git-infos</id>
+              <goals>
+                <goal>revision</goal>
+              </goals>
+            </execution>
+            <execution>
+              <id>validate-the-git-infos</id>
+              <goals>
+                <goal>validateRevision</goal>
+              </goals>
+            </execution>
+          </executions>
+          <configuration>
+            <generateGitPropertiesFile>true</generateGitPropertiesFile>
+          </configuration>
+        </plugin>
+
         <plugin>
           <groupId>com.google.cloud.tools</groupId>
           <artifactId>jib-maven-plugin</artifactId>
@@ -149,6 +199,7 @@
         </plugin>
       </plugins>
     </pluginManagement>
+
     <plugins>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
@@ -200,6 +251,29 @@
             <goals>
               <goal>report-integration</goal>
             </goals>
+          </execution>
+        </executions>
+      </plugin>
+
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-enforcer-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>enforce-versions</id>
+            <goals>
+              <goal>enforce</goal>
+            </goals>
+            <configuration>
+              <rules>
+                <requireMavenVersion>
+                  <version>${maven.version}</version>
+                </requireMavenVersion>
+                <requireJavaVersion>
+                  <version>${java.version}</version>
+                </requireJavaVersion>
+              </rules>
+            </configuration>
           </execution>
         </executions>
       </plugin>

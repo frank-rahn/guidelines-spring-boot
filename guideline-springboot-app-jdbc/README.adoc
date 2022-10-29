@@ -25,7 +25,7 @@ Diese Spring Boot Anwendung implementiert mit Spring Data JDBC eine Datenbankanw
 Nach dem Erzeugen einiger Datensätze beendet sich die Spring Boot Anwendung und liefert einen
 `exit code` zurück.
 
-In diesem Module `App-JDBC` werden die folgende Technologien angewendet.
+In diesem Modul `App-JDBC` werden die folgenden Technologien angewendet.
 
 * JDBC mit https://spring.io/projects/spring-data-jdbc[Spring Data JDBC]
 ** Berücksichtigung von *_Auditing_* mit https://spring.io/projects/spring-security[Spring Security]
