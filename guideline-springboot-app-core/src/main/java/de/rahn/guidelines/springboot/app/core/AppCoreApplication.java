@@ -18,17 +18,18 @@ package de.rahn.guidelines.springboot.app.core;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.ApplicationContext;
 
-/** @author Frank Rahn */
+/**
+ * @author Frank Rahn
+ */
 @SpringBootApplication
 @Slf4j
 public class AppCoreApplication {
 
   public static void main(String[] args) {
-    ApplicationContext applicationContext = SpringApplication.run(AppCoreApplication.class, args);
+    var applicationContext = SpringApplication.run(AppCoreApplication.class, args);
 
-    int exitCode = SpringApplication.exit(applicationContext);
+    var exitCode = SpringApplication.exit(applicationContext);
     LOGGER.info("App-Core finished with exit code {}", exitCode);
     System.exit(exitCode);
   }

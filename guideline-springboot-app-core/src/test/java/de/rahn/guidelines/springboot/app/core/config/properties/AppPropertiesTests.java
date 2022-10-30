@@ -16,52 +16,67 @@
 package de.rahn.guidelines.springboot.app.core.config.properties;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.from;
 
+import de.rahn.guidelines.springboot.app.core.config.properties.AppProperties.Person;
 import java.time.LocalDate;
+import org.assertj.core.api.InstanceOfAssertFactories;
+import org.junit.jupiter.api.DisplayNameGeneration;
+import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 /**
  * @author Frank Rahn
  */
-@ExtendWith({SpringExtension.class})
 @SpringBootTest(
     properties = {
-        "app.people[0].id=4711",
-        "app.people[0].firstName=Frank",
-        "app.people[0].lastName=Rahn",
-        "app.people[0].birthday=1967-05-05",
-        "app.people[0].emailAddress=frank@frank-rahn.de",
-        "app.people[1].id=4712",
-        "app.people[1].firstName=Martin",
-        "app.people[1].lastName=Rahn",
-        "app.people[1].birthday=1979-03-25",
-        "app.people[1].emailAddress=martin@frank-rahn.de"
+      "app.people[0].id=4711",
+      "app.people[0].firstName=Frank",
+      "app.people[0].lastName=Rahn",
+      "app.people[0].birthday=1967-05-05",
+      "app.people[0].emailAddress=frank@frank-rahn.de",
+      "app.people[1].id=4712",
+      "app.people[1].firstName=Martin",
+      "app.people[1].lastName=Rahn",
+      "app.people[1].birthday=1979-03-25",
+      "app.people[1].emailAddress=martin@frank-rahn.de"
     })
+@DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 class AppPropertiesTests {
 
   @Autowired(required = false)
   private AppProperties properties;
 
   @Test
-  void givenContext_whenLoads_thenShouldPopulateAppProperties() {
+  void given_Context_when_loads_then_populate_AppProperties() {
+    // Given
+    // When
     // Then
-    assertThat(properties).isNotNull();
-    assertThat(properties.getPeople()).hasSize(2);
-    assertThat(properties.getPeople().get(0)).isNotNull();
-    assertThat(properties.getPeople().get(0).getId()).isEqualTo("4711");
-    assertThat(properties.getPeople().get(0).getFirstName()).isEqualTo("Frank");
-    assertThat(properties.getPeople().get(0).getLastName()).isEqualTo("Rahn");
-    assertThat(properties.getPeople().get(0).getBirthday()).isEqualTo(LocalDate.of(1967, 5, 5));
-    assertThat(properties.getPeople().get(0).getEmailAddress()).isEqualTo("frank@frank-rahn.de");
-    assertThat(properties.getPeople().get(1)).isNotNull();
-    assertThat(properties.getPeople().get(1).getId()).isEqualTo("4712");
-    assertThat(properties.getPeople().get(1).getFirstName()).isEqualTo("Martin");
-    assertThat(properties.getPeople().get(1).getLastName()).isEqualTo("Rahn");
-    assertThat(properties.getPeople().get(1).getBirthday()).isEqualTo(LocalDate.of(1979, 3, 25));
-    assertThat(properties.getPeople().get(1).getEmailAddress()).isEqualTo("martin@frank-rahn.de");
+    assertThat(properties)
+        .extracting(AppProperties::getPeople, InstanceOfAssertFactories.list(Person.class))
+        .hasSize(2)
+        .element(0)
+        .satisfies(
+            person ->
+                assertThat(person)
+                    .hasFieldOrPropertyWithValue("id", "4711")
+                    .hasFieldOrPropertyWithValue("firstName", "Frank")
+                    .hasFieldOrPropertyWithValue("lastName", "Rahn")
+                    .hasFieldOrPropertyWithValue("emailAddress", "frank@frank-rahn.de")
+                    .returns(LocalDate.of(1967, 5, 5), from(Person::getBirthday)));
+    assertThat(properties)
+        .extracting(AppProperties::getPeople, InstanceOfAssertFactories.list(Person.class))
+        .hasSize(2)
+        .element(1)
+        .satisfies(
+            person ->
+                assertThat(person)
+                    .hasFieldOrPropertyWithValue("id", "4712")
+                    .hasFieldOrPropertyWithValue("firstName", "Martin")
+                    .hasFieldOrPropertyWithValue("lastName", "Rahn")
+                    .hasFieldOrPropertyWithValue("emailAddress", "martin@frank-rahn.de")
+                    .returns(LocalDate.of(1979, 3, 25), from(Person::getBirthday)));
   }
 }

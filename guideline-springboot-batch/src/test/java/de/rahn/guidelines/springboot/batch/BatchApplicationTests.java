@@ -18,28 +18,29 @@ package de.rahn.guidelines.springboot.batch;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import de.rahn.guidelines.springboot.batch.customized.CustomizedJobExecutionExitCodeGenerator;
+import org.junit.jupiter.api.DisplayNameGeneration;
+import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 /**
  * @author Frank Rahn
  */
-@ExtendWith({SpringExtension.class})
 @SpringBootTest
+@DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 class BatchApplicationTests {
 
   @Autowired
   private CustomizedJobExecutionExitCodeGenerator customizedJobExecutionExitCodeGenerator;
 
   @Test
-  void givenContext_whenLoads_thenOk() {
+  void given_Context_when_loads_then_exit_code_is_0() {
+    // Given
     // When
-    int exitCode = customizedJobExecutionExitCodeGenerator.getExitCode();
+    var exitCode = customizedJobExecutionExitCodeGenerator.getExitCode();
 
     // Then
-    assertThat(exitCode).isEqualTo(1);
+    assertThat(exitCode).isEqualTo(0);
   }
 }

@@ -30,6 +30,7 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+import org.hibernate.Hibernate;
 import org.hibernate.envers.RevisionEntity;
 import org.hibernate.envers.RevisionNumber;
 import org.hibernate.envers.RevisionTimestamp;
@@ -44,7 +45,7 @@ import org.hibernate.envers.RevisionTimestamp;
 @Getter
 @Setter
 @ToString
-@EqualsAndHashCode(callSuper = false)
+@SuppressWarnings("JpaDataSourceORMInspection")
 public class UserRevisionEntity implements Serializable {
 
   private static final long serialVersionUID = 1L;
@@ -60,6 +61,22 @@ public class UserRevisionEntity implements Serializable {
   @Column(name = "REVISION_DATE")
   private long timestamp;
 
-  @EqualsAndHashCode.Exclude
-  private String userId;
+  @EqualsAndHashCode.Exclude private String userId;
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) {
+      return true;
+    }
+    if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) {
+      return false;
+    }
+    var that = (UserRevisionEntity) o;
+    return id == that.id;
+  }
+
+  @Override
+  public int hashCode() {
+    return Integer.hashCode(id);
+  }
 }

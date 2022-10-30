@@ -44,7 +44,9 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.validation.DataBinder;
 
-/** @author Frank Rahn */
+/**
+ * @author Frank Rahn
+ */
 @Configuration
 @EnableBatchProcessing
 class BatchConfiguration {
@@ -95,7 +97,7 @@ class BatchConfiguration {
   }
 
   @Bean
-  JdbcBatchItemWriter<Person> userImportPersonWriter(DataSource dataSource) {
+  JdbcBatchItemWriter<Person> userImportPersonWriter(DataSource springDataSource) {
     return new JdbcBatchItemWriterBuilder<Person>()
         .sql(
             "INSERT INTO people (first_name, last_name, email_address, birth_day) "
@@ -111,7 +113,7 @@ class BatchConfiguration {
                 ps.setNull(4, Types.DATE);
               }
             })
-        .dataSource(dataSource)
+        .dataSource(springDataSource)
         .build();
   }
 

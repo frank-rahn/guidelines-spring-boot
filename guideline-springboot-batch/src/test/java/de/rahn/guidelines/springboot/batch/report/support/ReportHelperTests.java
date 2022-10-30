@@ -15,8 +15,8 @@
  */
 package de.rahn.guidelines.springboot.batch.report.support;
 
-import static java.util.Arrays.asList;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.InstanceOfAssertFactories.STRING;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.ArgumentMatchers.argThat;
@@ -30,7 +30,10 @@ import ch.qos.logback.classic.spi.ILoggingEvent;
 import ch.qos.logback.core.Appender;
 import de.rahn.guidelines.springboot.batch.report.ReportJobExecutionListener;
 import java.sql.SQLException;
+import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayNameGeneration;
+import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
@@ -40,16 +43,14 @@ import org.slf4j.LoggerFactory;
 import org.springframework.dao.DataAccessException;
 
 @ExtendWith({MockitoExtension.class})
+@DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 class ReportHelperTests {
 
-  @Mock
-  private Appender<ILoggingEvent> mockAppender;
+  @Mock private Appender<ILoggingEvent> mockAppender;
 
-  @Mock
-  private org.slf4j.Logger mockLogger;
+  @Mock private org.slf4j.Logger mockLogger;
 
-  @Spy
-  private ReportHelper classUnderTest = new ReportHelper();
+  @Spy private ReportHelper classUnderTest = new ReportHelper();
 
   @BeforeEach
   void setUp() {
@@ -58,9 +59,9 @@ class ReportHelperTests {
   }
 
   @Test
-  void givenMessage_whenReportInformation_thenLoggingMessageAsInfo() {
+  void given_Message_when_reportInformation_then_logging_Message_as_info() {
     // Given
-    String message = "test";
+    var message = "test";
 
     // When
     classUnderTest.reportInformation(message);
@@ -69,17 +70,17 @@ class ReportHelperTests {
     verify(mockAppender)
         .doAppend(
             argThat(
-                argument -> {
-                  assertThat(argument.getMessage()).isEqualTo(message);
-                  assertThat(argument.getLevel()).isEqualTo(Level.INFO);
+                event -> {
+                  assertThat(event).extracting(ILoggingEvent::getMessage).isEqualTo(message);
+                  assertThat(event).extracting(ILoggingEvent::getLevel).isEqualTo(Level.INFO);
                   return true;
                 }));
   }
 
   @Test
-  void givenMessage_whenReportWarning_thenLoggingMessageAsWarn() {
+  void given_Message_when_reportWarning_then_logging_Message_as_warn() {
     // Given
-    String message = "test";
+    var message = "test";
 
     // When
     classUnderTest.reportWarning(message);
@@ -88,17 +89,17 @@ class ReportHelperTests {
     verify(mockAppender)
         .doAppend(
             argThat(
-                argument -> {
-                  assertThat(argument.getMessage()).isEqualTo(message);
-                  assertThat(argument.getLevel()).isEqualTo(Level.WARN);
+                event -> {
+                  assertThat(event).extracting(ILoggingEvent::getMessage).isEqualTo(message);
+                  assertThat(event).extracting(ILoggingEvent::getLevel).isEqualTo(Level.WARN);
                   return true;
                 }));
   }
 
   @Test
-  void givenMessage_whenReportError_thenLoggingMessageAsError() {
+  void given_message_when_reportError_then_logging_Message_as_error() {
     // Given
-    String message = "test";
+    var message = "test";
 
     // When
     classUnderTest.reportError(message);
@@ -107,18 +108,19 @@ class ReportHelperTests {
     verify(mockAppender)
         .doAppend(
             argThat(
-                argument -> {
-                  assertThat(argument.getMessage()).isEqualTo(message);
-                  assertThat(argument.getLevel()).isEqualTo(Level.ERROR);
+                event -> {
+                  assertThat(event).extracting(ILoggingEvent::getMessage).isEqualTo(message);
+                  assertThat(event).extracting(ILoggingEvent::getLevel).isEqualTo(Level.ERROR);
                   return true;
                 }));
   }
 
   @Test
-  void givenMessageAndRuntimeExceptionWithoutItem_whenReportThrowable_thenLoggingMessageAsError() {
+  void
+      given_Message_and_RuntimeException_without_Item_when_reportThrowable_then_logging_Message_as_error() {
     // Given
-    String message = "test";
-    Throwable exception = new RuntimeException(message);
+    var message = "test";
+    var exception = new RuntimeException(message);
 
     doReturn(false).when(mockLogger).isErrorEnabled();
 
@@ -129,11 +131,12 @@ class ReportHelperTests {
     verify(mockAppender)
         .doAppend(
             argThat(
-                argument -> {
-                  String msg = argument.getFormattedMessage();
-                  assertThat(msg).startsWith(message);
-                  assertThat(msg).endsWith(message);
-                  assertThat(argument.getLevel()).isEqualTo(Level.ERROR);
+                event -> {
+                  assertThat(event)
+                      .extracting(ILoggingEvent::getFormattedMessage, STRING)
+                      .startsWith(message)
+                      .endsWith(message);
+                  assertThat(event).extracting(ILoggingEvent::getLevel).isEqualTo(Level.ERROR);
                   return true;
                 }));
     verify(mockLogger, times(1)).isErrorEnabled();
@@ -141,11 +144,11 @@ class ReportHelperTests {
 
   @Test
   void
-  givenMessageAndRuntimeExceptionAndItem_whenReportThrowable_thenLoggingMessageAsErrorAndException() {
+      given_Message_and_RuntimeException_and_Item_when_reportThrowable_then_logging_Message_as_error_and_Exception() {
     // Given
-    String message = "test";
-    Throwable exception = new RuntimeException(message);
-    Object item = asList("test-a", "test-b");
+    var message = "test";
+    var exception = new RuntimeException(message);
+    var item = List.of("test-a", "test-b");
 
     doReturn(true).when(mockLogger).isErrorEnabled();
 
@@ -156,11 +159,12 @@ class ReportHelperTests {
     verify(mockAppender)
         .doAppend(
             argThat(
-                argument -> {
-                  String msg = argument.getFormattedMessage();
-                  assertThat(msg).startsWith(message);
-                  assertThat(msg).endsWith(message);
-                  assertThat(argument.getLevel()).isEqualTo(Level.ERROR);
+                event -> {
+                  assertThat(event)
+                      .extracting(ILoggingEvent::getFormattedMessage, STRING)
+                      .startsWith(message)
+                      .endsWith(message);
+                  assertThat(event).extracting(ILoggingEvent::getLevel).isEqualTo(Level.ERROR);
                   return true;
                 }));
     verify(mockLogger, times(1)).isErrorEnabled();
@@ -168,12 +172,11 @@ class ReportHelperTests {
 
   @Test
   void
-  givenMessageAndDataAccessExceptionAndItemAndSQLException_whenReportThrowable_thenLoggingMessageAsErrorAndException() {
+      given_Message_and_DataAccessException_and_Item_and_SQLException_when_reportThrowable_then_lLogging_Message_as_error_and_Exception() {
     // Given
-    String message = "test";
-    Throwable exception = new DataAccessException(message) {
-    };
-    Object item = asList("test-a", "test-b");
+    var message = "test";
+    var exception = new DataAccessException(message) {};
+    var item = List.of("test-a", "test-b");
 
     doReturn(true).when(mockLogger).isErrorEnabled();
 
@@ -184,11 +187,12 @@ class ReportHelperTests {
     verify(mockAppender)
         .doAppend(
             argThat(
-                argument -> {
-                  String msg = argument.getFormattedMessage();
-                  assertThat(msg).startsWith(message);
-                  assertThat(msg).endsWith(message);
-                  assertThat(argument.getLevel()).isEqualTo(Level.ERROR);
+                event -> {
+                  assertThat(event)
+                      .extracting(ILoggingEvent::getFormattedMessage, STRING)
+                      .startsWith(message)
+                      .endsWith(message);
+                  assertThat(event).extracting(ILoggingEvent::getLevel).isEqualTo(Level.ERROR);
                   return true;
                 }));
     verify(mockLogger, times(1)).isErrorEnabled();
@@ -197,13 +201,12 @@ class ReportHelperTests {
 
   @Test
   void
-  givenMessageAndDataAccessExceptionAndSQLExceptionAndItem_whenReportThrowable_thenLoggingMessageAsErrorAndException() {
+      given_Message_and_DataAccessException_and_SQLException_and_Item_when_reportThrowable_then_logging_Message_as_error_and_Exception() {
     // Given
-    String message = "test";
-    Throwable exception =
-        new DataAccessException(message, new SQLException("reason", "SQLState", 4711)) {
-        };
-    Object item = asList("test-a", "test-b");
+    var message = "test";
+    var exception =
+        new DataAccessException(message, new SQLException("reason", "SQLState", 4711)) {};
+    var item = List.of("test-a", "test-b");
 
     // When
     classUnderTest.reportThrowable(message, item, exception, mockLogger);
@@ -212,10 +215,11 @@ class ReportHelperTests {
     verify(mockAppender)
         .doAppend(
             argThat(
-                argument -> {
-                  String msg = argument.getFormattedMessage();
-                  assertThat(msg).startsWith(message);
-                  assertThat(argument.getLevel()).isEqualTo(Level.ERROR);
+                event -> {
+                  assertThat(event)
+                      .extracting(ILoggingEvent::getFormattedMessage, STRING)
+                      .startsWith(message);
+                  assertThat(event).extracting(ILoggingEvent::getLevel).isEqualTo(Level.ERROR);
                   return true;
                 }));
     verify(mockLogger, times(0)).isErrorEnabled();

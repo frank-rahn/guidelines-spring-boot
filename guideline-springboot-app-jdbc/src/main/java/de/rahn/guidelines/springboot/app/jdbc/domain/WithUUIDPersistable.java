@@ -45,7 +45,7 @@ public abstract class WithUUIDPersistable implements Persistable<UUID> {
     @Override
     public void onApplicationEvent(BeforeSaveEvent<?> event) {
       if (event.getEntity() instanceof WithUUIDPersistable) {
-        WithUUIDPersistable entity = (WithUUIDPersistable) event.getEntity();
+        var entity = (WithUUIDPersistable) event.getEntity();
         if (entity != null && entity.id == null) {
           entity.id = UUID.randomUUID();
         }

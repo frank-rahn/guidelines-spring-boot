@@ -1,9 +1,6 @@
 info:
   application:
     name: @project.name@
-    groupId: @project.groupId@
-    artifactId: @project.artifactId@
-    version: @project.version@
     description: @project.description@
 
 server:
@@ -24,6 +21,20 @@ spring:
       indent-output: true
 
 management:
+  info:
+    java:
+      enabled: true
+    env:
+      enabled: true
+    build:
+      enabled: true
+    git:
+      enabled: true
+      mode: full
+    os:
+      enabled: true
+    defaults:
+      enabled: true
   endpoint:
     health:
       show-details: always

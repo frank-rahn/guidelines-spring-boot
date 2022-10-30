@@ -18,12 +18,14 @@ package de.rahn.guidelines.springboot.batch.report.support;
 import static java.time.format.DateTimeFormatter.ISO_LOCAL_DATE;
 import static java.time.format.DateTimeFormatter.ISO_LOCAL_TIME;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.InstanceOfAssertFactories.STRING;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.Map;
+import org.junit.jupiter.api.DisplayNameGeneration;
+import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Test;
 import org.springframework.batch.core.ExitStatus;
 import org.springframework.batch.core.JobExecution;
@@ -32,480 +34,488 @@ import org.springframework.batch.core.JobParameter;
 import org.springframework.batch.core.JobParameters;
 import org.springframework.batch.core.StepExecution;
 
+@DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 class ReportBuilderTests {
 
-  private ReportBuilder classUnderTest = new ReportBuilder();
+  private final ReportBuilder classUnderTest = new ReportBuilder();
 
   @Test
-  void givenNothing_whenOf_thenReturnJobReportBuilder() {
-    // When
-    ReportBuilder result = ReportBuilder.of();
-
-    // Then
-    assertThat(result).isNotNull();
-    assertThat(result.build()).hasSize(0);
-  }
-
-  @Test
-  void givenNothing_whenWriteNewLine_thenReportOnlyNewLine() {
-    // When
-    ReportBuilder result = classUnderTest.writeNewLine();
-
-    // Then
-    assertThat(result).isNotNull();
-    assertThat(result).isEqualTo(classUnderTest);
-    assertThat(result.build()).isEqualTo("\n");
-  }
-
-  @Test
-  void givenNothing_whenWriteNull_thenReportNull() {
-    // When
-    ReportBuilder result = classUnderTest.writeNull();
-
-    // Then
-    assertThat(result).isNotNull();
-    assertThat(result).isEqualTo(classUnderTest);
-    assertThat(result.build()).isEqualTo(ReportBuilder.NULL);
-  }
-
-  @Test
-  void givenFillerAndCount0_whenWriteFilled_thenReportEmptyLine() {
+  void given_nothing_when_of_then_returns_JobReportBuilder() {
     // Given
-    char filler = '#';
-    int count = 0;
-
     // When
-    ReportBuilder result = classUnderTest.writeFilled(filler, count);
+    var result = ReportBuilder.of();
 
     // Then
-    assertThat(result).isNotNull();
-    assertThat(result).isEqualTo(classUnderTest);
-    assertThat(result.build()).isEqualTo("");
+    assertThat(result).extracting(ReportBuilder::build, STRING).hasSize(0);
   }
 
   @Test
-  void givenFillerAndCount5_whenWriteFilled_thenReportOnlyFilledLine() {
+  void given_nothing_when_writeNewLine_then_reports_only_a_new_line() {
     // Given
-    char filler = '#';
-    int count = 5;
-
     // When
-    ReportBuilder result = classUnderTest.writeFilled(filler, count);
+    var result = classUnderTest.writeNewLine();
 
     // Then
-    assertThat(result).isNotNull();
-    assertThat(result).isEqualTo(classUnderTest);
-    assertThat(result.build()).isEqualTo("#####");
+    assertThat(result).isEqualTo(classUnderTest).extracting(ReportBuilder::build).isEqualTo("\n");
   }
 
   @Test
-  void givenFiller_whenWriteFilledLine_thenReportOnlyFilledLine() {
-    // Given
-    char filler = '#';
-
+  void given_nothing_when_write_null_then_reports_null() {
     // When
-    ReportBuilder result = classUnderTest.writeFilledLine(filler);
+    var result = classUnderTest.writeNull();
 
     // Then
-    assertThat(result).isNotNull();
-    assertThat(result).isEqualTo(classUnderTest);
-    assertThat(result.build())
+    assertThat(result)
+        .isEqualTo(classUnderTest)
+        .extracting(ReportBuilder::build)
+        .isEqualTo(ReportBuilder.NULL);
+  }
+
+  @Test
+  void given_filler_and_count_0_when_writeFilled_then_reports_empty_line() {
+    // Given
+    var filler = '#';
+    var count = 0;
+
+    // When
+    var result = classUnderTest.writeFilled(filler, count);
+
+    // Then
+    assertThat(result).isEqualTo(classUnderTest).extracting(ReportBuilder::build).isEqualTo("");
+  }
+
+  @Test
+  void given_filler_and_count_5_when_writeFilled_then_reports_only_a_filled_line() {
+    // Given
+    var filler = '#';
+    var count = 5;
+
+    // When
+    var result = classUnderTest.writeFilled(filler, count);
+
+    // Then
+    assertThat(result)
+        .isEqualTo(classUnderTest)
+        .extracting(ReportBuilder::build)
+        .isEqualTo("#####");
+  }
+
+  @Test
+  void given_filler_when_writeFilledLine_then_reports_only_a_filled_lLine() {
+    // Given
+    var filler = '#';
+
+    // When
+    var result = classUnderTest.writeFilledLine(filler);
+
+    // Then
+    assertThat(result)
+        .isEqualTo(classUnderTest)
+        .extracting(ReportBuilder::build)
         .isEqualTo(Character.toString(filler).repeat(ReportBuilder.LINE_SIZE) + '\n');
   }
 
   @Test
-  void givenCharacter_whenWriteText_thenReportCharacter() {
+  void given_character_when_writeText_then_reports_character() {
     // Given
-    char character = '#';
+    var character = '#';
 
     // When
-    ReportBuilder result = classUnderTest.writeText(character);
+    var result = classUnderTest.writeText(character);
 
     // Then
-    assertThat(result).isNotNull();
-    assertThat(result).isEqualTo(classUnderTest);
-    assertThat(result.build()).isEqualTo(Character.toString(character));
+    assertThat(result)
+        .isEqualTo(classUnderTest)
+        .extracting(ReportBuilder::build)
+        .isEqualTo(Character.toString(character));
   }
 
   @Test
-  void givenObject_whenWriteText_thenReportToString() {
+  void given_Object_when_writeText_then_reports_toString() {
     // Given
-    Object obj = new Object();
+    var obj = new Object();
 
     // When
-    ReportBuilder result = classUnderTest.writeText(obj);
+    var result = classUnderTest.writeText(obj);
 
     // Then
-    assertThat(result).isNotNull();
-    assertThat(result).isEqualTo(classUnderTest);
-    assertThat(result.build()).isEqualTo(obj.toString());
+    assertThat(result)
+        .isEqualTo(classUnderTest)
+        .extracting(ReportBuilder::build)
+        .isEqualTo(obj.toString());
   }
 
   @Test
-  void givenNoneObject_whenWriteText_thenReportNull() {
+  @SuppressWarnings("ConstantConditions")
+  void given_none_Object_when_writeText_then_reports_null() {
     // Given
     Object obj = null;
 
     // When
-    @SuppressWarnings("ConstantConditions")
-    ReportBuilder result = classUnderTest.writeText(obj);
+    var result = classUnderTest.writeText(obj);
 
     // Then
-    assertThat(result).isNotNull();
-    assertThat(result).isEqualTo(classUnderTest);
-    assertThat(result.build()).isEqualTo(ReportBuilder.NULL);
+    assertThat(result)
+        .isEqualTo(classUnderTest)
+        .extracting(ReportBuilder::build)
+        .isEqualTo(ReportBuilder.NULL);
   }
 
   @Test
-  void givenNoneLong_whenWriteText_thenReportNull() {
+  void given_none_Long_when_writeText_then_reports_null() {
     // Given
     Long value = null;
 
     // When
-    ReportBuilder result = classUnderTest.writeText(value);
+    var result = classUnderTest.writeText(value);
 
     // Then
-    assertThat(result).isNotNull();
-    assertThat(result).isEqualTo(classUnderTest);
-    assertThat(result.build()).isEqualTo(ReportBuilder.NULL);
+    assertThat(result)
+        .isEqualTo(classUnderTest)
+        .extracting(ReportBuilder::build)
+        .isEqualTo(ReportBuilder.NULL);
   }
 
   @Test
-  void givenLong_whenWriteText_thenReportNumber() {
+  void given_Long_when_writeText_then_reports_number() {
     // Given
     Long value = 100L;
 
     // When
-    ReportBuilder result = classUnderTest.writeText(value);
+    var result = classUnderTest.writeText(value);
 
     // Then
-    assertThat(result).isNotNull();
-    assertThat(result).isEqualTo(classUnderTest);
-    assertThat(result.build()).isEqualTo(value.toString());
+    assertThat(result)
+        .isEqualTo(classUnderTest)
+        .extracting(ReportBuilder::build)
+        .isEqualTo(value.toString());
   }
 
   @Test
-  void givenNoneInteger_whenWriteText_thenReportNull() {
+  void given_none_Integer_when_writeText_then_report_null() {
     // Given
     Integer value = null;
 
     // When
-    ReportBuilder result = classUnderTest.writeText(value);
+    var result = classUnderTest.writeText(value);
 
     // Then
-    assertThat(result).isNotNull();
-    assertThat(result).isEqualTo(classUnderTest);
-    assertThat(result.build()).isEqualTo(ReportBuilder.NULL);
+    assertThat(result)
+        .isEqualTo(classUnderTest)
+        .extracting(ReportBuilder::build)
+        .isEqualTo(ReportBuilder.NULL);
   }
 
   @Test
-  void givenInteger_whenWriteText_thenReportNumber() {
+  void givenInteger_when_writeText_then_reports_number() {
     // Given
     Integer value = 100;
 
     // When
-    ReportBuilder result = classUnderTest.writeText(value);
+    var result = classUnderTest.writeText(value);
 
     // Then
-    assertThat(result).isNotNull();
-    assertThat(result).isEqualTo(classUnderTest);
-    assertThat(result.build()).isEqualTo(value.toString());
+    assertThat(result)
+        .isEqualTo(classUnderTest)
+        .extracting(ReportBuilder::build)
+        .isEqualTo(value.toString());
   }
 
   @Test
-  void givenText_whenWriteText_thenReportText() {
+  void given_Text_when_writeText_then_reports_text() {
     // Given
-    String text = "100L";
+    var text = "100L";
 
     // When
-    ReportBuilder result = classUnderTest.writeText(text);
+    var result = classUnderTest.writeText(text);
 
     // Then
-    assertThat(result).isNotNull();
-    assertThat(result).isEqualTo(classUnderTest);
-    assertThat(result.build()).isEqualTo(text);
+    assertThat(result).isEqualTo(classUnderTest).extracting(ReportBuilder::build).isEqualTo(text);
   }
 
   @Test
-  void givenNoneText_whenWriteText_thenReportNull() {
+  @SuppressWarnings("ConstantConditions")
+  void given_none_Text_when_writeText_then_reports_null() {
     // Given
     String test = null;
 
     // When
-    @SuppressWarnings("ConstantConditions")
-    ReportBuilder result = classUnderTest.writeText(test);
+    var result = classUnderTest.writeText(test);
 
     // Then
-    assertThat(result).isNotNull();
-    assertThat(result).isEqualTo(classUnderTest);
-    assertThat(result.build()).isEqualTo(ReportBuilder.NULL);
+    assertThat(result)
+        .isEqualTo(classUnderTest)
+        .extracting(ReportBuilder::build)
+        .isEqualTo(ReportBuilder.NULL);
   }
 
   @Test
-  void givenLocalDate_whenWriteText_thenReportDate() {
+  void given_LocalDate_when_writeText_then_reports_Date() {
     // Given
-    LocalDate date = LocalDate.now();
+    var date = LocalDate.now();
 
     // When
-    ReportBuilder result = classUnderTest.writeText(date);
+    var result = classUnderTest.writeText(date);
 
     // Then
-    assertThat(result).isNotNull();
-    assertThat(result).isEqualTo(classUnderTest);
-    assertThat(result.build()).isEqualTo(date.format(ISO_LOCAL_DATE));
+    assertThat(result)
+        .isEqualTo(classUnderTest)
+        .extracting(ReportBuilder::build)
+        .isEqualTo(date.format(ISO_LOCAL_DATE));
   }
 
   @Test
-  void givenNoneLocalDate_whenWriteText_thenReportNull() {
+  @SuppressWarnings("ConstantConditions")
+  void given_none_LocalDate_when_writeText_then_reports_null() {
     // Given
     LocalDate date = null;
 
     // When
-    @SuppressWarnings("ConstantConditions")
-    ReportBuilder result = classUnderTest.writeText(date);
+    var result = classUnderTest.writeText(date);
 
     // Then
-    assertThat(result).isNotNull();
-    assertThat(result).isEqualTo(classUnderTest);
-    assertThat(result.build()).isEqualTo(ReportBuilder.NULL);
+    assertThat(result)
+        .isEqualTo(classUnderTest)
+        .extracting(ReportBuilder::build)
+        .isEqualTo(ReportBuilder.NULL);
   }
 
   @Test
-  void givenLocalTime_whenWriteText_thenReportTime() {
+  void given_LocalTime_when_writeText_then_reports_Time() {
     // Given
-    LocalTime time = LocalTime.now();
+    var time = LocalTime.now();
 
     // When
-    ReportBuilder result = classUnderTest.writeText(time);
+    var result = classUnderTest.writeText(time);
 
     // Then
-    assertThat(result).isNotNull();
-    assertThat(result).isEqualTo(classUnderTest);
-    assertThat(result.build()).isEqualTo(time.format(ISO_LOCAL_TIME));
+    assertThat(result)
+        .isEqualTo(classUnderTest)
+        .extracting(ReportBuilder::build)
+        .isEqualTo(time.format(ISO_LOCAL_TIME));
   }
 
   @Test
-  void givenNoneLocalTime_whenWriteText_thenReportNull() {
+  @SuppressWarnings("ConstantConditions")
+  void given_none_LocalTime_when_writeText_then_reports_null() {
     // Given
     LocalTime time = null;
 
     // When
-    @SuppressWarnings("ConstantConditions")
-    ReportBuilder result = classUnderTest.writeText(time);
+    var result = classUnderTest.writeText(time);
 
     // Then
-    assertThat(result).isNotNull();
-    assertThat(result).isEqualTo(classUnderTest);
-    assertThat(result.build()).isEqualTo(ReportBuilder.NULL);
+    assertThat(result)
+        .isEqualTo(classUnderTest)
+        .extracting(ReportBuilder::build)
+        .isEqualTo(ReportBuilder.NULL);
   }
 
   @Test
-  void givenNoneJobParameters_whenWriteText_thenReportNull() {
+  @SuppressWarnings("ConstantConditions")
+  void given_none_JobParameters_when_writeText_then_reports_null() {
     // Given
     JobParameters jobParameters = null;
 
     // When
-    @SuppressWarnings("ConstantConditions")
-    ReportBuilder result = classUnderTest.writeText(jobParameters);
+    var result = classUnderTest.writeText(jobParameters);
 
     // Then
-    assertThat(result).isNotNull();
-    assertThat(result).isEqualTo(classUnderTest);
-    assertThat(result.build()).isEqualTo(ReportBuilder.NULL);
+    assertThat(result)
+        .isEqualTo(classUnderTest)
+        .extracting(ReportBuilder::build)
+        .isEqualTo(ReportBuilder.NULL);
   }
 
   @Test
-  void givenJobParametersWithoutParameters_whenWriteText_thenReportNothing() {
+  void given_JobParameters_without_Parameters_when_writeText_then_reports_nothing() {
     // Given
-    JobParameters jobParameters = new JobParameters();
+    var jobParameters = new JobParameters();
 
     // When
-    ReportBuilder result = classUnderTest.writeText(jobParameters);
+    var result = classUnderTest.writeText(jobParameters);
 
     // Then
-    assertThat(result).isNotNull();
-    assertThat(result).isEqualTo(classUnderTest);
-    assertThat(result.build()).hasSize(0);
+    assertThat(result)
+        .isEqualTo(classUnderTest)
+        .extracting(ReportBuilder::build, STRING)
+        .hasSize(0);
   }
 
   @Test
-  void givenJobParameters_whenWriteText_thenReportParameters() {
+  void given_JobParameters_when_writeText_then_reports_parameters() {
     // Given
-    Map<String, JobParameter> parameters = new HashMap<>();
-    parameters.put("name", new JobParameter("value"));
-    JobParameters jobParameters = new JobParameters(parameters);
+    var parameters = Map.of("name", new JobParameter("value"));
+    var jobParameters = new JobParameters(parameters);
 
     // When
-    ReportBuilder result = classUnderTest.writeText(jobParameters);
+    var result = classUnderTest.writeText(jobParameters);
 
     // Then
-    assertThat(result).isNotNull();
-    assertThat(result).isEqualTo(classUnderTest);
-    assertThat(result.build()).contains("\n", "name", ": value");
+    assertThat(result)
+        .isEqualTo(classUnderTest)
+        .extracting(ReportBuilder::build, STRING)
+        .contains("\n", "name", ": value");
   }
 
   @Test
-  void givenJobExecution_whenWriteHeader_thenReportHeader() {
+  void given_JobExecution_when_writeHeader_then_reports_header() {
     // Given
-    JobInstance jobInstance = new JobInstance(4711L, "Job-Name");
-
-    Map<String, JobParameter> parameters = new HashMap<>();
-    parameters.put("name", new JobParameter("value"));
-    JobParameters jobParameters = new JobParameters(parameters);
-
-    JobExecution jobExecution =
-        new JobExecution(jobInstance, 1L, jobParameters, "Job-Configuration-Name");
+    var jobInstance = new JobInstance(4711L, "Job-Name");
+    var parameters = Map.of("name", new JobParameter("value"));
+    var jobParameters = new JobParameters(parameters);
+    var jobExecution = new JobExecution(jobInstance, 1L, jobParameters, "Job-Configuration-Name");
     jobExecution.setStartTime(new Date());
     jobExecution.setEndTime(new Date());
     jobExecution.setExitStatus(ExitStatus.COMPLETED.addExitDescription("Completed"));
 
     // When
-    ReportBuilder result = classUnderTest.writeHeader(jobExecution);
+    var result = classUnderTest.writeHeader(jobExecution);
 
     // Then
-    assertThat(result).isNotNull();
-    assertThat(result).isEqualTo(classUnderTest);
-    assertThat(result.build()).contains("Job-Name", "Completed", "name", ": value", "4711");
+    assertThat(result)
+        .isEqualTo(classUnderTest)
+        .extracting(ReportBuilder::build, STRING)
+        .contains("Job-Name", "Completed", "name", ": value", "4711");
   }
 
   @Test
-  void givenJobExecution_whenWriteFooter_thenReportFooter() {
+  void given_JobExecution_when_write_footer_then_reports_footer() {
     // Given
-    JobInstance jobInstance = new JobInstance(4711L, "Job-Name");
-
-    Map<String, JobParameter> parameters = new HashMap<>();
-    parameters.put("name", new JobParameter("value"));
-    JobParameters jobParameters = new JobParameters(parameters);
-
-    JobExecution jobExecution =
-        new JobExecution(jobInstance, 1L, jobParameters, "Job-Configuration-Name");
+    var jobInstance = new JobInstance(4711L, "Job-Name");
+    var parameters = Map.of("name", new JobParameter("value"));
+    var jobParameters = new JobParameters(parameters);
+    var jobExecution = new JobExecution(jobInstance, 1L, jobParameters, "Job-Configuration-Name");
     jobExecution.setStartTime(new Date());
     jobExecution.setEndTime(new Date());
     jobExecution.setExitStatus(ExitStatus.COMPLETED.addExitDescription("Completed"));
 
     // When
-    ReportBuilder result = classUnderTest.writeFooter(jobExecution);
+    var result = classUnderTest.writeFooter(jobExecution);
 
     // Then
-    assertThat(result).isNotNull();
-    assertThat(result).isEqualTo(classUnderTest);
-    assertThat(result.build()).containsSequence("*");
+    assertThat(result)
+        .isEqualTo(classUnderTest)
+        .extracting(ReportBuilder::build, STRING)
+        .containsSequence("*");
   }
 
   @Test
-  void givenNoneTitle_whenWriteTitle_thenReportNull() {
+  @SuppressWarnings("ConstantConditions")
+  void given_none_Title_when_writeTitle_then_reports_null() {
     // Given
     String title = null;
 
     // When
-    @SuppressWarnings("ConstantConditions")
-    ReportBuilder result = classUnderTest.writeTitle(title);
+    var result = classUnderTest.writeTitle(title);
 
     // Then
-    assertThat(result).isNotNull();
-    assertThat(result).isEqualTo(classUnderTest);
-    assertThat(result.build()).contains(ReportBuilder.NULL);
+    assertThat(result)
+        .isEqualTo(classUnderTest)
+        .extracting(ReportBuilder::build, STRING)
+        .contains(ReportBuilder.NULL);
   }
 
   @Test
-  void givenTitle_whenWriteTitle_thenReportTitle() {
+  void given_Title_when_writeTitle_then_reports_Title() {
     // Given
-    String title = "Title";
+    var title = "Title";
 
     // When
-    ReportBuilder result = classUnderTest.writeTitle(title);
+    var result = classUnderTest.writeTitle(title);
 
     // Then
-    assertThat(result).isNotNull();
-    assertThat(result).isEqualTo(classUnderTest);
-    assertThat(result.build()).contains("Title");
+    assertThat(result)
+        .isEqualTo(classUnderTest)
+        .extracting(ReportBuilder::build, STRING)
+        .contains(title);
   }
 
   @Test
-  void givenNoneTitleAndNoneCounter_whenWriteCount_thenReportNulls() {
+  @SuppressWarnings("ConstantConditions")
+  void given_none_Title_and_none_counter_when_writeCount_then_reports_nulls() {
     // Given
     String title = null;
     Integer counter = null;
 
     // When
-    @SuppressWarnings("ConstantConditions")
-    ReportBuilder result = classUnderTest.writeCount(title, counter);
+    var result = classUnderTest.writeCount(title, counter);
 
     // Then
-    assertThat(result).isNotNull();
-    assertThat(result).isEqualTo(classUnderTest);
-    assertThat(result.build()).contains(ReportBuilder.NULL, ReportBuilder.NULL, "\n");
+    assertThat(result)
+        .isEqualTo(classUnderTest)
+        .extracting(ReportBuilder::build, STRING)
+        .contains(ReportBuilder.NULL, ReportBuilder.NULL, "\n");
   }
 
   @Test
-  void givenTitleAndNoneCounter_whenWriteCount_thenReportTitleAndNull() {
+  void given_Title_and_none_Counter_when_writeCount_then_reports_Title_and_null() {
     // Given
-    String title = "title";
+    var title = "title";
     Integer counter = null;
 
     // When
-    ReportBuilder result = classUnderTest.writeCount(title, counter);
+    var result = classUnderTest.writeCount(title, counter);
 
     // Then
-    assertThat(result).isNotNull();
-    assertThat(result).isEqualTo(classUnderTest);
-    assertThat(result.build()).contains(title, ReportBuilder.NULL, "\n");
+    assertThat(result)
+        .isEqualTo(classUnderTest)
+        .extracting(ReportBuilder::build, STRING)
+        .contains(title, ReportBuilder.NULL, "\n");
   }
 
   @Test
-  void givenTitleAndCounter_whenWriteCount_thenReportTitleAndCounter() {
+  void given_Title_and_Counter_when_writeCount_then_report_Title_and_Counter() {
     // Given
-    String title = "title";
-    Integer counter = 100;
+    var title = "title";
+    var counter = 100;
 
     // When
-    ReportBuilder result = classUnderTest.writeCount(title, counter);
+    var result = classUnderTest.writeCount(title, counter);
 
     // Then
-    assertThat(result).isNotNull();
-    assertThat(result).isEqualTo(classUnderTest);
-    assertThat(result.build()).contains(title, ": 100", "\n").hasSize(46);
+    assertThat(result)
+        .isEqualTo(classUnderTest)
+        .extracting(ReportBuilder::build, STRING)
+        .contains(title, ": 100", "\n")
+        .hasSize(46);
   }
 
   @Test
-  void givenNoneStepExecution_whenWriteStepExecution_thenReportNull() {
+  @SuppressWarnings("ConstantConditions")
+  void given_none_StepExecution_when_writeStepExecution_then_reports_null() {
     // Given
     StepExecution stepExecution = null;
 
     // When
-    @SuppressWarnings("ConstantConditions")
-    ReportBuilder result = classUnderTest.writeStepExecution(stepExecution);
+    var result = classUnderTest.writeStepExecution(stepExecution);
 
     // Then
-    assertThat(result).isNotNull();
-    assertThat(result).isEqualTo(classUnderTest);
-    assertThat(result.build()).contains(ReportBuilder.NULL, "\n");
+    assertThat(result)
+        .isEqualTo(classUnderTest)
+        .extracting(ReportBuilder::build, STRING)
+        .contains(ReportBuilder.NULL, "\n");
   }
 
   @Test
-  void givenStepExecution_whenWriteStepExecution_thenReportStep() {
+  void given_StepExecution_when_writeStepExecution_then_reports_Step() {
     // Given
-    JobInstance jobInstance = new JobInstance(4711L, "Job-Name");
-
-    Map<String, JobParameter> parameters = new HashMap<>();
-    parameters.put("name", new JobParameter("value"));
-    JobParameters jobParameters = new JobParameters(parameters);
-
-    JobExecution jobExecution =
-        new JobExecution(jobInstance, 1L, jobParameters, "Job-Configuration-Name");
+    var jobInstance = new JobInstance(4711L, "Job-Name");
+    var parameters = Map.of("name", new JobParameter("value"));
+    var jobParameters = new JobParameters(parameters);
+    var jobExecution = new JobExecution(jobInstance, 1L, jobParameters, "Job-Configuration-Name");
     jobExecution.setStartTime(new Date());
     jobExecution.setEndTime(new Date());
     jobExecution.setExitStatus(ExitStatus.COMPLETED.addExitDescription("Completed"));
-
-    StepExecution stepExecution = new StepExecution("Step-Name", jobExecution);
+    var stepExecution = new StepExecution("Step-Name", jobExecution);
 
     // When
-    ReportBuilder result = classUnderTest.writeStepExecution(stepExecution);
+    var result = classUnderTest.writeStepExecution(stepExecution);
 
     // Then
-    assertThat(result).isNotNull();
-    assertThat(result).isEqualTo(classUnderTest);
-    assertThat(result.build())
+    assertThat(result)
+        .isEqualTo(classUnderTest)
+        .extracting(ReportBuilder::build, STRING)
         .contains(
             "Step-Name",
             "Start",

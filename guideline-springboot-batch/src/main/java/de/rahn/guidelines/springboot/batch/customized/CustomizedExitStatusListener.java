@@ -40,7 +40,7 @@ class CustomizedExitStatusListener implements JobExecutionListener, StepListener
 
   @AfterStep
   public ExitStatus afterStep(StepExecution stepExecution) {
-    String exitCode = stepExecution.getExitStatus().getExitCode();
+    var exitCode = stepExecution.getExitStatus().getExitCode();
 
     if (!FAILED.getExitCode().equals(exitCode)
         && (stepExecution.getSkipCount() > 0 || stepExecution.getRollbackCount() > 0)) {

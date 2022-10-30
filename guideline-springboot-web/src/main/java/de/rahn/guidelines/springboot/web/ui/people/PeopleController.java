@@ -23,7 +23,6 @@ import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.ParameterizedTypeReference;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -32,7 +31,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.client.RestTemplate;
 
-/** @author Frank Rahn */
+/**
+ * @author Frank Rahn
+ */
 @Controller
 @RequestMapping(path = "/people")
 @Secured("ROLE_USER")
@@ -46,8 +47,8 @@ class PeopleController {
   public String getAllPeople(Model model) {
     LOGGER.info("GetAllPeople: Authentication={}", getContext().getAuthentication());
 
-    ResponseEntity<List<Person>> people =
-        template.exchange("/", GET, null, new ParameterizedTypeReference<>() {});
+    var people =
+        template.exchange("/", GET, null, new ParameterizedTypeReference<List<Person>>() {});
 
     model.addAttribute("people", people.getBody());
 

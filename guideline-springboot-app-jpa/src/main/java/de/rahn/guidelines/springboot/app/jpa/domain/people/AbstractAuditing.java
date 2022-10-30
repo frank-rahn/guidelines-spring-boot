@@ -47,20 +47,17 @@ public abstract class AbstractAuditing implements Serializable {
 
   private static final long serialVersionUID = 1L;
 
-  @Version
-  private long version;
+  @Version private long version;
 
   @CreatedDate
   @DateTimeFormat(iso = DATE_TIME)
   private LocalDateTime createdDate;
 
-  @CreatedBy
-  private String createdBy;
+  @CreatedBy private String createdBy;
 
   @LastModifiedDate
   @DateTimeFormat(iso = DATE_TIME)
   private LocalDateTime lastModifiedDate;
 
-  @LastModifiedBy
-  private String lastModifiedBy;
+  @LastModifiedBy private String lastModifiedBy;
 }

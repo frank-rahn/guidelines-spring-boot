@@ -57,10 +57,8 @@ public class AppProperties {
     @NotBlank
     private String lastName;
 
-    @Email
-    private String emailAddress;
+    @Email private String emailAddress;
 
-    @NotNull
-    private LocalDate birthday;
+    @NotNull private LocalDate birthday;
   }
 }

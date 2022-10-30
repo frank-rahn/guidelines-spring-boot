@@ -28,7 +28,7 @@ import org.springframework.stereotype.Component;
  */
 @Component
 @Slf4j
-public class UserImportStepExecutionListener implements StepListener {
+class UserImportStepExecutionListener implements StepListener {
 
   @BeforeStep
   public void beforeStep(StepExecution stepExecution) {

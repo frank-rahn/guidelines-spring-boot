@@ -25,7 +25,6 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import java.net.URI;
 import java.time.LocalDate;
 import java.util.Collection;
 import java.util.HashMap;
@@ -49,7 +48,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-/** @author Frank Rahn */
+/**
+ * @author Frank Rahn
+ */
 @RestController
 @RequestMapping(
     path = {"/api/people"},
@@ -92,7 +93,7 @@ class PeopleController {
 
   @PostConstruct
   private Person setup() {
-    Person person = new Person("Rahn", LocalDate.of(1967, 5, 5));
+    var person = new Person("Rahn", LocalDate.of(1967, 5, 5));
     person.setId(UUID.randomUUID().toString());
     person.setFirstName("Frank");
 
@@ -103,7 +104,7 @@ class PeopleController {
   @Secured("ROLE_USER")
   @Operation(summary = "Liefert alle Personen")
   @ApiResponse(responseCode = "200", description = "Personen erfolgreich abgerufen (Ok)")
-  public Collection<Person> getPeople() {
+  Collection<Person> getAllPeople() {
     LOGGER.info("GetAllPeople: Authentication={}", getContext().getAuthentication());
 
     return people.values();
@@ -120,7 +121,7 @@ class PeopleController {
       responseCode = "404",
       description = "Keine Person gefunden (Not Found)",
       content = {@Content()})
-  public ResponseEntity<Person> getPersonById(
+  ResponseEntity<Person> getPersonById(
       @PathVariable @Parameter(description = "Die UUID der gesuchten Person") UUID id) {
     LOGGER.info("GetPersonById: Id={}, Authentication={}", id, getContext().getAuthentication());
 
@@ -130,8 +131,11 @@ class PeopleController {
   @DeleteMapping(path = "/{id}")
   @Secured("ROLE_USER")
   @Operation(summary = "Lösche die Person mit der Id")
-  @ApiResponse(responseCode = "204", description = "Person erfolgreich gelöscht (No Content)", content = @Content())
-  public ResponseEntity<Void> deletePersonById(
+  @ApiResponse(
+      responseCode = "204",
+      description = "Person erfolgreich gelöscht (No Content)",
+      content = @Content())
+  ResponseEntity<Void> deletePersonById(
       @PathVariable @Parameter(description = "Die UUID der zu löschenden Person") UUID id) {
     LOGGER.info("DeletePersonById: Id={}, Authentication={}", id, getContext().getAuthentication());
 
@@ -144,7 +148,7 @@ class PeopleController {
   @Secured("ROLE_USER")
   @Operation(summary = "Füge die Person mit der Id hinzu oder ändere sie")
   @ApiResponse(responseCode = "200", description = "Person erfolgreich geändert oder angelegt (Ok)")
-  public Person putPersonById(
+  Person putPersonById(
       @PathVariable @Parameter(description = "Die UUID der neuen oder zu ändernde Person") UUID id,
       @RequestBody
           @Parameter(description = "Die neue oder zu ändernde Person", required = true)
@@ -172,14 +176,14 @@ class PeopleController {
             required = true,
             schema = @Schema(name = "string", format = "uri"))
       })
-  public ResponseEntity<Person> postPerson(
+  ResponseEntity<Person> postPerson(
       @RequestBody @Parameter(description = "Die neue Person", required = true) @Valid
           Person person) {
     LOGGER.info(
         "PostPerson: Person={}, Authentication={}", person, getContext().getAuthentication());
 
     addPersonToPeople(null, person);
-    URI location =
+    var location =
         ServletUriComponentsBuilder.fromCurrentRequestUri().path("/{id}").build(person.getId());
     LOGGER.info("PostPerson: Location={}", location);
 

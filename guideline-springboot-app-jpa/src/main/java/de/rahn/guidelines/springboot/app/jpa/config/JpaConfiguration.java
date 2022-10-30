@@ -41,7 +41,7 @@ public class JpaConfiguration {
   @Bean
   AuditorAware<String> auditorAware() {
     return () -> {
-      String currentAuditor =
+      var currentAuditor =
           ofNullable(SecurityContextHolder.getContext().getAuthentication())
               .map(Authentication::getName)
               .orElse("anonymous");

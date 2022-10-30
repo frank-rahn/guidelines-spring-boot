@@ -32,13 +32,14 @@ import org.springframework.stereotype.Component;
 @Component
 @Slf4j
 @RequiredArgsConstructor
-public class UserImportJobCompletionNotificationListener extends JobExecutionListenerSupport {
+class UserImportJobCompletionNotificationListener extends JobExecutionListenerSupport {
 
   private final JdbcTemplate jdbcTemplate;
 
   private final ReportHelper reportHelper;
 
   @Override
+  @SuppressWarnings("SqlResolve")
   public void afterJob(JobExecution jobExecution) {
     LOGGER.info(jobExecution.toString());
 

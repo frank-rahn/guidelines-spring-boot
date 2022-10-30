@@ -35,14 +35,12 @@ public class ReportJobExecutionListener extends JobExecutionListenerSupport {
 
   private final ReportHelper reportHelper;
 
-  /**
-   * Die Konstante für den Logger.
-   */
+  /** Die Konstante für den Logger. */
   public static final String REPORT = "REPORT";
 
   @Override
   public void afterJob(JobExecution jobExecution) {
-    ReportBuilder reportBuilder = ReportBuilder.of().writeHeader(jobExecution);
+    var reportBuilder = ReportBuilder.of().writeHeader(jobExecution);
 
     jobExecution.getStepExecutions().forEach(reportBuilder::writeStepExecution);
 

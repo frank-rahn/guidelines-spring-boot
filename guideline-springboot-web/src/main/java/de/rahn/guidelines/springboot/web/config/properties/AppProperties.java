@@ -33,15 +33,9 @@ import org.springframework.validation.annotation.Validated;
 @Validated
 public class AppProperties {
 
-  @NotNull
-  @NotBlank
-  private String url;
+  @NotNull @NotBlank private String url;
 
-  @NotNull
-  @NotBlank
-  private String user;
+  @NotNull @NotBlank private String user;
 
-  @NotNull
-  @NotBlank
-  private String password;
+  @NotNull @NotBlank private String password;
 }

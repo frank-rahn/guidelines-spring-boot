@@ -16,10 +16,13 @@
 package de.rahn.guidelines.springboot.batch.job.userimport;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
+import static org.assertj.core.api.InstanceOfAssertFactories.LOCAL_DATE;
 
 import de.rahn.guidelines.springboot.batch.report.support.ReportHelper;
 import java.time.LocalDate;
-import org.assertj.core.api.Assertions;
+import org.junit.jupiter.api.DisplayNameGeneration;
+import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -27,62 +30,66 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 @ExtendWith({MockitoExtension.class})
+@DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 class UserImportPersonProcessorTests {
 
   @Mock
   @SuppressWarnings("unused")
   private ReportHelper reportHelper;
 
-  @InjectMocks
-  private UserImportPersonProcessor classUnderTest;
+  @InjectMocks private UserImportPersonProcessor classUnderTest;
 
   @Test
-  void givenPersonAndNotFilterUserAndNotSkipUser_whenProcess_thenReturnPersonIsOk() {
+  void given_Person_and_not_filter_user_and_not_skip_user_when_process_then_returns_Person_is_ok() {
     // Given
-    final Person person = new Person("firstName", "lastName");
+    var person = new Person("firstName", "lastName");
     person.setEmailAddress("emailAddress");
     person.setBirthday(LocalDate.now());
     classUnderTest.filterUser = "FILTER";
     classUnderTest.skipUser = "SKIP";
 
     // When
-    Person result = classUnderTest.process(person);
+    var result = classUnderTest.process(person);
 
     // Then
-    assertThat(result).isNotNull();
-    assertThat(result.getFirstName()).isEqualTo(person.getFirstName().toUpperCase());
-    assertThat(result.getLastName()).isEqualTo(person.getLastName().toUpperCase());
-    assertThat(result.getEmailAddress()).isEqualTo(person.getEmailAddress());
-    assertThat(result.getBirthday()).isToday();
+    assertThat(result)
+        .extracting(Person::getFirstName)
+        .isEqualTo(person.getFirstName().toUpperCase());
+    assertThat(result)
+        .extracting(Person::getLastName)
+        .isEqualTo(person.getLastName().toUpperCase());
+    assertThat(result).extracting(Person::getEmailAddress).isEqualTo(person.getEmailAddress());
+    assertThat(result).extracting(Person::getBirthday, LOCAL_DATE).isToday();
   }
 
   @Test
-  void givenPersonAndFilterUserAndNotSkipUser_whenProcessAndFilter_thenReturnNull() {
+  void given_Person_and_filter_user_and_not_skip_user_when_process_and_filter_then_returns_null() {
     // Given
-    final Person person = new Person("firstName", "lastName");
+    var person = new Person("firstName", "lastName");
     person.setEmailAddress("emailAddress");
     person.setBirthday(LocalDate.now());
     classUnderTest.filterUser = "LastNaMe";
     classUnderTest.skipUser = "SKIP";
 
     // When
-    Person result = classUnderTest.process(person);
+    var result = classUnderTest.process(person);
 
     // Then
     assertThat(result).isNull();
   }
 
   @Test
-  void givenPersonAndNotFilterUserAndSkipUser_whenProcessAndFilter_thenReturnPersonIsOk() {
+  void
+      given_Person_and_not_filter_user_and_skip_user_when_process_and_filter_then_throws_RuntimeException() {
     // Given
-    final Person person = new Person("firstName", "lastName");
+    var person = new Person("firstName", "lastName");
     person.setEmailAddress("emailAddress");
     person.setBirthday(LocalDate.now());
     classUnderTest.filterUser = "FILTER";
     classUnderTest.skipUser = "LastNaMe";
 
     // When and Then
-    Assertions.assertThatExceptionOfType(RuntimeException.class)
+    assertThatExceptionOfType(RuntimeException.class)
         .isThrownBy(() -> classUnderTest.process(person))
         .withMessage("Skip LastNaMe");
   }

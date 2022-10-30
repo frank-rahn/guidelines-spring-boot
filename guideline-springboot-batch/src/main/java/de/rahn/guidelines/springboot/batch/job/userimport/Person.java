@@ -39,8 +39,7 @@ import lombok.With;
 @EqualsAndHashCode
 public class Person {
 
-  @NonNull
-  private String firstName;
+  @NonNull private String firstName;
 
   @NonNull
   @ToString.Include(rank = 1)

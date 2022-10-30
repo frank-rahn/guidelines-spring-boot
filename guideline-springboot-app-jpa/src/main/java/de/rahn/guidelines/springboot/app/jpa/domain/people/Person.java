@@ -19,6 +19,7 @@ import static javax.persistence.AccessType.FIELD;
 import static org.springframework.format.annotation.DateTimeFormat.ISO.DATE;
 
 import java.time.LocalDate;
+import java.util.Objects;
 import javax.persistence.Access;
 import javax.persistence.Basic;
 import javax.persistence.Entity;
@@ -28,13 +29,13 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import lombok.AccessLevel;
-import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
+import org.hibernate.Hibernate;
 import org.hibernate.envers.Audited;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -49,7 +50,6 @@ import org.springframework.format.annotation.DateTimeFormat;
 @Getter
 @Setter
 @ToString
-@EqualsAndHashCode(callSuper = false)
 public class Person extends AbstractAuditing {
 
   private static final long serialVersionUID = 1L;
@@ -68,12 +68,28 @@ public class Person extends AbstractAuditing {
   @ToString.Include(rank = 2)
   private String lastName;
 
-  @Email
-  private String emailAddress;
+  @Email private String emailAddress;
 
   @Basic(optional = false)
   @DateTimeFormat(iso = DATE)
   @NotNull
   @NonNull
   private LocalDate birthday;
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) {
+      return true;
+    }
+    if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) {
+      return false;
+    }
+    var person = (Person) o;
+    return id != null && Objects.equals(id, person.id);
+  }
+
+  @Override
+  public int hashCode() {
+    return id.hashCode();
+  }
 }

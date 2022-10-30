@@ -19,18 +19,16 @@ import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.ToString;
-import org.springframework.data.annotation.PersistenceConstructor;
+import org.springframework.data.annotation.PersistenceCreator;
 
 /**
  * @author Frank Rahn
  */
-@AllArgsConstructor(onConstructor = @__(@PersistenceConstructor))
+@AllArgsConstructor(onConstructor = @__(@PersistenceCreator))
 @Getter
 @ToString
 @EqualsAndHashCode
 public class Address {
-
   private String street;
-
   private String city;
 }

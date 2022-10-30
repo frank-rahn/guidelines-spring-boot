@@ -20,7 +20,9 @@ import static org.springframework.context.annotation.FilterType.ASSIGNABLE_TYPE;
 
 import de.rahn.guidelines.springboot.app.jpa.config.JpaConfiguration;
 import java.time.LocalDate;
-import java.util.List;
+import org.assertj.core.api.InstanceOfAssertFactories;
+import org.junit.jupiter.api.DisplayNameGeneration;
+import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
@@ -33,24 +35,24 @@ import org.springframework.test.context.jdbc.Sql;
  */
 @DataJpaTest(
     includeFilters = {
-        @Filter(
-            type = ASSIGNABLE_TYPE,
-            classes = {JpaConfiguration.class})
+      @Filter(
+          type = ASSIGNABLE_TYPE,
+          classes = {JpaConfiguration.class})
     })
+@DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 class PersonRepositoryTests {
 
-  @Autowired
-  PersonRepository personRepository;
+  @Autowired PersonRepository personRepository;
 
   @Test
-  void givenContext_whenLoads_thenInjectedComponentsAreNotNull() {
+  void given_Context_when_loads_then_injected_components_are_not_null() {
     assertThat(personRepository).isNotNull();
   }
 
   @Test
   @SuppressWarnings({"SqlResolve", "SqlWithoutWhere"})
   @Sql(statements = {"DELETE FROM person"})
-  void givenPeopleWithoutAuthentication_whenSaved_thenFindByName() {
+  void given_People_without_authentication_when_saved_then_FindByName() {
     givenPeople_whenSaved_thenFindByName();
   }
 
@@ -58,30 +60,30 @@ class PersonRepositoryTests {
   @SuppressWarnings({"SqlResolve", "SqlWithoutWhere"})
   @Sql(statements = {"DELETE FROM person"})
   @WithMockUser
-  void givenPeopleWithAuthentication_whenSaved_thenFindByName() {
+  void given_People_with_authentication_when_saved_then_FindByName() {
     givenPeople_whenSaved_thenFindByName();
   }
 
   private void givenPeople_whenSaved_thenFindByName() {
     // Given
-    final Person person = new Person("Rahn", LocalDate.of(1940, 2, 8));
+    var person = new Person("Rahn", LocalDate.of(1940, 2, 8));
     person.setFirstName("Gerd");
 
     // When
-    final Person result = personRepository.save(person);
+    var result = personRepository.save(person);
 
     // Then
-    assertThat(result.getId()).isNotEmpty();
+    assertThat(result).extracting(Person::getId, InstanceOfAssertFactories.STRING).isNotEmpty();
 
-    final List<Person> foundPerson = personRepository.findByLastName("Rahn");
-    assertThat(foundPerson).hasSize(1);
-    assertThat(foundPerson).contains(person);
+    var foundPerson = personRepository.findByLastName("Rahn");
+    assertThat(foundPerson).hasSize(1).contains(person);
   }
 
   @Test
-  void givenNothing_whenFindByLastName_thenFindOldData() {
+  void given_nothing_when_FindByLastName_then_find_old_data() {
+    // Given
     // When
-    final List<Person> result = personRepository.findByLastName("Rahn");
+    var result = personRepository.findByLastName("Rahn");
 
     // Then
     assertThat(result).hasSize(0);

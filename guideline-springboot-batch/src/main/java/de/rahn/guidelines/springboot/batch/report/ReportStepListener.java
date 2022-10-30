@@ -33,41 +33,41 @@ import org.springframework.stereotype.Component;
 @Component
 @Slf4j
 @RequiredArgsConstructor
-public class ReportStepListener implements StepListener {
+class ReportStepListener implements StepListener {
 
   private final ReportHelper reportHelper;
 
   @OnProcessError
   public void onProcessError(Object item, Exception exception) {
-    final String message = "Exception inside ItemProcessor for Item -> ";
+    final var message = "Exception inside ItemProcessor for Item -> ";
 
     reportHelper.reportThrowable(message, item, exception, LOGGER);
   }
 
   @OnWriteError
   public void onWriteError(Exception exception, List<?> items) {
-    final String message = "Exception inside ItemProcessor for Items -> ";
+    final var message = "Exception inside ItemProcessor for Items -> ";
 
     reportHelper.reportThrowable(message, items, exception, LOGGER);
   }
 
   @OnSkipInRead
   public void onSkipInRead(Throwable throwable) {
-    final String message = "Skippable Exception inside ItemReader -> ";
+    final var message = "Skippable Exception inside ItemReader -> ";
 
     reportHelper.reportThrowable(message, null, throwable, LOGGER);
   }
 
   @OnSkipInWrite
   public void onSkipInWrite(Object item, Throwable throwable) {
-    final String message = "Skippable Exception inside ItemWriter for Item -> ";
+    final var message = "Skippable Exception inside ItemWriter for Item -> ";
 
     reportHelper.reportThrowable(message, item, throwable, LOGGER);
   }
 
   @OnSkipInProcess
   public void onSkipInProcess(Object item, Throwable throwable) {
-    final String message = "Skippable Exception inside ItemProcessor for Item -> ";
+    final var message = "Skippable Exception inside ItemProcessor for Item -> ";
 
     reportHelper.reportThrowable(message, item, throwable, LOGGER);
   }

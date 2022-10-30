@@ -3,7 +3,10 @@ spring:
     name: @project.name@
   datasource:
     url: jdbc:h2:mem:standard;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
-    schema: classpath:schema-h2.sql
+  sql:
+    init:
+      mode: always
+      platform: h2
 
 batch:
   datasource:

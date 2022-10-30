@@ -24,7 +24,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
 
 @Configuration
-public class DataSourceConfiguration {
+class DataSourceConfiguration {
 
   /** spring.datasource.url=jdbc:h2:mem:standard */
   @Bean
@@ -45,7 +45,7 @@ public class DataSourceConfiguration {
   }
 
   /** batch.datasource.url=jdbc:hsqldb:mem:batch */
-  @Bean()
+  @Bean
   @ConfigurationProperties(prefix = "batch.datasource")
   DataSourceProperties batchDataSourceProperties() {
     return new DataSourceProperties();

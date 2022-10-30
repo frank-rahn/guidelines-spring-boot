@@ -30,7 +30,7 @@ import org.springframework.core.annotation.Order;
  */
 @Configuration
 @Slf4j
-public class AppJdbcConfiguration {
+class AppJdbcConfiguration {
 
   @Bean
   @Order(1)
@@ -50,7 +50,7 @@ public class AppJdbcConfiguration {
   @Bean
   ExitCodeExceptionMapper exitCodeExceptionMapper() {
     return exception -> {
-      Throwable cause = exception.getCause();
+      var cause = exception.getCause();
 
       if (cause == null) {
         cause = exception;

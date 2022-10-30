@@ -21,6 +21,8 @@ import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
+import org.junit.jupiter.api.DisplayNameGeneration;
+import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
@@ -31,6 +33,7 @@ import org.springframework.batch.core.JobExecution;
 import org.springframework.boot.autoconfigure.batch.JobExecutionEvent;
 
 @ExtendWith({MockitoExtension.class})
+@DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 class CustomizedJobExecutionExitCodeGeneratorTests {
 
   @Spy
@@ -38,90 +41,90 @@ class CustomizedJobExecutionExitCodeGeneratorTests {
       new CustomizedJobExecutionExitCodeGenerator();
 
   @Test
-  void givenJobExecution_whenGetExitCode_thenExitCodeIs0(@Mock JobExecution jobExecution) {
+  void given_JobExecution_when_get_ExitCode_then_ExitCode_is_0(@Mock JobExecution jobExecution) {
     // Given
-    ExitStatus givenExitStatus = ExitStatus.COMPLETED;
-    int expectedErrorCode = 0;
+    var givenExitStatus = ExitStatus.COMPLETED;
+    var expectedErrorCode = 0;
 
     // When & Then
     assertCustomizedJobExecutionExitCodeGenerator(givenExitStatus, expectedErrorCode, jobExecution);
   }
 
   @Test
-  void givenJobExecution_whenGetExitCode_thenExitCodeIs1(@Mock JobExecution jobExecution) {
+  void given_JobExecution_when_get_ExitCode_then_ExitCode_is_1(@Mock JobExecution jobExecution) {
     // Given
-    ExitStatus givenExitStatus = CustomizedExitStatus.COMPLETED_WITH_ERRORS;
-    int expectedErrorCode = 1;
+    var givenExitStatus = CustomizedExitStatus.COMPLETED_WITH_ERRORS;
+    var expectedErrorCode = 1;
 
     // When & Then
     assertCustomizedJobExecutionExitCodeGenerator(givenExitStatus, expectedErrorCode, jobExecution);
   }
 
   @Test
-  void givenJobExecution_whenGetExitCode_thenExitCodeIs2(@Mock JobExecution jobExecution) {
+  void given_JobExecution_when_get_ExitCode_then_ExitCode_is_2(@Mock JobExecution jobExecution) {
     // Given
-    ExitStatus givenExitStatus = CustomizedExitStatus.COMPLETED_WITH_SKIPS;
-    int expectedErrorCode = 2;
+    var givenExitStatus = CustomizedExitStatus.COMPLETED_WITH_SKIPS;
+    var expectedErrorCode = 2;
 
     // When & Then
     assertCustomizedJobExecutionExitCodeGenerator(givenExitStatus, expectedErrorCode, jobExecution);
   }
 
   @Test
-  void givenJobExecution_whenGetExitCode_thenExitCodeIs3(@Mock JobExecution jobExecution) {
+  void given_JobExecution_when_get_ExitCode_then_ExitCode_is_3(@Mock JobExecution jobExecution) {
     // Given
-    ExitStatus givenExitStatus = ExitStatus.NOOP;
-    int expectedErrorCode = 3;
+    var givenExitStatus = ExitStatus.NOOP;
+    var expectedErrorCode = 3;
 
     // When & Then
     assertCustomizedJobExecutionExitCodeGenerator(givenExitStatus, expectedErrorCode, jobExecution);
   }
 
   @Test
-  void givenJobExecution_whenGetExitCode_thenExitCodeIs4(@Mock JobExecution jobExecution) {
+  void given_JobExecution_when_get_ExitCode_then_ExitCode_is_4(@Mock JobExecution jobExecution) {
     // Given
-    ExitStatus givenExitStatus = ExitStatus.FAILED;
-    int expectedErrorCode = 4;
+    var givenExitStatus = ExitStatus.FAILED;
+    var expectedErrorCode = 4;
 
     // When & Then
     assertCustomizedJobExecutionExitCodeGenerator(givenExitStatus, expectedErrorCode, jobExecution);
   }
 
   @Test
-  void givenJobExecution_whenGetExitCode_thenExitCodeIs5(@Mock JobExecution jobExecution) {
+  void given_JobExecution_when_get_ExitCode_then_ExitCode_is_5(@Mock JobExecution jobExecution) {
     // Given
-    ExitStatus givenExitStatus = ExitStatus.EXECUTING;
-    int expectedErrorCode = 5;
+    var givenExitStatus = ExitStatus.EXECUTING;
+    var expectedErrorCode = 5;
 
     // When & Then
     assertCustomizedJobExecutionExitCodeGenerator(givenExitStatus, expectedErrorCode, jobExecution);
   }
 
   @Test
-  void givenJobExecution_whenGetExitCode_thenExitCodeIs6(@Mock JobExecution jobExecution) {
+  void given_JobExecution_when_get_ExitCode_then_ExitCode_is_6(@Mock JobExecution jobExecution) {
     // Given
-    ExitStatus givenExitStatus = ExitStatus.STOPPED;
-    int expectedErrorCode = 6;
+    var givenExitStatus = ExitStatus.STOPPED;
+    var expectedErrorCode = 6;
 
     // When & Then
     assertCustomizedJobExecutionExitCodeGenerator(givenExitStatus, expectedErrorCode, jobExecution);
   }
 
   @Test
-  void givenJobExecution_whenGetExitCode_thenExitCodeIs7(@Mock JobExecution jobExecution) {
+  void given_JobExecution_when_get_ExitCode_then_ExitCode_is_7(@Mock JobExecution jobExecution) {
     // Given
-    ExitStatus givenExitStatus = ExitStatus.UNKNOWN;
-    int expectedErrorCode = 7;
+    var givenExitStatus = ExitStatus.UNKNOWN;
+    var expectedErrorCode = 7;
 
     // When & Then
     assertCustomizedJobExecutionExitCodeGenerator(givenExitStatus, expectedErrorCode, jobExecution);
   }
 
   @Test
-  void givenJobExecution_whenGetExitCode_thenExitCodeIs8(@Mock JobExecution jobExecution) {
+  void given_JobExecution_when_get_ExitCode_then_ExitCode_is_8(@Mock JobExecution jobExecution) {
     // Given
-    ExitStatus givenExitStatus = new ExitStatus("exitCode", "description");
-    int expectedErrorCode = 8;
+    var givenExitStatus = new ExitStatus("exitCode", "description");
+    var expectedErrorCode = 8;
 
     // When & Then
     assertCustomizedJobExecutionExitCodeGenerator(givenExitStatus, expectedErrorCode, jobExecution);
@@ -131,11 +134,11 @@ class CustomizedJobExecutionExitCodeGeneratorTests {
       ExitStatus givenExitStatus, int expectedErrorCode, JobExecution jobExecution) {
     // Given
     doReturn(givenExitStatus).when(jobExecution).getExitStatus();
-    JobExecutionEvent jobExecutionEvent = spy(new JobExecutionEvent(jobExecution));
+    var jobExecutionEvent = spy(new JobExecutionEvent(jobExecution));
 
     // When
     classUnderTest.onApplicationEvent(jobExecutionEvent);
-    int exitCode = classUnderTest.getExitCode();
+    var exitCode = classUnderTest.getExitCode();
 
     // Then
     verify(jobExecutionEvent, times(1)).getJobExecution();

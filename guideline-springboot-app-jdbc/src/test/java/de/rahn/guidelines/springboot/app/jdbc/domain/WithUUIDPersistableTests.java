@@ -22,62 +22,67 @@ import de.rahn.guidelines.springboot.app.jdbc.domain.people.Address;
 import de.rahn.guidelines.springboot.app.jdbc.domain.people.Person;
 import java.time.LocalDate;
 import java.util.UUID;
+import org.assertj.core.api.InstanceOfAssertFactories;
+import org.junit.jupiter.api.DisplayNameGeneration;
+import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Test;
-import org.springframework.data.relational.core.conversion.AggregateChange;
 import org.springframework.data.relational.core.conversion.MutableAggregateChange;
 import org.springframework.data.relational.core.mapping.event.BeforeSaveEvent;
 
-/** @author Frank Rahn */
+/**
+ * @author Frank Rahn
+ */
+@DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 class WithUUIDPersistableTests {
 
   private final BeforeUuidSaveListener classUnderTest = new BeforeUuidSaveListener();
 
   @Test
-  void givenBeforeSaveEventWithPersonWithoutUUID_whenOnApplicationEvent_thenSetUuid() {
+  void given_BeforeSaveEvent_with_Person_without_Uuid_when_onApplicationEvent_then_sets_Uuid() {
     // Given
-    LocalDate birthday = LocalDate.of(1967, 5, 5);
-    Person entity = new Person("Rahn", birthday);
-    AggregateChange<Person> change = MutableAggregateChange.forSave(entity);
-    BeforeSaveEvent<Person> event = new BeforeSaveEvent<>(entity, change);
+    var birthday = LocalDate.of(1967, 5, 5);
+    var entity = new Person("Rahn", birthday);
+    var change = MutableAggregateChange.forSave(entity);
+    var event = new BeforeSaveEvent<>(entity, change);
 
     // When
     classUnderTest.onApplicationEvent(event);
 
     // Then
-    assertThat(entity.isNew()).isFalse();
-    assertThat(entity.getId()).isNotNull();
+    assertThat(entity).extracting(Person::isNew, InstanceOfAssertFactories.BOOLEAN).isFalse();
+    assertThat(entity).extracting(Person::getId).isNotNull();
   }
 
   @Test
-  void givenBeforeSaveEventWithPersonWithUUID_whenOnApplicationEvent_thenSetUuid() {
+  void given_BeforeSaveEvent_with_Person_with_Uuid_when_onApplicationEvent_then_sets_Uuid() {
     // Given
-    LocalDate birthday = LocalDate.of(1967, 5, 5);
-    UUID uuid = UUID.randomUUID();
-    Person entity = new Person("Rahn", birthday);
+    var birthday = LocalDate.of(1967, 5, 5);
+    var uuid = UUID.randomUUID();
+    var entity = new Person("Rahn", birthday);
     entity.id = uuid;
-    AggregateChange<Person> change = MutableAggregateChange.forSave(entity);
-    BeforeSaveEvent<Person> event = new BeforeSaveEvent<>(entity, change);
+    var change = MutableAggregateChange.forSave(entity);
+    var event = new BeforeSaveEvent<>(entity, change);
 
     // When
     classUnderTest.onApplicationEvent(event);
 
     // Then
-    assertThat(entity.isNew()).isFalse();
-    assertThat(entity.getId()).isEqualTo(uuid);
+    assertThat(entity).extracting(Person::isNew, InstanceOfAssertFactories.BOOLEAN).isFalse();
+    assertThat(entity).extracting(Person::getId).isEqualTo(uuid);
   }
 
   @Test
-  void givenBeforeSaveEventWithAddress_whenOnApplicationEvent_thenDoNothing() {
+  void given_BeforeSaveEvent_with_Address_when_onApplicationEvent_then_do_nothing() {
     // Given
-    Address entity = new Address("street", "city");
-    AggregateChange<Address> change = MutableAggregateChange.forSave(entity);
-    BeforeSaveEvent<Address> event = new BeforeSaveEvent<>(entity, change);
+    var entity = new Address("street", "city");
+    var change = MutableAggregateChange.forSave(entity);
+    var event = new BeforeSaveEvent<>(entity, change);
 
     // When
     classUnderTest.onApplicationEvent(event);
 
     // Then
-    assertThat(entity.getStreet()).isEqualTo("street");
-    assertThat(entity.getCity()).isEqualTo("city");
+    assertThat(entity).extracting(Address::getStreet).isEqualTo("street");
+    assertThat(entity).extracting(Address::getCity).isEqualTo("city");
   }
 }

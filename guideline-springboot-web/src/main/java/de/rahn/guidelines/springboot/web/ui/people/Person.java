@@ -46,13 +46,9 @@ public class Person {
 
   private String firstName;
 
-  @NotNull
-  @NotBlank
-  @NonNull
-  private String lastName;
+  @NotNull @NotBlank @NonNull private String lastName;
 
-  @Email
-  private String emailAddress;
+  @Email private String emailAddress;
 
   @DateTimeFormat(iso = DATE)
   @NotNull

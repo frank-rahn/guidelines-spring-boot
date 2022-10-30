@@ -31,10 +31,6 @@ class LocalDateConverter implements Converter<String, LocalDate> {
 
   @Override
   public LocalDate convert(String source) {
-    if (source == null) {
-      return null;
-    }
-
     return LocalDate.parse(source, ISO_DATE);
   }
 }

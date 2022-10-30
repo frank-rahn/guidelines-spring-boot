@@ -60,9 +60,9 @@ public class ReportBuilder {
   }
 
   public ReportBuilder writeHeader(JobExecution jobExecution) {
-    ZonedDateTime zonedStartDateTime =
+    var zonedStartDateTime =
         computeZonedDateTime(jobExecution.getStartTime(), jobExecution.getCreateTime());
-    ZonedDateTime zonedEndDateTime =
+    var zonedEndDateTime =
         computeZonedDateTime(jobExecution.getEndTime(), jobExecution.getCreateTime());
 
     return writeFilledLine(FILLER)
@@ -126,8 +126,8 @@ public class ReportBuilder {
     writeFilledLine(FILLER);
 
     if (stepExecution != null) {
-      ZonedDateTime zonedStartDateTime = computeZonedDateTime(stepExecution.getStartTime());
-      ZonedDateTime zonedEndDateTime =
+      var zonedStartDateTime = computeZonedDateTime(stepExecution.getStartTime());
+      var zonedEndDateTime =
           computeZonedDateTime(stepExecution.getEndTime(), stepExecution.getStartTime());
 
       return writeText(stepExecution.getStepName())
@@ -180,11 +180,7 @@ public class ReportBuilder {
     if (jobParameters != null) {
       jobParameters
           .getParameters()
-          .forEach(
-              (key, value) ->
-                  writeNewLine()
-                      .writeTitle(key)
-                      .writeText(value.getValue()));
+          .forEach((key, value) -> writeNewLine().writeTitle(key).writeText(value.getValue()));
       return this;
     }
 

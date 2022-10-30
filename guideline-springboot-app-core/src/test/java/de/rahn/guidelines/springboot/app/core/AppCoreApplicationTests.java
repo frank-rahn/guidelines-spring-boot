@@ -16,65 +16,59 @@
 package de.rahn.guidelines.springboot.app.core;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
 
 import java.util.List;
+import org.junit.jupiter.api.DisplayNameGeneration;
+import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.boot.DefaultApplicationArguments;
 import org.springframework.boot.ExitCodeExceptionMapper;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 /**
  * @author Frank Rahn
  */
-@ExtendWith({SpringExtension.class})
 @SpringBootTest
+@DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 class AppCoreApplicationTests {
 
-  @Autowired
-  private List<ApplicationRunner> applicationRunnerList;
+  @Autowired private List<ApplicationRunner> applicationRunnerList;
 
-  @Autowired
-  private ExitCodeExceptionMapper exitCodeExceptionMapper;
+  @Autowired private ExitCodeExceptionMapper exitCodeExceptionMapper;
 
   @Test
-  void givenContext_whenLoads_thenOk() {
+  void given_Context_when_loads_then_is_ok() {
     // Empty
   }
 
   @Test
-  void givenContext_whenLoads_thenApplicationRunner() {
+  void given_Context_when_loads_then_wrong_ApplicationRunner() {
     // Given
-    ApplicationArguments applicationArguments = new DefaultApplicationArguments("--go-wrong");
+    var applicationArguments = new DefaultApplicationArguments("--go-wrong");
 
     // When
     assertThat(applicationRunnerList).hasSize(2);
 
     // Then
-    Throwable t =
-        assertThrows(
-            IllegalArgumentException.class,
-            () -> applicationRunnerList.get(1).run(applicationArguments));
-
-    assertThat(t.getMessage()).contains("go-wrong");
+    assertThatIllegalArgumentException()
+        .isThrownBy(() -> applicationRunnerList.get(1).run(applicationArguments))
+        .withMessageContaining("go-wrong");
   }
 
   @Test
-  void givenContext_whenLoads_thenExitCodeExceptionMapper() {
+  @SuppressWarnings("UnnecessaryInitCause")
+  void given_Context_when_loads_then_correct_Exitcodes() {
     // Given
-    Throwable throwable = new RuntimeException("Unknown Exception");
+    var throwable = new RuntimeException("Unknown Exception");
 
     // When
-    int exitCode2 = exitCodeExceptionMapper.getExitCode(throwable);
+    var exitCode2 = exitCodeExceptionMapper.getExitCode(throwable);
 
-    //noinspection UnnecessaryInitCause
     throwable.initCause(new IllegalArgumentException("Known Exception"));
-    int exitCode3 = exitCodeExceptionMapper.getExitCode(throwable);
+    var exitCode3 = exitCodeExceptionMapper.getExitCode(throwable);
 
     // Then
     assertThat(exitCode2).isEqualTo(2);

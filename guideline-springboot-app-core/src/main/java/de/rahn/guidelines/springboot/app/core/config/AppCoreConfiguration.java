@@ -24,11 +24,13 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
 
-/** @author Frank Rahn */
+/**
+ * @author Frank Rahn
+ */
 @Configuration
 @EnableConfigurationProperties({AppProperties.class})
 @Slf4j
-public class AppCoreConfiguration {
+class AppCoreConfiguration {
 
   @Bean
   @Order(1)
@@ -52,7 +54,7 @@ public class AppCoreConfiguration {
   @Bean
   ExitCodeExceptionMapper exitCodeExceptionMapper() {
     return exception -> {
-      Throwable cause = exception.getCause();
+      var cause = exception.getCause();
 
       if (cause == null) {
         cause = exception;

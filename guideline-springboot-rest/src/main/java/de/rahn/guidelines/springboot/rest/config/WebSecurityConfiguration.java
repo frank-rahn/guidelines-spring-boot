@@ -17,39 +17,50 @@ package de.rahn.guidelines.springboot.rest.config;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.actuate.autoconfigure.security.servlet.EndpointRequest;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.provisioning.InMemoryUserDetailsManager;
+import org.springframework.security.web.SecurityFilterChain;
 
 /**
  * @author Frank Rahn
  */
 @Configuration
 @EnableGlobalMethodSecurity(securedEnabled = true)
-class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
+@EnableWebSecurity
+public class WebSecurityConfiguration {
 
   @Value("${spring.application.name}")
   private String applicationName;
 
-  @Override
-  protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-    auth.inMemoryAuthentication().withUser("user").password("{noop}user").roles("USER");
-    auth.inMemoryAuthentication().withUser("gast").password("{noop}gast").roles("GAST");
-    auth.inMemoryAuthentication().withUser("admin").password("{noop}admin").roles("USER", "ADMIN");
+  @Bean
+  public UserDetailsService userDetailsService() {
+    var user = User.withUsername("user").password("{noop}user").roles("USER").build();
+    var gast = User.withUsername("gast").password("{noop}gast").roles("GAST").build();
+    var admin = User.withUsername("admin").password("{noop}admin").roles("USER", "ADMIN").build();
+    return new InMemoryUserDetailsManager(user, gast, admin);
   }
 
-  @Override
-  protected void configure(HttpSecurity http) throws Exception {
-    http.authorizeRequests(
-        customizer -> {
-          customizer.antMatchers("/api/**").hasRole("USER");
-          customizer.requestMatchers(EndpointRequest.toAnyEndpoint()).hasRole("ADMIN");
-          customizer.anyRequest().authenticated();
-        })
+  @Bean
+  public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+    return http.authorizeRequests(
+            customizer -> {
+              customizer.antMatchers("/api/**").hasRole("USER");
+              customizer
+                  .antMatchers(
+                      "/swagger-ui.html", "/swagger-ui/**", "/v3/api-docs/**", "/webjars/**")
+                  .permitAll();
+              customizer.requestMatchers(EndpointRequest.toAnyEndpoint()).hasRole("ADMIN");
+              customizer.anyRequest().authenticated();
+            })
         .httpBasic(customizer -> customizer.realmName(applicationName + "API"))
-        .csrf(AbstractHttpConfigurer::disable);
+        .csrf()
+        .disable()
+        .build();
   }
 }

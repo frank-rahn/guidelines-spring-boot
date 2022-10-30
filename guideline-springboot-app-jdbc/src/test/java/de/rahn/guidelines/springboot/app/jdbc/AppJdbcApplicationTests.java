@@ -17,6 +17,8 @@ package de.rahn.guidelines.springboot.app.jdbc;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import org.junit.jupiter.api.DisplayNameGeneration;
+import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ExitCodeExceptionMapper;
@@ -26,25 +28,25 @@ import org.springframework.boot.test.context.SpringBootTest;
  * @author Frank Rahn
  */
 @SpringBootTest
+@DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 class AppJdbcApplicationTests {
 
-  @Autowired
-  private ExitCodeExceptionMapper exitCodeExceptionMapper;
+  @Autowired private ExitCodeExceptionMapper exitCodeExceptionMapper;
 
   @Test
-  void givenContext_whenLoads_thenOk() {
+  void given_Context_when_loads_then_is_ok() {
     // Empty
   }
 
   @Test
-  void givenContext_whenLoads_thenExitCodeExceptionMapper() {
+  @SuppressWarnings("UnnecessaryInitCause")
+  void given_Context_when_loads_then_special_ExitCode() {
     // Given
     Throwable throwable = new RuntimeException("Unknown Exception");
 
     // When
     int exitCode2 = exitCodeExceptionMapper.getExitCode(throwable);
 
-    //noinspection UnnecessaryInitCause
     throwable.initCause(new IllegalArgumentException("Known Exception"));
     int exitCode3 = exitCodeExceptionMapper.getExitCode(throwable);
 

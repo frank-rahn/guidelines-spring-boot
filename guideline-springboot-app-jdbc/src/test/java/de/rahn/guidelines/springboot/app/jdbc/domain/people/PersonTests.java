@@ -19,7 +19,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import de.rahn.guidelines.springboot.app.jdbc.config.AggregateConfiguration;
 import java.time.LocalDate;
-import java.util.List;
+import org.junit.jupiter.api.DisplayNameGeneration;
+import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.data.jdbc.DataJdbcTest;
@@ -32,95 +33,92 @@ import org.springframework.test.context.jdbc.Sql;
  */
 @DataJdbcTest
 @ContextConfiguration(classes = AggregateConfiguration.class)
+@DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 class PersonTests {
 
-  @Autowired
-  private PersonRepository repository;
+  @Autowired private PersonRepository repository;
 
   @Test
   @WithMockUser(username = "user")
-  void givenPerson_whenSave_thenPersonHasUuidAndAuditorInformation() {
+  void given_Person_when_save_then_Person_has_Uuid_and_AuditorInformation() {
     // Given
-    final String creator = "user";
-    final String auditor = "user";
-    final String name = "Rahn";
-    final LocalDate birthday = LocalDate.of(1967, 5, 5);
-    Person person = new Person(name, birthday);
+    var creator = "user";
+    var auditor = "user";
+    var name = "Rahn";
+    var birthday = LocalDate.of(1967, 5, 5);
+    var person = new Person(name, birthday);
 
     // When
-    Person savedPerson = repository.save(person);
+    var result = repository.save(person);
 
     // Then
-    assertThat(savedPerson).isNotNull();
-    assertThat(savedPerson.getId()).isNotNull();
-    assertThat(savedPerson.getFirstName()).isNull();
-    assertThat(savedPerson.getLastName()).isEqualTo(name);
-    assertThat(savedPerson.getEmailAddress()).isNull();
-    assertThat(savedPerson.getBirthday()).isEqualTo(birthday);
-    assertThat(savedPerson.getCreatedBy()).isEqualTo(creator);
-    assertThat(savedPerson.getCreatedDate()).isNotNull();
-    assertThat(savedPerson.getLastModifiedBy()).isEqualTo(auditor);
-    assertThat(savedPerson.getLastModifiedDate()).isNotNull();
+    assertThat(result).extracting(Person::getId).isNotNull();
+    assertThat(result).extracting(Person::getFirstName).isNull();
+    assertThat(result).extracting(Person::getLastName).isEqualTo(name);
+    assertThat(result).extracting(Person::getEmailAddress).isNull();
+    assertThat(result).extracting(Person::getBirthday).isEqualTo(birthday);
+    assertThat(result).extracting(Person::getCreatedBy).isEqualTo(creator);
+    assertThat(result).extracting(Person::getCreatedDate).isNotNull();
+    assertThat(result).extracting(Person::getLastModifiedBy).isEqualTo(auditor);
+    assertThat(result).extracting(Person::getLastModifiedDate).isNotNull();
   }
 
   @Test
   @WithMockUser(username = "user")
-  void givenPersonWithAddress_whenSave_thenPersonHasUuidAndAuditorInformation() {
+  void given_Person_with_Address_when_save_then_Person_has_Uuid_and_AuditorInformation() {
     // Given
-    final String creator = "user";
-    final String auditor = "user";
-    final String name = "Rahn";
-    final LocalDate birthday = LocalDate.of(1967, 5, 5);
-    Person person = new Person(name, birthday);
-    Address address = new Address("Neusser Str. 594", "50737 Köln");
+    var creator = "user";
+    var auditor = "user";
+    var name = "Rahn";
+    var birthday = LocalDate.of(1967, 5, 5);
+    var person = new Person(name, birthday);
+    var address = new Address("Neusser Str. 594", "50737 Köln");
     person.getAddresses().add(address);
 
     // When
-    Person savedPerson = repository.save(person);
+    var result = repository.save(person);
 
     // Then
-    assertThat(savedPerson).isNotNull();
-    assertThat(savedPerson.getId()).isNotNull();
-    assertThat(savedPerson.getFirstName()).isNull();
-    assertThat(savedPerson.getLastName()).isEqualTo(name);
-    assertThat(savedPerson.getEmailAddress()).isNull();
-    assertThat(savedPerson.getBirthday()).isEqualTo(birthday);
-    assertThat(savedPerson.getCreatedBy()).isEqualTo(creator);
-    assertThat(savedPerson.getCreatedDate()).isNotNull();
-    assertThat(savedPerson.getLastModifiedBy()).isEqualTo(auditor);
-    assertThat(savedPerson.getLastModifiedDate()).isNotNull();
+    assertThat(result).extracting(Person::getId).isNotNull();
+    assertThat(result).extracting(Person::getFirstName).isNull();
+    assertThat(result).extracting(Person::getLastName).isEqualTo(name);
+    assertThat(result).extracting(Person::getEmailAddress).isNull();
+    assertThat(result).extracting(Person::getBirthday).isEqualTo(birthday);
+    assertThat(result).extracting(Person::getCreatedBy).isEqualTo(creator);
+    assertThat(result).extracting(Person::getCreatedDate).isNotNull();
+    assertThat(result).extracting(Person::getLastModifiedBy).isEqualTo(auditor);
+    assertThat(result).extracting(Person::getLastModifiedDate).isNotNull();
   }
 
   @Test
   @WithMockUser(username = "gast")
   @Sql(scripts = "classpath:saved.sql")
-  void givenPerson_whenLoadAndUpdate_thenChangedFirstNameAndVersion() {
+  void given_Person_when_load_and_update_then_changed_FirstName_and_Version() {
     // Given
-    final String creator = "user";
-    final String auditor = "gast";
-    final String name = "Rahn";
-    final String firstName = "Frank";
-    final LocalDate birthday = LocalDate.of(1967, 5, 5);
+    var creator = "user";
+    var auditor = "gast";
+    var name = "Rahn";
+    var firstName = "Frank";
+    var birthday = LocalDate.of(1967, 5, 5);
 
     // When
-    List<Person> persons = repository.findByLastName(name);
+    var result = repository.findByLastName(name);
 
-    assertThat(persons).hasSize(1);
-    Person savedPerson = persons.get(0);
+    assertThat(result).hasSize(1);
+    Person savedPerson = result.get(0);
     savedPerson.setFirstName(firstName);
 
     Person updatedPerson = repository.save(savedPerson);
 
     // Then
-    assertThat(updatedPerson).isNotNull();
-    assertThat(updatedPerson.getId()).isNotNull();
-    assertThat(updatedPerson.getFirstName()).isEqualTo(firstName);
-    assertThat(updatedPerson.getLastName()).isEqualTo(name);
-    assertThat(updatedPerson.getEmailAddress()).isNull();
-    assertThat(updatedPerson.getBirthday()).isEqualTo(birthday);
-    assertThat(updatedPerson.getCreatedBy()).isEqualTo(creator);
-    assertThat(updatedPerson.getCreatedDate()).isNotNull();
-    assertThat(updatedPerson.getLastModifiedBy()).isEqualTo(auditor);
-    assertThat(updatedPerson.getLastModifiedDate()).isNotNull();
+    assertThat(updatedPerson).extracting(Person::getId).isNotNull();
+    assertThat(updatedPerson).extracting(Person::getFirstName).isEqualTo(firstName);
+    assertThat(updatedPerson).extracting(Person::getLastName).isEqualTo(name);
+    assertThat(updatedPerson).extracting(Person::getEmailAddress).isNull();
+    assertThat(updatedPerson).extracting(Person::getBirthday).isEqualTo(birthday);
+    assertThat(updatedPerson).extracting(Person::getCreatedBy).isEqualTo(creator);
+    assertThat(updatedPerson).extracting(Person::getCreatedDate).isNotNull();
+    assertThat(updatedPerson).extracting(Person::getLastModifiedBy).isEqualTo(auditor);
+    assertThat(updatedPerson).extracting(Person::getLastModifiedDate).isNotNull();
   }
 }

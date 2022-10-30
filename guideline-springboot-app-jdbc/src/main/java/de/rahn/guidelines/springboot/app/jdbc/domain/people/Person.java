@@ -37,48 +37,37 @@ import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedBy;
 import org.springframework.data.annotation.LastModifiedDate;
-import org.springframework.data.annotation.PersistenceConstructor;
+import org.springframework.data.annotation.PersistenceCreator;
 import org.springframework.format.annotation.DateTimeFormat;
 
 /**
  * @author Frank Rahn
  */
-@AllArgsConstructor(access = PRIVATE, onConstructor = @__(@PersistenceConstructor))
+@AllArgsConstructor(access = PRIVATE, onConstructor = @__(@PersistenceCreator))
 @RequiredArgsConstructor
 @Getter
 @ToString(callSuper = true)
 @EqualsAndHashCode(callSuper = true)
 public class Person extends WithUUIDPersistable {
 
-  @Setter
-  private String firstName;
+  @Setter private String firstName;
 
-  @NotNull
-  @NotBlank
-  @NonNull
-  private String lastName;
+  @NotNull @NotBlank @NonNull private String lastName;
 
-  @Email
-  @Setter
-  private String emailAddress;
+  @Email @Setter private String emailAddress;
 
   @DateTimeFormat(iso = DATE)
   @NotNull
   @NonNull
   private LocalDate birthday;
 
-  @EqualsAndHashCode.Exclude
-  private Set<Address> addresses = new HashSet<>();
+  @EqualsAndHashCode.Exclude private Set<Address> addresses = new HashSet<>();
 
-  @CreatedBy
-  private String createdBy;
+  @CreatedBy private String createdBy;
 
-  @CreatedDate
-  private LocalDateTime createdDate;
+  @CreatedDate private LocalDateTime createdDate;
 
-  @LastModifiedBy
-  private String lastModifiedBy;
+  @LastModifiedBy private String lastModifiedBy;
 
-  @LastModifiedDate
-  private LocalDateTime lastModifiedDate;
+  @LastModifiedDate private LocalDateTime lastModifiedDate;
 }

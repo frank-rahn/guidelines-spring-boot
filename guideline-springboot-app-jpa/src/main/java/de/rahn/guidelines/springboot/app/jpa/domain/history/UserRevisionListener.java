@@ -16,7 +16,6 @@
 package de.rahn.guidelines.springboot.app.jpa.domain.history;
 
 import org.hibernate.envers.RevisionListener;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 
 /**
@@ -26,12 +25,12 @@ public class UserRevisionListener implements RevisionListener {
 
   @Override
   public void newRevision(Object revisionEntity) {
-    UserRevisionEntity userRevisionEntity = (UserRevisionEntity) revisionEntity;
+    var userRevisionEntity = (UserRevisionEntity) revisionEntity;
     userRevisionEntity.setUserId(getUser());
   }
 
   private String getUser() {
-    Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+    var authentication = SecurityContextHolder.getContext().getAuthentication();
 
     if (authentication == null || !authentication.isAuthenticated()) {
       return "anonymous";

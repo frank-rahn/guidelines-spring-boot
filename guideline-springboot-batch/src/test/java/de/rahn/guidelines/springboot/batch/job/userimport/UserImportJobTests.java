@@ -19,43 +19,61 @@ import static de.rahn.guidelines.springboot.batch.customized.CustomizedExitStatu
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.batch.core.ExitStatus.COMPLETED;
 
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayNameGeneration;
+import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
+import org.springframework.batch.core.ExitStatus;
 import org.springframework.batch.core.JobExecution;
+import org.springframework.batch.core.JobInstance;
 import org.springframework.batch.core.JobParameters;
 import org.springframework.batch.core.JobParametersBuilder;
 import org.springframework.batch.test.JobLauncherTestUtils;
+import org.springframework.batch.test.JobRepositoryTestUtils;
 import org.springframework.batch.test.context.SpringBatchTest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-@ExtendWith({SpringExtension.class})
 @SpringBootTest(properties = {"spring.batch.job.enabled=false"})
 @SpringBatchTest
+@DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 class UserImportJobTests {
 
-  @SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")
-  @Autowired
-  private JobLauncherTestUtils jobLauncherTestUtils;
+  @Autowired private JobLauncherTestUtils jobLauncherTestUtils;
+
+  @Autowired private JobRepositoryTestUtils jobRepositoryTestUtils;
+
+  @BeforeEach
+  void beforeEachSetUp() {
+    jobRepositoryTestUtils.removeJobExecutions();
+  }
+
+  @AfterEach
+  void afterEachTearDown() {
+    jobRepositoryTestUtils.removeJobExecutions();
+  }
 
   @Test
-  void givenJobWithoutParameters_whenJobExecuted_thenSuccess() throws Exception {
+  void given_Job_without_parameters_when_Job_executed_then_completed() throws Exception {
+    // Given
     // When
     JobExecution jobExecution = jobLauncherTestUtils.launchJob();
 
     // Then
-    assertThat(jobExecution).isNotNull();
+    assertThat(jobExecution)
+        .extracting(JobExecution::getJobInstance)
+        .extracting(JobInstance::getJobName)
+        .isEqualTo("userImportJob");
 
-    assertThat(jobExecution.getJobInstance()).isNotNull();
-    assertThat(jobExecution.getJobInstance().getJobName()).isEqualTo("userImportJob");
-
-    assertThat(jobExecution.getExitStatus()).isNotNull();
-    assertThat(jobExecution.getExitStatus().getExitCode()).isEqualTo(COMPLETED.getExitCode());
+    assertThat(jobExecution)
+        .extracting(JobExecution::getExitStatus)
+        .extracting(ExitStatus::getExitCode)
+        .isEqualTo(COMPLETED.getExitCode());
   }
 
   @Test
-  void givenJobWithParameters_whenJobExecuted_thenSuccess() throws Exception {
+  void given_Job_with_parameters_when_Job_executed_then_completed_with_errors() throws Exception {
     // Given
     JobParameters jobParameters =
         new JobParametersBuilder()
@@ -67,13 +85,14 @@ class UserImportJobTests {
     JobExecution jobExecution = jobLauncherTestUtils.launchJob(jobParameters);
 
     // Then
-    assertThat(jobExecution).isNotNull();
+    assertThat(jobExecution)
+        .extracting(JobExecution::getJobInstance)
+        .extracting(JobInstance::getJobName)
+        .isEqualTo("userImportJob");
 
-    assertThat(jobExecution.getJobInstance()).isNotNull();
-    assertThat(jobExecution.getJobInstance().getJobName()).isEqualTo("userImportJob");
-
-    assertThat(jobExecution.getExitStatus()).isNotNull();
-    assertThat(jobExecution.getExitStatus().getExitCode())
+    assertThat(jobExecution)
+        .extracting(JobExecution::getExitStatus)
+        .extracting(ExitStatus::getExitCode)
         .isEqualTo(COMPLETED_WITH_ERRORS.getExitCode());
   }
 }

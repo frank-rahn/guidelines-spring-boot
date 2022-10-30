@@ -18,7 +18,6 @@ package de.rahn.guidelines.springboot.app.jdbc;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.ApplicationContext;
 
 /**
  * @author Frank Rahn
@@ -28,9 +27,9 @@ import org.springframework.context.ApplicationContext;
 public class AppJdbcApplication {
 
   public static void main(String[] args) {
-    ApplicationContext applicationContext = SpringApplication.run(AppJdbcApplication.class, args);
+    var applicationContext = SpringApplication.run(AppJdbcApplication.class, args);
 
-    int exitCode = SpringApplication.exit(applicationContext);
+    var exitCode = SpringApplication.exit(applicationContext);
     LOGGER.info("App-JDBC finished with exit code {}", exitCode);
     System.exit(exitCode);
   }

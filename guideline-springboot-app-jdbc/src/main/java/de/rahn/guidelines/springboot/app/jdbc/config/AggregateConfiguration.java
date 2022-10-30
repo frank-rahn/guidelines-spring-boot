@@ -48,7 +48,7 @@ public class AggregateConfiguration extends AbstractJdbcConfiguration {
   @Bean
   AuditorAware<String> auditorAware() {
     return () -> {
-      String currentAuditor =
+      var currentAuditor =
           ofNullable(SecurityContextHolder.getContext().getAuthentication())
               .map(Authentication::getName)
               .orElse("anonymous");

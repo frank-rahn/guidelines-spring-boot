@@ -19,30 +19,36 @@ import static java.time.format.DateTimeFormatter.ISO_DATE;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.time.LocalDate;
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.DisplayNameGeneration;
+import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Test;
 
+@DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 class LocalDateConverterTests {
 
-  private LocalDateConverter classUnderTests = new LocalDateConverter();
+  private final LocalDateConverter classUnderTests = new LocalDateConverter();
 
   @Test
-  void givenLocalDate_whenConvert_thenLocalDate() {
+  void given_LocalDate_as_String_when_convert_then_is_LocalDate() {
     // Given
-    LocalDate localDate = LocalDate.now();
-    String dateString = localDate.format(ISO_DATE);
+    var localDate = LocalDate.now();
+    var dateString = localDate.format(ISO_DATE);
 
     // When
-    LocalDate result = classUnderTests.convert(dateString);
+    var result = classUnderTests.convert(dateString);
 
     // Then
-    assertThat(result).isNotNull();
     assertThat(result).isEqualTo(localDate);
   }
 
   @Test
-  void givenNull_whenConvert_thenNull() {
+  @SuppressWarnings("ConstantConditions")
+  @Disabled("Diese Situation sollte nie auftreten. IntelliJ meckert das auch an.")
+  void given_null_when_convert_then_is_null() {
+    // Given
     // When
-    LocalDate result = classUnderTests.convert(null);
+    var result = classUnderTests.convert(null);
 
     // Then
     assertThat(result).isNull();

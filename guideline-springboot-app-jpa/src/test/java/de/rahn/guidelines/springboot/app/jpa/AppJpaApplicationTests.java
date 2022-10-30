@@ -17,9 +17,9 @@ package de.rahn.guidelines.springboot.app.jpa;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import de.rahn.guidelines.springboot.app.jpa.domain.people.Person;
 import de.rahn.guidelines.springboot.app.jpa.domain.people.PersonRepository;
-import java.util.Optional;
+import org.junit.jupiter.api.DisplayNameGeneration;
+import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ExitCodeExceptionMapper;
@@ -30,38 +30,40 @@ import org.springframework.security.test.context.support.WithMockUser;
  * @author Frank Rahn
  */
 @SpringBootTest
+@DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 class AppJpaApplicationTests {
 
-  @Autowired
-  private PersonRepository repository;
+  @Autowired private PersonRepository repository;
 
-  @Autowired
-  private ExitCodeExceptionMapper exitCodeExceptionMapper;
+  @Autowired private ExitCodeExceptionMapper exitCodeExceptionMapper;
 
   @Test
   @WithMockUser
-  void givenContextWithUser_whenLoads_thenOk() {
-    Optional<Person> personOpt = repository.findByLastName("Rahn").stream().findFirst();
+  void given_Context_with_user_when_loads_then_ok() {
+    // Given
+    // When
+    var personOpt = repository.findByLastName("Rahn").stream().findFirst();
 
+    // Then
     assertThat(personOpt).isPresent();
 
-    Person person = personOpt.get();
+    var person = personOpt.get();
     person.setEmailAddress("rahn@koeln.de");
 
     repository.save(person);
   }
 
   @Test
-  void givenContext_whenLoads_thenExitCodeExceptionMapper() {
+  @SuppressWarnings("UnnecessaryInitCause")
+  void given_Context_when_loads_then_special_ExitCode() {
     // Given
     Throwable throwable = new RuntimeException("Unknown Exception");
 
     // When
-    int exitCode2 = exitCodeExceptionMapper.getExitCode(throwable);
+    var exitCode2 = exitCodeExceptionMapper.getExitCode(throwable);
 
-    //noinspection UnnecessaryInitCause
     throwable.initCause(new IllegalArgumentException("Known Exception"));
-    int exitCode3 = exitCodeExceptionMapper.getExitCode(throwable);
+    var exitCode3 = exitCodeExceptionMapper.getExitCode(throwable);
 
     // Then
     assertThat(exitCode2).isEqualTo(2);

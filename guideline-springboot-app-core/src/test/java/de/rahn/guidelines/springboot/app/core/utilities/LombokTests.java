@@ -25,21 +25,24 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 import lombok.extern.slf4j.Slf4j;
+import org.junit.jupiter.api.DisplayNameGeneration;
+import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Test;
 
 /**
  * @author Frank Rahn
  */
 @Slf4j
+@DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 class LombokTests {
 
   @Test
-  void givenObjects_whenToString_thenOutput() {
+  void given_Objects_when_toString_then_output() {
     // Given
-    Whole whole = newWhole();
+    var whole = standardWhole();
 
     // When
-    String result = whole.toString();
+    var result = whole.toString();
 
     // Then
     assertThat(result).isNotBlank();
@@ -47,12 +50,12 @@ class LombokTests {
   }
 
   @Test
-  void givenObjects_whenHasCode_thenOk() {
+  void given_Objects_when_hasCode_then_is_ok() {
     // Given
-    Whole whole = newWhole();
+    var whole = standardWhole();
 
     // When
-    int result = whole.hashCode();
+    var result = whole.hashCode();
 
     // Then
     assertThat(result).isGreaterThan(0);
@@ -60,20 +63,20 @@ class LombokTests {
   }
 
   @Test
-  void givenObjects_whenEquals_thenTrue() {
+  void given_Objects_when_equals_then_is_true() {
     // Given
-    Whole whole1 = newWhole();
-    Whole whole2 = newWhole();
+    var whole1 = standardWhole();
+    var whole2 = standardWhole();
 
     // When
-    boolean result = whole1.equals(whole2);
+    var result = whole1.equals(whole2);
 
     // Then
     assertThat(result).isTrue();
   }
 
-  private static Whole newWhole() {
-    Whole whole = new Whole();
+  private static Whole standardWhole() {
+    var whole = new Whole();
     whole.setId("4711");
     whole.getParts().add(new Part("1", whole));
     whole.getParts().add(new Part("2", whole));
@@ -102,8 +105,6 @@ class LombokTests {
 
     private String id;
 
-    @ToString.Exclude
-    @EqualsAndHashCode.Exclude
-    private Whole whole;
+    @ToString.Exclude @EqualsAndHashCode.Exclude private Whole whole;
   }
 }

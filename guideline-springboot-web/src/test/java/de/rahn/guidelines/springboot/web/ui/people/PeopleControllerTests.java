@@ -24,6 +24,8 @@ import static org.springframework.http.HttpStatus.OK;
 
 import java.util.List;
 import java.util.UUID;
+import org.junit.jupiter.api.DisplayNameGeneration;
+import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -36,25 +38,42 @@ import org.springframework.ui.ExtendedModelMap;
 import org.springframework.web.client.RestTemplate;
 
 @ExtendWith({MockitoExtension.class})
+@DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 class PeopleControllerTests {
 
-  @Mock
-  private RestTemplate template;
+  @Mock private RestTemplate template;
 
-  @InjectMocks
-  private PeopleController classUnderTest;
+  @InjectMocks private PeopleController classUnderTest;
 
   @Test
-  void givenPeople_WhenGetAllPeople_ThenOk(@Mock Person person) {
+  void given_People_when_getAllPeople_then_ok(@Mock Person person) {
     // Given
-    List<Person> personList = List.of(person);
-    ResponseEntity<List<Person>> people = new ResponseEntity<>(personList, OK);
-
+    var personList = List.of(person);
+    var people = new ResponseEntity<>(personList, OK);
     doReturn(people)
         .when(template)
         .exchange(
             eq("/"), eq(GET), isNull(), Mockito.<ParameterizedTypeReference<List<Person>>>any());
-    ExtendedModelMap model = new ExtendedModelMap();
+    var model = new ExtendedModelMap();
+
+    // When
+    var result = classUnderTest.getAllPeople(model);
+
+    // Then
+    assertThat(result).isEqualTo("people");
+    assertThat(model).hasSize(1);
+    assertThat(model.getAttribute("people")).isEqualTo(personList);
+  }
+
+  @Test
+  void given_nothing_when_getAllPeople_then_ok(@Mock List<Person> personList) {
+    // Given
+    var people = new ResponseEntity<>(personList, OK);
+    doReturn(people)
+        .when(template)
+        .exchange(
+            eq("/"), eq(GET), isNull(), Mockito.<ParameterizedTypeReference<List<Person>>>any());
+    var model = new ExtendedModelMap();
 
     // When
     String result = classUnderTest.getAllPeople(model);
@@ -66,34 +85,15 @@ class PeopleControllerTests {
   }
 
   @Test
-  void givenNothing_WhenGetAllPeople_ThenOk(@Mock List<Person> personList) {
+  void given_Person_when_getPersonById_then_ok(@Mock Person person) {
     // Given
-    ResponseEntity<List<Person>> people = new ResponseEntity<>(personList, OK);
-
-    doReturn(people)
-        .when(template)
-        .exchange(
-            eq("/"), eq(GET), isNull(), Mockito.<ParameterizedTypeReference<List<Person>>>any());
-    ExtendedModelMap model = new ExtendedModelMap();
+    var uuid = UUID.randomUUID();
+    var url = "/" + uuid;
+    doReturn(person).when(template).getForObject(eq(url), eq(Person.class));
+    var model = new ExtendedModelMap();
 
     // When
-    String result = classUnderTest.getAllPeople(model);
-
-    // Then
-    assertThat(result).isEqualTo("people");
-    assertThat(model).hasSize(1);
-    assertThat(model.getAttribute("people")).isEqualTo(personList);
-  }
-
-  @Test
-  void givenPerson_whenGetPersonById_thenOk(@Mock Person person) {
-    // Given
-    ExtendedModelMap model = new ExtendedModelMap();
-    UUID id = UUID.randomUUID();
-    doReturn(person).when(template).getForObject(eq("/" + id.toString()), eq(Person.class));
-
-    // When
-    String result = classUnderTest.getPersonById(id, model);
+    var result = classUnderTest.getPersonById(uuid, model);
 
     // Then
     assertThat(result).isEqualTo("person");

@@ -22,10 +22,8 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import lombok.extern.slf4j.Slf4j;
-import org.hibernate.envers.AuditReader;
 import org.hibernate.envers.AuditReaderFactory;
 import org.hibernate.envers.query.AuditEntity;
-import org.hibernate.envers.query.AuditQuery;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.boot.ExitCodeExceptionMapper;
@@ -45,7 +43,7 @@ class AppJpaConfiguration {
   @Order(1)
   ApplicationRunner initDatabase(PersonRepository repository) {
     return args -> {
-      Person person = new Person("Rahn", LocalDate.of(1967, 5, 5));
+      var person = new Person("Rahn", LocalDate.of(1967, 5, 5));
       person.setFirstName("Frank");
       repository.save(person);
 
@@ -76,8 +74,8 @@ class AppJpaConfiguration {
       @Override
       @Transactional
       public void run(ApplicationArguments args) {
-        AuditReader auditReader = AuditReaderFactory.get(entityManager);
-        AuditQuery auditQuery =
+        var auditReader = AuditReaderFactory.get(entityManager);
+        var auditQuery =
             auditReader
                 .createQuery()
                 .forRevisionsOfEntity(Person.class, false, true)
@@ -102,7 +100,7 @@ class AppJpaConfiguration {
   @Bean
   ExitCodeExceptionMapper exitCodeExceptionMapper() {
     return exception -> {
-      Throwable cause = exception.getCause();
+      var cause = exception.getCause();
 
       if (cause == null) {
         cause = exception;

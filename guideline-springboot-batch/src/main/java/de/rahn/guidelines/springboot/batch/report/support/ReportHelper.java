@@ -60,7 +60,7 @@ public class ReportHelper {
     if (throwable instanceof DataAccessException && throwable.getCause() instanceof SQLException) {
       logThrowable(message, item, throwable.getCause(), logger);
     } else if (throwable instanceof SQLException) {
-      final String tmp = message + toStringRepresentation(item, true);
+      final var tmp = message + toStringRepresentation(item, true);
       ((SQLException) throwable).forEach(t2 -> logger.error(tmp, t2));
     } else {
       if (logger.isErrorEnabled()) {
@@ -76,7 +76,7 @@ public class ReportHelper {
 
     if (item instanceof Collection) {
       @SuppressWarnings("unchecked")
-      Collection<Object> items = (Collection<Object>) item;
+      var items = (Collection<Object>) item;
       return toStringRepresentation(items, full);
     }
 
