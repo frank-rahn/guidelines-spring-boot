@@ -49,14 +49,14 @@
     <spring-cloud-dependencies.version>2021.0.4</spring-cloud-dependencies.version>
 
     <!-- Other Libraries (Not in spring-boot-dependencies) -->
-    <springdoc-openapi.version>1.6.11</springdoc-openapi.version>
+    <springdoc-openapi.version>1.6.12</springdoc-openapi.version>
     <jquery.version>3.6.1</jquery.version>
     <popper.js.version>2.9.3</popper.js.version>
     <bootstrap.version>4.6.2</bootstrap.version>
 
     <!-- Plugins Version -->
     <jacoco-maven-plugin.version>0.8.8</jacoco-maven-plugin.version>
-    <jib-maven-plugin.version>3.3.0</jib-maven-plugin.version>
+    <jib-maven-plugin.version>3.3.1</jib-maven-plugin.version>
     <sonar-maven-plugin.version>3.9.1.2184</sonar-maven-plugin.version>
   </properties>
 
