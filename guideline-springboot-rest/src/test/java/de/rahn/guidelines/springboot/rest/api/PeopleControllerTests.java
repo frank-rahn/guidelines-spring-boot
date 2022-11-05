@@ -61,7 +61,7 @@ class PeopleControllerTests {
   private Person person;
 
   @BeforeEach
-  void resetPeopleController() {
+  void beforeEachSetUpResetPeopleController() {
     person = classUnderTest.reset();
   }
 

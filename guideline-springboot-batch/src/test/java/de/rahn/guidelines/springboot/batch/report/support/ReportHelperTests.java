@@ -53,7 +53,7 @@ class ReportHelperTests {
   @Spy private ReportHelper classUnderTest = new ReportHelper();
 
   @BeforeEach
-  void setUp() {
+  void beforeEachSetUp() {
     Logger logger = (Logger) LoggerFactory.getLogger(ReportJobExecutionListener.REPORT);
     logger.addAppender(mockAppender);
   }

@@ -33,13 +33,9 @@ import org.springframework.security.test.context.support.WithMockUser;
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 class AppJpaApplicationTests {
 
-  @Autowired private PersonRepository repository;
-
-  @Autowired private ExitCodeExceptionMapper exitCodeExceptionMapper;
-
   @Test
   @WithMockUser
-  void given_Context_with_user_when_loads_then_ok() {
+  void given_Context_with_user_when_loads_then_ok(@Autowired PersonRepository repository) {
     // Given
     // When
     var personOpt = repository.findByLastName("Rahn").stream().findFirst();
@@ -55,7 +51,8 @@ class AppJpaApplicationTests {
 
   @Test
   @SuppressWarnings("UnnecessaryInitCause")
-  void given_Context_when_loads_then_special_ExitCode() {
+  void given_Context_when_loads_then_special_ExitCode(
+      @Autowired ExitCodeExceptionMapper exitCodeExceptionMapper) {
     // Given
     Throwable throwable = new RuntimeException("Unknown Exception");
 

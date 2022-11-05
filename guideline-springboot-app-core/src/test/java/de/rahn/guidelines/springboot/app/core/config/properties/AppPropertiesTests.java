@@ -46,11 +46,9 @@ import org.springframework.boot.test.context.SpringBootTest;
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 class AppPropertiesTests {
 
-  @Autowired(required = false)
-  private AppProperties properties;
-
   @Test
-  void given_Context_when_loads_then_populate_AppProperties() {
+  void given_Context_when_loads_then_populate_AppProperties(
+      @Autowired(required = false) AppProperties properties) {
     // Given
     // When
     // Then

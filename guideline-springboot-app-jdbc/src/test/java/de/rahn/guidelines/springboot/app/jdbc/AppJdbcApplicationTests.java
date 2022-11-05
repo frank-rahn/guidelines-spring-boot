@@ -42,7 +42,7 @@ class AppJdbcApplicationTests {
   @SuppressWarnings("UnnecessaryInitCause")
   void given_Context_when_loads_then_special_ExitCode() {
     // Given
-    Throwable throwable = new RuntimeException("Unknown Exception");
+    var throwable = new RuntimeException("Unknown Exception");
 
     // When
     int exitCode2 = exitCodeExceptionMapper.getExitCode(throwable);

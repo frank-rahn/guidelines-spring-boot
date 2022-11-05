@@ -36,7 +36,7 @@ class AppJdbcConfiguration {
   @Order(1)
   ApplicationRunner insertPerson(PersonRepository repository) {
     return args -> {
-      Person person = repository.save(new Person("Rahn", LocalDate.of(1967, 5, 5)));
+      var person = repository.save(new Person("Rahn", LocalDate.of(1967, 5, 5)));
       LOGGER.info("Person erzeugt: {}", person);
     };
   }

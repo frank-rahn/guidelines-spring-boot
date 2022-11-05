@@ -25,7 +25,9 @@ import io.swagger.v3.oas.annotations.security.SecurityScheme;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.context.annotation.Configuration;
 
-/** @author Frank Rahn */
+/**
+ * @author Frank Rahn
+ */
 @Configuration
 @OpenAPIDefinition(
     info =

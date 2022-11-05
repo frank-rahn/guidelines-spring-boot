@@ -35,17 +35,14 @@ import org.springframework.boot.test.context.SpringBootTest;
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 class AppCoreApplicationTests {
 
-  @Autowired private List<ApplicationRunner> applicationRunnerList;
-
-  @Autowired private ExitCodeExceptionMapper exitCodeExceptionMapper;
-
   @Test
   void given_Context_when_loads_then_is_ok() {
     // Empty
   }
 
   @Test
-  void given_Context_when_loads_then_wrong_ApplicationRunner() {
+  void given_Context_when_loads_then_wrong_ApplicationRunner(
+      @Autowired List<ApplicationRunner> applicationRunnerList) {
     // Given
     var applicationArguments = new DefaultApplicationArguments("--go-wrong");
 
@@ -60,7 +57,8 @@ class AppCoreApplicationTests {
 
   @Test
   @SuppressWarnings("UnnecessaryInitCause")
-  void given_Context_when_loads_then_correct_Exitcodes() {
+  void given_Context_when_loads_then_correct_Exitcodes(
+      @Autowired ExitCodeExceptionMapper exitCodeExceptionMapper) {
     // Given
     var throwable = new RuntimeException("Unknown Exception");
 

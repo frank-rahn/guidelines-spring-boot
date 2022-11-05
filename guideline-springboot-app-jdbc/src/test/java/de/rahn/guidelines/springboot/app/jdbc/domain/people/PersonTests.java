@@ -108,7 +108,7 @@ class PersonTests {
     Person savedPerson = result.get(0);
     savedPerson.setFirstName(firstName);
 
-    Person updatedPerson = repository.save(savedPerson);
+    var updatedPerson = repository.save(savedPerson);
 
     // Then
     assertThat(updatedPerson).extracting(Person::getId).isNotNull();

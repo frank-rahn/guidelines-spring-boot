@@ -27,7 +27,6 @@ import org.junit.jupiter.api.Test;
 import org.springframework.batch.core.ExitStatus;
 import org.springframework.batch.core.JobExecution;
 import org.springframework.batch.core.JobInstance;
-import org.springframework.batch.core.JobParameters;
 import org.springframework.batch.core.JobParametersBuilder;
 import org.springframework.batch.test.JobLauncherTestUtils;
 import org.springframework.batch.test.JobRepositoryTestUtils;
@@ -58,7 +57,7 @@ class UserImportJobTests {
   void given_Job_without_parameters_when_Job_executed_then_completed() throws Exception {
     // Given
     // When
-    JobExecution jobExecution = jobLauncherTestUtils.launchJob();
+    var jobExecution = jobLauncherTestUtils.launchJob();
 
     // Then
     assertThat(jobExecution)
@@ -75,14 +74,14 @@ class UserImportJobTests {
   @Test
   void given_Job_with_parameters_when_Job_executed_then_completed_with_errors() throws Exception {
     // Given
-    JobParameters jobParameters =
+    var jobParameters =
         new JobParametersBuilder()
             .addString("skip", "Schmitz")
             .addString("filter", "Meier")
             .toJobParameters();
 
     // When
-    JobExecution jobExecution = jobLauncherTestUtils.launchJob(jobParameters);
+    var jobExecution = jobLauncherTestUtils.launchJob(jobParameters);
 
     // Then
     assertThat(jobExecution)
