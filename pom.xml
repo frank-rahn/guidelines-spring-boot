@@ -35,14 +35,14 @@
 
   <properties>
     <!-- Java Version -->
-    <java.version>11</java.version>
+    <java.version>17</java.version>
 
     <!-- Maven Version für super-pom -->
     <maven.version>3.2.5</maven.version>
 
-    <!-- Docker Tagging: adoptopenjdk/openjdk11:jdk-11.0.8_10-alpine -->
+    <!-- Docker Tagging: eclipse-temurin:17.0.4.1_1-jdk-alpine -->
     <docker-basis-image.version>
-      adoptopenjdk/openjdk11@sha256:8a1d4211a3c1e6d9e6e4b67a7afda229fba7ddd233014e893216170675954622
+      eclipse-temurin@sha256:e7a7810dd3e3893772804118e35079e70f317af4e4db992f455d86e1d03760c1
     </docker-basis-image.version>
 
     <!-- Other Spring Version -->

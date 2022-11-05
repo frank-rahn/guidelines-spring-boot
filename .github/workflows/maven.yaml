@@ -8,20 +8,22 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout sources
-        uses: actions/checkout@v1
+        uses: actions/checkout@v3
       - name: Set up JDK
-        uses: actions/setup-java@v1
+        uses: actions/setup-java@v3
         with:
-          java-version: 11
+          java-version: 17
+          distribution: temurin
+          cache: maven
       - name: Cache for Maven
-        uses: actions/cache@v1
+        uses: actions/cache@v3
         with:
           path: ~/.m2/repository
           key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
           restore-keys: |
             ${{ runner.os }}-maven-
       - name: Build with Maven und JIB (Docker Image)
-        run: mvn --batch-mode --show-version --errors install
+        run: mvn --batch-mode --show-version --fail-at-end --errors install
       - name: Analyze with SonarCloud
         run: mvn --batch-mode sonar:sonar -Dsonar.host.url=$HOST -Dsonar.organization=$ORG -Dsonar.projectKey=$KEY -Dsonar.login=$LOGIN
         env:

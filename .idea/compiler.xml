@@ -11,21 +11,21 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="guideline-springboot-rest" />
-        <module name="guideline-springboot-web" />
-        <module name="guideline-springboot-app-core" />
-        <module name="guideline-springboot-app-jpa" />
         <module name="guideline-springboot-app-jdbc" />
+        <module name="guideline-springboot-app-core" />
+        <module name="guideline-springboot-web" />
         <module name="guideline-springboot-batch" />
+        <module name="guideline-springboot-app-jpa" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
-      <module name="guideline-springboot-app-core" target="11" />
-      <module name="guideline-springboot-app-jdbc" target="11" />
-      <module name="guideline-springboot-app-jpa" target="11" />
-      <module name="guideline-springboot-batch" target="11" />
-      <module name="guideline-springboot-parent" target="11" />
-      <module name="guideline-springboot-rest" target="11" />
-      <module name="guideline-springboot-web" target="11" />
+      <module name="guideline-springboot-app-core" target="17" />
+      <module name="guideline-springboot-app-jdbc" target="17" />
+      <module name="guideline-springboot-app-jpa" target="17" />
+      <module name="guideline-springboot-batch" target="17" />
+      <module name="guideline-springboot-parent" target="17" />
+      <module name="guideline-springboot-rest" target="17" />
+      <module name="guideline-springboot-web" target="17" />
       <module name="guidelines-spring-boot" target="11" />
     </bytecodeTargetLevel>
   </component>
