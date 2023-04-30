@@ -16,10 +16,9 @@
 package de.rahn.guidelines.springboot.app.core.config.properties;
 
 import static java.time.format.DateTimeFormatter.ISO_DATE;
-import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.*;
 
 import java.time.LocalDate;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Test;
@@ -42,15 +41,14 @@ class LocalDateConverterTests {
     assertThat(result).isEqualTo(localDate);
   }
 
+  @SuppressWarnings("DataFlowIssue")
   @Test
-  @SuppressWarnings("ConstantConditions")
-  @Disabled("Diese Situation sollte nie auftreten. IntelliJ meckert das auch an.")
   void given_null_when_convert_then_is_null() {
     // Given
     // When
-    var result = classUnderTests.convert(null);
-
     // Then
-    assertThat(result).isNull();
+    assertThatIllegalArgumentException()
+        .isThrownBy(() -> classUnderTests.convert(null))
+        .withMessage("Argument source ist null");
   }
 }

@@ -31,6 +31,11 @@ class LocalDateConverter implements Converter<String, LocalDate> {
 
   @Override
   public LocalDate convert(String source) {
+    //noinspection ConstantValue
+    if (source == null) {
+      throw new IllegalArgumentException("Argument source ist null");
+    }
+
     return LocalDate.parse(source, ISO_DATE);
   }
 }
