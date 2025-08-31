@@ -22,7 +22,7 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-maven-
       - name: Build with Maven und JIB (Docker Image)
-        run: mvn --batch-mode --show-version --errors install
+        run: mvn --batch-mode verifiy
       - name: Analyze with SonarCloud
         run: mvn --batch-mode sonar:sonar -Dsonar.host.url=$HOST -Dsonar.organization=$ORG -Dsonar.projectKey=$KEY -Dsonar.login=$LOGIN
         env:
